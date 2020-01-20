@@ -1,0 +1,44 @@
+<!-- <mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div><a routerLink="/">Sli.do</a></div>
+  <ul
+      fxFlex 
+      fxLayout 
+      fxLayoutAlign="flex-end" 
+      fxLayoutGap="20px" 
+      fxHide.xs 
+      class="navigation-links">
+    <li><a *ngIf="!isAuth" routerLink="/login">Log In</a></li>
+    <li><a *ngIf="!isAuth" routerLink="/signup">Sign Up</a></li>
+    <li><a *ngIf="isAuth" routerLink="/user">Events</a></li>
+    <li><a *ngIf="isAuth" (click)="logout()" class="logout-link">Logout</a></li>
+  </ul>
+</mat-toolbar> -->
+
+<mat-toolbar fxLayout color="primary" class="toolbar">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div>
+    <a routerLink="/home">Social Media</a>
+  </div>
+  <ul
+    fxFlex
+    fxLayout
+    fxLayoutGap="15px"
+    fxLayoutAlign="flex-end"
+    fxShow
+    fxHide.lt-sm
+  >
+    <li><a routerLink="/my-friends">My Friends</a></li>
+    <li><a routerLink="/my-posts">My Posts</a></li>
+    <li><a routerLink="/post">New Post</a></li>
+    <li><a routerLink="/logout">Logout</a></li>
+  </ul>
+</mat-toolbar>

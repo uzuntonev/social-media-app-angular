@@ -1,0 +1,20 @@
+<mat-nav-list>
+  <div>
+    <a *ngIf="!isAuth" mat-list-item routerLink="/signup">
+      <mat-icon>perm_identity</mat-icon>
+      Sign Up
+    </a>
+    <a *ngIf="!isAuth" mat-list-item routerLink="/login">
+      <mat-icon>account_circle</mat-icon>
+      Log In
+    </a>
+    <a *ngIf="isAuth" mat-list-item routerLink="/user">
+      <mat-icon>question_answer</mat-icon>
+      Events
+    </a>
+    <a *ngIf="isAuth" (click)="logout()" class="logout-link" mat-list-item>
+      <mat-icon>eject</mat-icon>
+      Logout
+    </a>
+  </div>
+</mat-nav-list>

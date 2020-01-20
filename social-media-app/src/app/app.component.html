@@ -1,0 +1,32 @@
+<!-- <mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <app-sidenav-list></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-toolbar (sidenavToggle)="sidenav.toggle()"></app-toolbar>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+
+<ul>
+    <li class="text" *ngFor="let item of items | async">
+      {{item.name}}
+    </li>
+  </ul> -->
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+<app-sidenav-list></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-toolbar (sidenavToggle) = "sidenav.toggle()"></app-toolbar>
+
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
