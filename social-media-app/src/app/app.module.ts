@@ -11,8 +11,16 @@ import { FirebaseModule } from './firebase.module';
 
 import { ToolbarComponent } from './components/shared/toolbar/toolbar.component';
 import { SidenavListComponent } from './components/shared/sidenav-list/sidenav-list.component';
-import { LoginComponent } from './components/auth/login/login.component';
-import { RegisterComponent } from './components/auth/register/register.component';
+
+
+import { HomeComponent } from './components/home/home.component';
+
+import { FormsModule } from '@angular/forms';
+
+import { SignInComponent } from './components/auth/sign-in/sign-in.component';
+import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
 
 
 @NgModule({
@@ -20,8 +28,11 @@ import { RegisterComponent } from './components/auth/register/register.component
     AppComponent,
     ToolbarComponent,
     SidenavListComponent,
-    LoginComponent,
-    RegisterComponent
+    HomeComponent,
+    SignUpComponent,
+    ForgotPasswordComponent,
+    VerifyEmailComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +40,8 @@ import { RegisterComponent } from './components/auth/register/register.component
     BrowserAnimationsModule,
     MaterialModule,
     FirebaseModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
     
   ],
   providers: [],

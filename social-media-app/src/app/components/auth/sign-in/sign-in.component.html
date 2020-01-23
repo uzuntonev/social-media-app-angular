@@ -1,0 +1,92 @@
+<form
+  class="example-form"
+  #loginForm="ngForm"
+  (ngSubmit)="authService.SignIn(loginForm.value.email, loginForm.value.pass)"
+  fxLayout="column"
+>
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      ngModel
+      id="email"
+      type="text"
+      name="email"
+      required
+      placeholder="Email address"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      ngModel
+      id="password"
+      type="password"
+      name="pass"
+      required
+      placeholder="Password"
+    />
+  </mat-form-field>
+  <button mat-raised-button color="primary" [disabled]="loginForm.invalid">
+    Log In
+  </button>
+</form>
+
+<div class="divider-container">
+  <div class="line"><mat-divider></mat-divider></div>
+  <div class="text ">Or</div>
+  <div class="line"><mat-divider></mat-divider></div>
+</div>
+
+<!-- Calling GoogleAuth Api from AuthService -->
+<div>
+  <button mat-raised-button color="primary" (click)="authService.GoogleAuth()">
+    <i class="fab fa-google-plus-g"></i>
+    Log in with Google
+  </button>
+</div>
+
+<mat-divider></mat-divider>
+
+<div>
+  <a routerLink="/forgot-password">Forgot Password?</a>
+</div>
+
+<div>
+  <span>Don't have an account?<a routerLink="/register-user">Sign Up</a></span>
+</div>
+
+<!-- <div> -->
+<!-- <h3>Sign In</h3>
+        <div class="formGroup">
+          <input type="text" class="formControl" placeholder="Username" #userName required>
+        </div>
+  
+        <div class="formGroup">
+          <input type="password" class="formControl" placeholder="Password" #userPassword required>
+        </div> -->
+
+<!-- Calling SignIn Api from AuthService -->
+<!-- <div class="formGroup">
+          <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
+        </div> -->
+
+<!-- <div class="formGroup">
+          <span class="or"><span class="orInner">Or</span></span>
+        </div>
+   -->
+<!-- Calling GoogleAuth Api from AuthService -->
+<!-- <div class="formGroup">
+          <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
+            <i class="fab fa-google-plus-g"></i>
+            Log in with Google
+          </button>
+        </div>
+   -->
+<!-- <div class="forgotPassword">
+          <span routerLink="/forgot-password">Forgot Password?</span>
+        </div>
+  
+      <div class="redirectToLogin">
+        <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>
+      </div> -->
+<!-- </div> -->

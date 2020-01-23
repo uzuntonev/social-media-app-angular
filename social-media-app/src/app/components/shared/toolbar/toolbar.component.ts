@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 // import { AuthService } from 'src/app/core/services/auth.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -19,13 +20,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   isAuthSub: Subscription;
 
   constructor(
-    // private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
     // this.isAuthSub = this.authService.isAuthChanged.subscribe((data) => {
       // this.isAuth = data;
     // });
+    this.isAuth = this.authService.isLoggedIn
   }
 
   ngOnDestroy() {
@@ -36,7 +38,5 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.sidenavToggle.emit();
   }
 
-  logout() {
-    // this.authService.logout();
-  }
+
 }

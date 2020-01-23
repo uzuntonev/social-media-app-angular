@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { Observable } from "rxjs";
 import { AngularFirestore } from "@angular/fire/firestore";
 
@@ -10,6 +10,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 export class AppComponent implements OnInit {
   title = "social-media-app";
 
+
   items: Observable<any[]>;
   constructor(db: AngularFirestore) {
     this.items = db.collection("test").valueChanges();
@@ -17,5 +18,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
+    
   }
 }
