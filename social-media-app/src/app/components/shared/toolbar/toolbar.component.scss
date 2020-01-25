@@ -4,8 +4,19 @@ a {
   color: white;
 }
 
-li{
+li {
   list-style: none;
+  a {
+    display: flex;
+    align-items: center;
+    mat-icon {
+      margin-right: 5%;
+    }
+  }
+}
+
+ul {
+  margin-right: 6%;
 }
 
 a:hover {
@@ -16,12 +27,6 @@ a:hover {
   cursor: pointer;
 }
 
-.navigation-links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.toolbar{
-height: 100px;
+.toolbar {
+  height: 100px;
 }

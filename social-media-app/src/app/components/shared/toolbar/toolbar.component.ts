@@ -1,42 +1,42 @@
-import { 
-  Component, 
-  OnInit, 
+import {
+  Component,
+  OnInit,
   Output,
-  EventEmitter, 
-  OnDestroy
-} from '@angular/core';
+  EventEmitter,
+  OnDestroy,
+  Input,
+  OnChanges
+} from "@angular/core";
 // import { AuthService } from 'src/app/core/services/auth.service';
-import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Subscription } from "rxjs";
+import { AuthService } from "src/app/core/services/auth.service";
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  selector: "app-toolbar",
+  templateUrl: "./toolbar.component.html",
+  styleUrls: ["./toolbar.component.scss"]
 })
-export class ToolbarComponent implements OnInit, OnDestroy {
+export class ToolbarComponent implements OnInit, OnDestroy, OnChanges {
   @Output() sidenavToggle = new EventEmitter<void>();
-  isAuth: boolean = false;
-  isAuthSub: Subscription;
+  @Input() isAuth: boolean;
+  logoRoute: string;
 
-  constructor(
-    public authService: AuthService
-  ) { }
+  constructor(public authService: AuthService) {}
 
   ngOnInit() {
-    // this.isAuthSub = this.authService.isAuthChanged.subscribe((data) => {
-      // this.isAuth = data;
-    // });
-    this.isAuth = this.authService.isLoggedIn
+    this.isAuth = this.authService.isLoggedIn;
+    
+  }
+
+  ngOnChanges(){
+    this.logoRoute = this.isAuth ? '/all-posts' : '/home'
   }
 
   ngOnDestroy() {
-    // this.isAuthSub.unsubscribe();
+
   }
 
   toggleSidenav() {
     this.sidenavToggle.emit();
   }
-
-
 }

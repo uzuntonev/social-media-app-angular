@@ -1,0 +1,38 @@
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.body {
+  margin: 0;
+  padding: 2rem 1.5rem;
+  font: 1rem/1.5 "PT Sans", Arial, sans-serif;
+  color: #5a5a5a;
+}
+
+mat-grid-tile {
+  background-color: green;
+  margin: 20px;
+}
+.create-post-section {
+  margin: 5% 20%;
+  border-radius: 0.5em;
+  box-shadow: 0 0 1em gray;
+  padding: 3% 7%;
+}
+
+.upload-msg {
+    background-color: green;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.upload-input {
+    border: 0.5px solid black;
+    padding: 2px
+}

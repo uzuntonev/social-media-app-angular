@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { Observable } from "rxjs";
 import { AngularFirestore } from "@angular/fire/firestore";
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: "app-root",
@@ -12,8 +13,8 @@ export class AppComponent implements OnInit {
 
 
   items: Observable<any[]>;
-  constructor(db: AngularFirestore) {
-    this.items = db.collection("test").valueChanges();
+  constructor(public authService: AuthService) {
+   
   }
 
   ngOnInit() {

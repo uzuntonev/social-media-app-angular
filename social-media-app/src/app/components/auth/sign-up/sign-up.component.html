@@ -1,49 +1,90 @@
-<div class="displayTable">
-    <div class="displayTableCell">
-  
-      <div class="authBlock">
-        <h3>Sign Up</h3>
-  
-        <div class="formGroup">
-          <input type="email" class="formControl" placeholder="Email Address" #userEmail required>
-        </div>
+<div class="container">
+  <section
+    class="sign-up-section"
+    fxFlex
+    fxLayout="column"
+    fxLayoutGap="15px"
+    fxLayoutAlign="center"
+  >
+    <h2 fxLayoutAlign="center">Sign up</h2>
+    <form
+      class="example-form"
+      #registerForm="ngForm"
+      (ngSubmit)="
+        authService.SignUp(
+          registerForm.value.email,
+          registerForm.value.password,
+          registerForm.value.username
+        )
+      "
+      fxLayout="column"
+    >
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          ngModel
+          id="email"
+          type="email"
+          name="email"
+          required
+          placeholder="Email address"
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          ngModel
+          id="username"
+          name="username"
+          type="text"
+          required
+          placeholder="Username"
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          ngModel
+          id="password"
+          name="password"
+          type="password"
+          required
+          placeholder="Password"
+        />
+      </mat-form-field>
 
-        <div class="formGroup">
-          <input type="text" class="formControl" placeholder="Username" #userName required>
-        </div>
-  
-        <div class="formGroup">
-          <input type="password" class="formControl" placeholder="Password" #userPwd required>
-        </div>
-  
-        <div class="formGroup">
-          <input type="button" class="btn btnPrimary" value="Sign Up" (click)="authService.SignUp(userEmail.value, userPwd.value, userName.value)">
-        </div>
-  
-        <div class="formGroup">
-          <span class="or"><span class="orInner">Or</span></span>
-        </div>
-  
-        <!-- Continue with Google -->
-        <div class="formGroup">
-          <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
-            <i class="fab fa-google-plus-g"></i>
-            Continue with Google
-          </button>
-        </div>
-  
-        <!-- Continue with Facebook -->
-        <div class="formGroup">
-          <button type="button" class="btn facebookBtn" (click)="authService.FacebookAuth()">
-            <i class="fab fa-facebook"></i>
-            Continue with Facebook
-          </button>
-        </div>
-      </div>
-  
-      <div class="redirectToLogin">
-        <span>Already have an account? <span class="redirect" routerLink="/sign-in">Log In</span></span>
-      </div>
+      <button
+        class="btn-sign-up"
+        mat-raised-button
+        color="primary"
+        [disabled]="registerForm.invalid"
+      >
+        Sign Up
+      </button>
+    </form>
+
+    <div class="divider-container" fxFlex fxLayoutAlign="center">
+      <div class="line"><mat-divider></mat-divider></div>
+      <div class="text ">Or</div>
+      <div class="line"><mat-divider></mat-divider></div>
     </div>
-  
-  </div>
+
+    <button
+      class="btn-sign-up"
+      mat-raised-button
+      color="primary"
+      fxFlex
+      fxLayoutAlign="center"
+      (click)="authService.GoogleAuth()"
+    >
+      Continue with Google
+    </button>
+
+    <div fxFlex fxLayoutAlign="center">
+      <span
+        >Already have an account?
+        <a class="redirect" routerLink="/sign-in">Log In</a></span
+      >
+    </div>
+  </section>
+</div>

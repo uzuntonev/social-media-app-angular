@@ -1,0 +1,109 @@
+<div class="container">
+  <section
+    class="create-post-section"
+    fxFlex
+    fxLayout="column"
+    fxLayoutGap="15px"
+    fxLayoutAlign="center"
+  >
+    <h2 fxLayoutAlign="center">Create post</h2>
+    <form
+      class="example-form"
+      #crateForm="ngForm"
+      (ngSubmit)="createPost()"
+      fxLayout="column"
+    >
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          ngModel
+          id="title"
+          type="text"
+          name="title"
+          required
+          placeholder="Title"
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          ngModel
+          id="description"
+          name="description"
+          type="text"
+          required
+          placeholder="Description"
+        />
+      </mat-form-field>
+    </form>
+    <div class="upload" fxFlex>
+      <input
+      class="upload-input"
+        id="upload"
+        type="file"
+        color="primary"
+        (change)="detectFiles($event)"
+      />
+
+      <button type="button" mat-button color="primary" (click)="uploadSingle()">
+        <mat-icon>file_upload</mat-icon>
+        Upload
+      </button>
+    </div>
+    <div *ngIf="currentUpload?.name" [ngClass]="{ 'upload-msg': currentUpload?.name }">
+      <p>
+        File {{ currentUpload?.name }} was upload successfully |
+        {{ currentUpload?.progress }}%
+      </p>
+    </div>
+    <!-- <mat-form-field class="example-full-width">
+          <input
+            matInput
+            ngModel
+            id="password"
+            name="password"
+            type="password"
+            required
+            placeholder="Password"
+          />
+        </mat-form-field> -->
+
+    <!-- <button
+          class="btn-sign-up"
+          mat-raised-button
+          color="primary"
+          [disabled]="registerForm.invalid"
+        >
+          Sign Up
+        </button> -->
+
+    <!-- 
+    <div style="text-align:center; margin-top: 100px; "><mat-card style="margin-top:10px; width: 50%;">  
+        <mat-card-content>  
+            <ul>  
+                <li *ngFor="let file of files">  
+                    <mat-progress-bar [value]="file.progress"></mat-progress-bar>  
+                    <span id="file-label">  
+                          
+                    </span>  
+                </li>  
+            </ul>  
+        </mat-card-content>  
+        <mat-card-actions>  
+
+        </mat-card-actions>  
+    </mat-card><input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" style="display:none;" /></div> -->
+
+    <!-- <div class="body">
+      <label class="file">
+        <input type="file" id="file" aria-label="File browser example">
+        <span class="file-custom"></span>
+      </label>
+    
+    </div> -->
+    <!-- <div>
+      
+      Complete
+    </div> -->
+  </section>
+</div>

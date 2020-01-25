@@ -1,31 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 // import { AuthService } from 'src/app/core/services/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
+import { AuthService } from "src/app/core/services/auth.service";
 
 @Component({
-  selector: 'app-sidenav-list',
-  templateUrl: './sidenav-list.component.html',
-  styleUrls: ['./sidenav-list.component.scss']
+  selector: "app-sidenav-list",
+  templateUrl: "./sidenav-list.component.html",
+  styleUrls: ["./sidenav-list.component.scss"]
 })
-export class SidenavListComponent implements OnInit, OnDestroy {
-  isAuth: boolean = false;
-  isAuthSub: Subscription;
+export class SidenavListComponent implements OnInit {
+  @Input() isAuth: boolean;
 
-  constructor(
-    // private authService: AuthService
-  ) { }
+  constructor(public authService: AuthService) {}
 
   ngOnInit() {
-    // this.isAuthSub = this.authService.isAuthChanged.subscribe((data) => {
-    //   this.isAuth = data;
-    // });
-  }
-
-  ngOnDestroy() {
-    // this.isAuthSub.unsubscribe();
-  }
-
-  logout() {
-    // this.authService.logout();
+    this.isAuth = this.authService.isLoggedIn;
   }
 }

@@ -21,6 +21,12 @@ import { SignInComponent } from './components/auth/sign-in/sign-in.component';
 import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
+import { MyPostsComponent } from './components/my-posts/my-posts.component';
+import { AllPostsComponent } from './components/all-posts/all-posts.component';
+import { CreatePostComponent } from './components/create-post/create-post.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
+import { FriendsComponent } from './components/friends/friends.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -32,7 +38,13 @@ import { VerifyEmailComponent } from './components/auth/verify-email/verify-emai
     SignUpComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
-    SignInComponent
+    SignInComponent,
+    MyPostsComponent,
+    AllPostsComponent,
+    CreatePostComponent,
+    FooterComponent,
+    FriendsComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +53,7 @@ import { VerifyEmailComponent } from './components/auth/verify-email/verify-emai
     MaterialModule,
     FirebaseModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
     
   ],
   providers: [],
