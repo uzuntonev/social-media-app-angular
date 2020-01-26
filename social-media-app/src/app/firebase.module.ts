@@ -12,7 +12,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
   ],
   exports: [
     AngularFirestoreModule,
