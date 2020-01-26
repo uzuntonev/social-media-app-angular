@@ -13,10 +13,12 @@ import { map } from "rxjs/operators";
   providedIn: "root"
 })
 export class PostService {
+  // private currentUserId: string = JSON.parse(localStorage.getItem("user")).uid;
+  private _allPosts: IPost[] = [];
   constructor(
-    public afDb: AngularFirestore,
+    private afDb: AngularFirestore,
     private router: Router,
-    public ngZone: NgZone
+    private ngZone: NgZone
   ) {}
 
   addPost(post: Observable<IPost>) {
@@ -34,13 +36,11 @@ export class PostService {
           .subscribe({
             next: (user: IUser) => {
               return this.afDb
-                .collection("users")
-                .doc(user.id)
-                .collection('posts')
+                .collection("posts")
                 .doc(post.id)
-                .set(post,{
+                .set(post, {
                   merge: true
-                })
+                });
             },
             error: err => console.error(err)
           });
@@ -49,12 +49,14 @@ export class PostService {
     });
   }
 
-  getAllPost(){
-
+  getAllPost() {
+    return this.afDb
+      .collection("posts")
+      .ref.get()
+      .then(allPosts => {
+        return allPosts.docs.map(post => post.data());
+      });
   }
 
-  getPost(id){
-
-  }
-
+  getPost(id) {}
 }

@@ -19,9 +19,9 @@ export class CreatePostComponent implements OnInit {
   isUpload: boolean = false;
   constructor(
     private uploadService: UploadService,
-    public postService: PostService,
+    private postService: PostService,
     private afs: AngularFireStorage,
-    public snackbar: MatSnackBar
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -68,6 +68,7 @@ export class CreatePostComponent implements OnInit {
       this.snackbar.open('Please select file', "Undo", {
         duration: 3000
       })
+      return;
     }
     this.isUpload = true;
     const file = this.selectedFiles.item(0);

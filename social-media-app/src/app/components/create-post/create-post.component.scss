@@ -18,17 +18,25 @@ mat-grid-tile {
 }
 
 .upload-input {
-  padding: 8px 10px 10px 10px;
+  border-radius: 8px;
+  padding: 6px 10px 10px 10px;
 }
 .upload-input:hover {
   background-color: #e5e3e8;
 }
+
+.btn-upload {
+  border-radius: 8px;
+}
 .upload {
-  margin: 5% 0;
+  margin: 15px 0;
 }
 
-.btn-sign-up {
-  margin: 5px 40px;
+.btn-submit {
+  margin: 5px 150px;
   padding: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
