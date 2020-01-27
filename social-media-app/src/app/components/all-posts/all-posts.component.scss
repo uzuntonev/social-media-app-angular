@@ -1,6 +1,6 @@
 .example-card {
     max-width: 500px;
-    margin: 5% 20%;
+    margin: 5% 20% 15% 20%;
     border-radius: 0.5em;
     box-shadow: 0 0 1em gray;
     // padding: 3% 7%;
@@ -8,10 +8,15 @@
   }
   
   .example-header-image {
-    // background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover !important;
+    // background-image: url('https://lh3.googleusercontent.com/a-/AAuE7mC4tbUB6H2UYq-dBIfK-2fEJ8hAvOyKx5kxJrlliA');
+    // background-size: cover !important;
   }
 
+  .avatar {
+      width: 80px;
+      height: 70px;
+      background-size: cover;
+  }
   .side-bar {
       margin-left: 100px;
       margin-right: 0;

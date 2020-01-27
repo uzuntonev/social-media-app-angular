@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy, DoCheck } from "@angular/core";
 import { PostService } from "src/app/core/services/post.service";
 import { IPost } from "src/app/core/interfaces/post";
 import { AngularFireStorage } from "@angular/fire/storage";
@@ -8,9 +8,9 @@ import { AngularFireStorage } from "@angular/fire/storage";
   templateUrl: "./all-posts.component.html",
   styleUrls: ["./all-posts.component.scss"]
 })
-export class AllPostsComponent implements OnInit {
-  allPost: IPost[] = [];
-
+export class AllPostsComponent implements OnInit, OnDestroy, DoCheck {
+  allPost: any[] = [];
+  private _allPost: any[] = [];
   constructor(
     public postServices: PostService,
     private afs: AngularFireStorage
@@ -22,8 +22,17 @@ export class AllPostsComponent implements OnInit {
         this.afs
           .ref(`/uploads/${post.imgName}`)
           .getDownloadURL()
-          .subscribe(x => {console.log(x)});
+          .subscribe(x => {
+            this._allPost.push({
+              ...post,
+              imgName: x
+            });
+          });
       });
     });
   }
+  ngDoCheck() {
+    this.allPost = this._allPost;
+  }
+  ngOnDestroy() {}
 }

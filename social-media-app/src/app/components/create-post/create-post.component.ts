@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnChanges, DoCheck } from "@angular/core";
 import { UploadService } from "src/app/core/services/upload.service";
 import { Upload } from "src/app/core/models/file";
 import { PostService } from "src/app/core/services/post.service";
@@ -6,6 +6,7 @@ import { IPost } from "src/app/core/interfaces/post";
 import { Observable } from "rxjs";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { MatSnackBar } from '@angular/material';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: "app-create-post",
@@ -21,13 +22,16 @@ export class CreatePostComponent implements OnInit {
     private uploadService: UploadService,
     private postService: PostService,
     private afs: AngularFireStorage,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     // this.afs.ref("/uploads/Screenshot (1).png").getDownloadURL().subscribe(x =>{
     //   console.log(x)
     // })
+
+
   }
 
   // Create stream of data for current post and pass them to the postService
@@ -49,7 +53,8 @@ export class CreatePostComponent implements OnInit {
         likes: 0,
         dislikes: 0,
         comments: [],
-        createdBy: JSON.parse(localStorage.getItem("user")).uid
+        createdBy: JSON.parse(localStorage.getItem("user")).uid,
+        avatar: JSON.parse(localStorage.getItem("user")).photoURL || JSON.parse(localStorage.getItem("user2")).avatar
       });
     });
     this.postService.addPost(post);

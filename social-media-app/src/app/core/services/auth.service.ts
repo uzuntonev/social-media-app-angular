@@ -8,14 +8,14 @@ import {
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
-import {  map } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-  userData: any; // Save logged in user data
-
+  private userData: any; // Save logged in user data
+  userData2: any;
   constructor(
     private afDb: AngularFirestore, // Inject Firestore service
     private afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -25,16 +25,26 @@ export class AuthService {
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem("user", JSON.stringify(this.userData));
-        // JSON.parse(localStorage.getItem('user'));
-      } else {
-        localStorage.setItem("user", null);
-        // JSON.parse(localStorage.getItem('user'));
-      }
-    });
+    this.afAuth.authState
+      // .pipe(map(user => {
+      //   return {
+      //     uid: user.uid,
+      //     email: user.email,
+      //     emailVerified: user.emailVerified,
+      //     displayName: user.displayName,
+      //     photoURL: user.photoURL
+      //   }
+      // }))
+      .subscribe(user => {
+        if (user) {
+          this.userData = user;
+          localStorage.setItem("user", JSON.stringify(this.userData));
+          // JSON.parse(localStorage.getItem('user'));
+        } else {
+          localStorage.setItem("user", null);
+          // JSON.parse(localStorage.getItem('user'));
+        }
+      });
   }
 
   // Sign in with email/password
@@ -60,6 +70,13 @@ export class AuthService {
                 { merge: true }
               );
           });
+        this.afDb
+          .collection("users")
+          .doc(result.user.uid)
+          .snapshotChanges()
+          .subscribe(user =>
+            localStorage.setItem("user2", JSON.stringify(user.payload.data()))
+          );
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -69,12 +86,12 @@ export class AuthService {
   }
 
   // Sign up with email/password
-  SignUp(email, password, username) {
+  SignUp(email, password, name, avatar) {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(result => {
         this.SendVerificationMail();
-        this.SetUserData(result, username);
+        this.SetUserData(result, name, avatar);
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -141,7 +158,7 @@ export class AuthService {
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user, username?: string) {
+  SetUserData(user, username?: string, avatar?: string) {
     const userRef: AngularFirestoreDocument<any> = this.afDb.doc(
       `users/${user.user.uid}`
     );
@@ -151,7 +168,7 @@ export class AuthService {
       email: user.user.email,
       emailVerified: user.user.emailVerified,
       username: username || user.user.displayName,
-      avatar: user.user.photoURL,
+      avatar: avatar || user.user.photoURL,
       friends: []
     };
     return userRef.set(userData, {

@@ -15,7 +15,7 @@
   padding-right: 10px;
 }
 
-.sign-up-section {
+.sign-up-container {
   margin: 5% 20%;
   border-radius: 0.5em;
   box-shadow: 0 0 1em gray;
@@ -23,5 +23,13 @@
 }
 
 .btn-sign-up {
-  margin: 0 30%;
+  margin: 0 20%;
+}
+
+.left {
+  width: 50%;
+}
+
+.avatar {
+  width: 30px;
 }

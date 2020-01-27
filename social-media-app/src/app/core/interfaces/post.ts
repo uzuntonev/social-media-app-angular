@@ -8,5 +8,6 @@ export interface IPost {
   comments: string[];
   imgName?: string;
   createdBy: string;
+  avatar: string;
 
 }
