@@ -1,0 +1,22 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <app-sidenav-list
+      [isAuth]="isAuth"
+    ></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="site">
+    <app-navbar
+      [isAuth]="isAuth"
+      (sidenavToggle)="sidenav.toggle()"
+    ></app-navbar>
+
+    <main class="main">
+      <router-outlet></router-outlet>
+    </main>
+  
+    <footer class="footer">
+      <app-footer></app-footer>
+    </footer>
+    
+  </mat-sidenav-content>
+</mat-sidenav-container>

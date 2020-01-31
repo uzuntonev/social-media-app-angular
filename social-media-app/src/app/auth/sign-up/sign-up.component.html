@@ -1,0 +1,117 @@
+<div class="container" fxLayout>
+  <div
+    class="sign-up-container"
+    fxFlex
+    fxLayout="column"
+    fxLayoutGap="15px"
+    fxLayoutAlign="center"
+  >
+    <h2 fxLayoutAlign="center">Sign up</h2>
+    <form
+      #registerForm="ngForm"
+      (ngSubmit)="
+        signUp(
+          registerForm.value.email,
+          registerForm.value.password,
+          registerForm.value.repassword,
+          registerForm.value.name,
+          selectInput.value
+        )
+      "
+      fxLayout="column"
+    >
+      <div class="input-field-container" fxLayout fxLayoutAlign="space-around">
+        <div class="left" fxLayout="column">
+          <mat-form-field>
+            <input
+              matInput
+              ngModel
+              id="email"
+              type="email"
+              name="email"
+              required
+              placeholder="Email address"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              ngModel
+              id="password"
+              name="password"
+              type="password"
+              required
+              placeholder="Password"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              ngModel
+              id="repassword"
+              name="repassword"
+              type="password"
+              required
+              placeholder="Repeat password"
+            />
+          </mat-form-field>
+        </div>
+        <div class="right" fxLayout="column">
+          <mat-form-field>
+            <input
+              matInput
+              ngModel
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Your name"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Select avatar</mat-label>
+            <mat-select #selectInput >
+              <mat-option *ngFor="let avatar of avatars" [value]="avatar.link">
+                <img class="avatar" src="{{ avatar.link }}" />
+                {{avatar.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <button
+        class="btn-sign-up"
+        mat-raised-button
+        color="primary"
+        [disabled]="registerForm.invalid"
+      >
+        Sign Up
+      </button>
+    </form>
+
+    <div class="divider-container" fxFlex fxLayoutAlign="center">
+      <div class="line"><mat-divider></mat-divider></div>
+      <div class="text ">Or</div>
+      <div class="line"><mat-divider></mat-divider></div>
+    </div>
+
+    <button
+      class="btn-sign-up"
+      mat-raised-button
+      color="primary"
+      fxFlex
+      fxLayoutAlign="center"
+      (click)="signUpGoogle()"
+    >
+      Continue with Google
+    </button>
+
+    <div fxFlex fxLayoutAlign="center">
+      <span
+        >Already have an account?
+        <a class="redirect" routerLink="/sign-in">Log In</a></span
+      >
+    </div>
+  </div>
+</div>

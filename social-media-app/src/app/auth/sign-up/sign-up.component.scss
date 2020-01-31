@@ -1,0 +1,41 @@
+.divider-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.line {
+  flex: 1;
+}
+
+.text {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.sign-up-container {
+  margin: 5% 20%;
+  border-radius: 0.5em;
+  box-shadow: 0 0 1em gray;
+  padding: 3% 7%;
+}
+
+.btn-sign-up {
+  margin: 0 20%;
+}
+
+.left {
+  width: 50%;
+}
+
+.avatar {
+  width: 30px;
+}
+
+.redirect {
+  color: #673ab7;
+  cursor: pointer;
+  font-weight: bold;
+}

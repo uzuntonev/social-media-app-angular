@@ -1,0 +1,63 @@
+<mat-toolbar fxLayout color="primary" class="toolbar">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div>
+    <a routerLink="home">Social Media</a>
+  </div>
+  <ul
+    fxFlex
+    fxLayout
+    fxLayoutGap="2%"
+    fxLayoutAlign="flex-end"
+    fxShow
+    fxHide.lt-sm
+  >
+    <li *ngIf="isAuth">
+      <a routerLink="/profile">
+        <mat-icon>account_circle</mat-icon>
+        My Profile</a
+      >
+    </li>
+
+    <li *ngIf="isAuth">
+      <a routerLink="/my-friends">
+        <mat-icon>group</mat-icon>
+        My Friends</a
+      >
+    </li>
+
+    <li *ngIf="isAuth">
+      <a routerLink="/posts">
+        <mat-icon>group</mat-icon>
+        All Posts</a
+      >
+    </li>
+
+    <li *ngIf="isAuth">
+      <a routerLink="/create-post">
+        <mat-icon>create</mat-icon>
+        Create Post</a
+      >
+    </li>
+
+    <li *ngIf="isAuth">
+      <a (click)="signOut()">
+        <mat-icon>cancel</mat-icon>
+        Logout</a
+      >
+    </li>
+
+    <li *ngIf="!isAuth">
+      <a routerLink="/sign-in"> <mat-icon>person_pin</mat-icon>Login</a>
+    </li>
+
+    <li *ngIf="!isAuth">
+      <a routerLink="/register-user">
+        <mat-icon>perm_identity</mat-icon>Register</a
+      >
+    </li>
+  </ul>
+</mat-toolbar>

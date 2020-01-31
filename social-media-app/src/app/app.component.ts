@@ -1,7 +1,5 @@
-import { Component, OnInit, Input, ViewChild } from "@angular/core";
-import { Observable } from "rxjs";
-import { AngularFirestore } from "@angular/fire/firestore";
-import { AuthService } from './core/services/auth.service';
+import { Component, OnInit, } from "@angular/core";
+
 
 @Component({
   selector: "app-root",
@@ -9,16 +7,7 @@ import { AuthService } from './core/services/auth.service';
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  title = "social-media-app";
+  constructor() {}
 
-
-  items: Observable<any[]>;
-  constructor(public authService: AuthService) {
-   
-  }
-
-  ngOnInit() {
-
-    
-  }
+  ngOnInit() {}
 }
