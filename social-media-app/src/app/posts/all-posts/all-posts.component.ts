@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, DoCheck } from "@angular/core";
 import { PostService } from "src/app/posts/post.service";
 import { IPost } from "src/app/core/models/post";
+import { IUser } from "src/app/core/models/user";
+
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-all-posts",
@@ -9,9 +12,11 @@ import { IPost } from "src/app/core/models/post";
 })
 export class AllPostsComponent implements OnInit, DoCheck {
   allPost: IPost[] = [];
-  private _allPost: IPost[] = [];
-
-  constructor(private postService: PostService) {}
+  private _allPosts: IPost[] = [];
+  allUsers: IUser[] = [];
+  private _allUsers: any[] = [];
+  isFriend: boolean;
+  constructor(private postService: PostService, private router: Router) {}
 
   get author() {
     return JSON.parse(localStorage.getItem("userData"))
@@ -20,27 +25,42 @@ export class AllPostsComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-    this.postService.getAllPost.then(allPosts => {
-      return allPosts.map(post => {
+    this.postService.getAllPost.subscribe(allPost => {
+      allPost.map(post => {
         this.postService
           .mapPostData(post)
-          .subscribe(x => this._allPost.push(x));
+          .subscribe(p => this._allPosts.push(p));
       });
     });
+
+    // this.postService.getAllUsers.subscribe((users: IUser[]) => {
+    // this.allUsers = users;
+    // });
   }
 
   ngDoCheck() {
-    this.allPost = [...this._allPost];
+    // this.allUsers = [...this._allUsers];
+    this.allPost = [...this._allPosts];
   }
-
 
   likePost(id) {
-    this.postService.likePost(id)
+    this.postService.likePost(id);
   }
   dislikePost(id) {
-    this.postService.dislikePost(id)
+    this.postService.dislikePost(id);
   }
   deletePost(id) {
-    this.postService.deletePost(id)
+    this.postService.deletePost(id);
   }
+
+  // addFriend(friend) {
+  //   this.postService.addFriend(friend);
+  // }
+
+  substringPost(post) {
+    return post.length > 100 ? post.substring(0, 200) + "..." : post;
+  }
+  // deleteFriend(friend) {
+  //   this.postService.deleteFriend(friend)
+  // }
 }

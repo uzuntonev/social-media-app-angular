@@ -27,8 +27,6 @@ export class CreatePostComponent implements OnInit {
     // this.afs.ref("/uploads/Screenshot (1).png").getDownloadURL().subscribe(x =>{
     //   console.log(x)
     // })
-
-
   }
 
   // Create stream of data for current post and pass them to the postService
@@ -55,7 +53,7 @@ export class CreatePostComponent implements OnInit {
         avatar: JSON.parse(localStorage.getItem("user")).photoURL || JSON.parse(localStorage.getItem("userData")).avatar
       });
     });
-    this.postService.addPost(post);
+    this.postService.createPost(post);
   }
 
   // Detect file when is selected

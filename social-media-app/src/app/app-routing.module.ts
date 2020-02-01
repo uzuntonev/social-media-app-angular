@@ -10,10 +10,12 @@ import { VerifyEmailComponent } from "./auth/verify-email/verify-email.component
 import { ForgotPasswordComponent } from "./auth/forgot-password/forgot-password.component";
 import { MyPostsComponent } from "./posts/my-posts/my-posts.component";
 import { AllPostsComponent } from "./posts/all-posts/all-posts.component";
-import { CreatePostComponent } from './posts/create-post/create-post.component';
-import { ProfileComponent } from './core/profile/profile.component';
-import { FriendsComponent } from './core/friends/friends.component';
-import { AnonymousHomeComponent } from './core/anonymous-home/anonymous-home.component';
+import { CreatePostComponent } from "./posts/create-post/create-post.component";
+import { ProfileComponent } from "./core/profile/profile.component";
+import { FriendsComponent } from "./core/friends/friends.component";
+import { AnonymousHomeComponent } from "./core/anonymous-home/anonymous-home.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
+import { DetailComponent } from "./posts/detail/detail.component";
 
 const routes: Routes = [
   { path: "", pathMatch: "full", component: AnonymousHomeComponent },
@@ -39,10 +41,16 @@ const routes: Routes = [
     canActivate: [SecureInnerGuard]
   },
   { path: "posts", component: AllPostsComponent, canActivate: [AuthGuard] },
-  {path: "create-post", component: CreatePostComponent, canActivate: [AuthGuard]},
-  {path: "profile", component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: "my-friends", component: FriendsComponent, canActivate: [AuthGuard]},
-  {path: "my-posts", component: MyPostsComponent}
+  { path: "posts/:id", component: DetailComponent, },
+  {
+    path: "create-post",
+    component: CreatePostComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: "my-friends", component: FriendsComponent, canActivate: [AuthGuard] },
+  { path: "my-posts", component: MyPostsComponent },
+  { path: "**", component: NotFoundComponent }
 ];
 
 @NgModule({

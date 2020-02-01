@@ -15,13 +15,13 @@ import { map } from "rxjs/operators";
 })
 export class AuthService {
   private _userData: any; // Save logged in user data
+
   constructor(
     private afDb: AngularFirestore, // Inject Firestore service
     private afAuth: AngularFireAuth, // Inject Firebase auth service
     private router: Router,
-    private snackbar: MatSnackBar
-  ) // private ngZone: NgZone, // NgZone service to remove outside scope warning         // this.ngZone.run(() => {});
-  {
+    private snackbar: MatSnackBar // private ngZone: NgZone, // NgZone service to remove outside scope warning         // this.ngZone.run(() => {});
+  ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(user => {
@@ -35,6 +35,11 @@ export class AuthService {
       }
     });
   }
+
+  get currentUser() {
+    return JSON.parse(localStorage.getItem("userData"));
+  }
+  
   get userData() {
     return this._userData;
   }
@@ -156,19 +161,20 @@ export class AuthService {
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user, fullName?: string, avatar?: string) {
+  SetUserData(result, fullName?: string, avatar?: string) {
     const userRef: AngularFirestoreDocument<any> = this.afDb.doc(
-      `users/${user.user.uid}`
+      `users/${result.user.uid}`
     );
-
+    this.SetUserInLocalStorage(result);
     const userData: IUser = {
-      id: user.user.uid,
-      email: user.user.email,
-      emailVerified: user.user.emailVerified,
-      fullName: fullName || user.user.displayName,
-      avatar: avatar || user.user.photoURL,
+      id: result.user.uid,
+      email: result.user.email,
+      emailVerified: result.user.emailVerified,
+      fullName: fullName || result.user.displayName,
+      avatar: avatar || result.user.photoURL,
       friends: []
     };
+
     return userRef.set(userData, {
       merge: true
     });

@@ -7,6 +7,7 @@ import {
   OnChanges
 } from "@angular/core";
 import { AuthService } from "../../auth/auth.service";
+import { IUser } from "src/app/core/models/user";
 
 @Component({
   selector: "app-navbar",
@@ -23,7 +24,13 @@ export class NavbarComponent implements OnInit, OnChanges {
     this.isAuth = this.authService.isLoggedIn;
   }
 
-  ngOnChanges() {}
+  get currentUser() {
+    return this.authService.currentUser
+  }
+
+  ngOnChanges() {
+  }
+
   signOut() {
     this.authService.SignOut();
   }

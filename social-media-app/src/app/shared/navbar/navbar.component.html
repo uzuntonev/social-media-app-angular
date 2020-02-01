@@ -5,12 +5,12 @@
     </button>
   </div>
   <div>
-    <a routerLink="home">Social Media</a>
+    <a class="title" routerLink="home">Social Media</a>
   </div>
   <ul
     fxFlex
     fxLayout
-    fxLayoutGap="2%"
+    fxLayoutGap="35px"
     fxLayoutAlign="flex-end"
     fxShow
     fxHide.lt-sm
@@ -43,12 +43,7 @@
       >
     </li>
 
-    <li *ngIf="isAuth">
-      <a (click)="signOut()">
-        <mat-icon>cancel</mat-icon>
-        Logout</a
-      >
-    </li>
+    <li *ngIf="isAuth"></li>
 
     <li *ngIf="!isAuth">
       <a routerLink="/sign-in"> <mat-icon>person_pin</mat-icon>Login</a>
@@ -60,4 +55,14 @@
       >
     </li>
   </ul>
+  <div *ngIf="isAuth" fxLayout fxLayoutGap="20px">
+    <p class="welcome-msg" *ngIf="!!currentUser">
+      Hello {{ currentUser.fullName }}
+    </p>
+    <p fxLayout fxLayoutAlign="center" fxLayoutGap="10px">
+      <a class="logout" (click)="signOut()"
+        >Logout <span><mat-icon>cancel</mat-icon></span></a
+      >
+    </p>
+  </div>
 </mat-toolbar>

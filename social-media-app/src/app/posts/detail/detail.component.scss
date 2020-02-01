@@ -1,0 +1,40 @@
+.wrapper{
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.example-card,
+.comments, 
+.form-comment {
+  max-width: 600px;
+  margin: 5% 0 3% 0;
+  border-radius: 0.5em;
+  box-shadow: 0 0 1em gray;
+
+}
+.comments {
+  margin-bottom: 15%;
+}
+
+.form-comment{
+  padding: 10px;
+  button{
+    margin: 0 10px
+  }
+}
+
+.avatar, .avatar-comments {
+  width: 80px;
+  height: 70px;
+  background-size: cover;
+}
+
+.avatar-comments {
+width: 60px;
+height: 50px;
+}
+
+.content-comments{
+    font-size: 20px;
+}
+

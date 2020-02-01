@@ -1,7 +1,7 @@
 <ng-container *ngIf="allPost.length == 0">
   <app-loader></app-loader>
 </ng-container>
-<div class="wrapper" fxLayoutAlign="center" fxLayout>
+<div class="wrapper" fxLayoutAlign="center" fxLayout *ngIf="allPost.length > 0">
   <div class="main-content">
     <mat-card class="example-card" *ngFor="let post of allPost">
       <div fxLayout>
@@ -23,7 +23,7 @@
       <img mat-card-image src="{{ post.imgName }}" alt="Photo of a Shiba Inu" />
       <mat-card-content>
         <p>
-          {{ post.description }}
+          {{ substringPost(post.description) }}
         </p>
       </mat-card-content>
       <mat-card-actions>
@@ -31,47 +31,36 @@
         {{ post.likes }}
         <button (click)="dislikePost(post.id)" mat-button>DISLIKE</button>
         {{ post.dislikes }}
-      <button  mat-button><a class="redirect" routerLink="/posts/{{post.id}}">DETAILS</a></button>
-        <button *ngIf="author === post.createdById" (click)="deletePost(post.id)" mat-button>DELETE</button>
+        <button mat-button>
+          <a class="redirect" routerLink="/posts/{{ post.id }}">DETAILS</a>
+        </button>
+        <button
+          *ngIf="author === post.createdById"
+          (click)="deletePost(post.id)"
+          mat-button
+        >
+          DELETE
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>
 
   <div class="side-bar">
-   
-    <mat-card class="example-card">
-        <div fxLayout fxLayoutAlign='center'>
-          <img src="https://lh3.googleusercontent.com/a-/AAuE7mC4tbUB6H2UYq-dBIfK-2fEJ8hAvOyKx5kxJrlliA" alt="No avatar" class="avatar" />
-          <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
-          </mat-card-header>
-        </div>
-        <mat-card-actions fxLayoutAlign="end">
-          <button mat-button>Follow</button>
-        </mat-card-actions>
-      </mat-card>
-      <mat-card class="example-card">
-        <div fxLayout fxLayoutAlign='center'>
-          <img src="https://lh3.googleusercontent.com/a-/AAuE7mC4tbUB6H2UYq-dBIfK-2fEJ8hAvOyKx5kxJrlliA" alt="No avatar" class="avatar" />
-          <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
-          </mat-card-header>
-        </div>
-        <mat-card-actions fxLayoutAlign="end">
-          <button mat-button>Follow</button>
-        </mat-card-actions>
-      </mat-card>
-      <mat-card class="example-card">
-        <div fxLayout fxLayoutAlign='center'>
-          <img src="https://lh3.googleusercontent.com/a-/AAuE7mC4tbUB6H2UYq-dBIfK-2fEJ8hAvOyKx5kxJrlliA" alt="No avatar" class="avatar" />
-          <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
-          </mat-card-header>
-        </div>
-        <mat-card-actions fxLayoutAlign="end">
-          <button mat-button>Follow</button>
-        </mat-card-actions>
-      </mat-card>
+    <mat-card class="example-card" *ngFor="let user of allUsers">
+      <div fxLayout fxLayoutAlign="center">
+        <img
+          src="{{user.avatar}}"
+          alt="No avatar"
+          class="avatar"
+        />
+        <mat-card-header>
+          <mat-card-title>{{user.fullName}}</mat-card-title>
+        </mat-card-header>
+      </div>
+      <mat-card-actions fxLayoutAlign="end">
+      <!-- <button mat-button  (click)="addFriend(user)">{{user.isFriend ? "You already friends" : "Add friend"}}</button> -->
+      <!-- <button mat-button *ngIf="!user.isFriend" (click)="deleteFriend(user)">Add Friend</button> -->
+      </mat-card-actions>
+    </mat-card>
   </div>
-  
 </div>

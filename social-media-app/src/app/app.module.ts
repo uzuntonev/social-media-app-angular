@@ -13,9 +13,10 @@ import { AuthModule } from "./auth/auth.module";
 
 import { PostsModule } from "./posts/posts.module";
 import { CoreModule } from "./core/core.module";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,

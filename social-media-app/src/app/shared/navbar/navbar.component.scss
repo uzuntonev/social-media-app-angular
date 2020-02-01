@@ -1,9 +1,18 @@
 /* Toolbar CSS */
+
+.welcome-msg,
+li,
+a {
+  font-family: "Pacifico", cursive;
+}
 a {
   text-decoration: none;
   color: white;
 }
-
+.title {
+  font-size: 1.7em;
+  font-weight: bold;
+}
 li {
   list-style: none;
   a {
@@ -23,10 +32,15 @@ a:hover {
   color: orange;
 }
 
-.logout-link {
+.logout {
   cursor: pointer;
 }
 
 .toolbar {
   height: 100px;
+}
+
+.welcome-msg {
+  font-size: 1.2em;
+  font-weight: bold;
 }

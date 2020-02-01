@@ -11,20 +11,18 @@ import { AngularFireStorage } from "@angular/fire/storage";
   providedIn: "root"
 })
 export class PostService {
-  likes: number;
-  dislikes: number;
   constructor(
     private afDb: AngularFirestore,
     private router: Router,
     private afs: AngularFireStorage
   ) {}
 
-  addPost(post: Observable<IPost>) {
+  createPost(post: Observable<IPost>) {
     this.router.navigate(["posts"]);
-    post.subscribe(post => this.savePostInDb(post));
+    post.subscribe(post => this.addPost(post));
   }
 
-  savePostInDb(post) {
+  addPost(post) {
     this.afDb
       .collection("users", ref => {
         return ref.where("id", "==", post.createdById).limit(1);
@@ -45,11 +43,14 @@ export class PostService {
 
   get getAllPost() {
     return this.afDb
-      .collection("posts")
-      .ref.get()
-      .then(allPosts => {
-        return allPosts.docs.map(post => post.data());
-      });
+      .collection("posts", ref => {
+        return ref.orderBy("createdOn", "asc");
+      })
+      .valueChanges();
+    // .ref.get()
+    // .then(allPosts => {
+    //   return allPosts.docs.map(post => post.data());
+    // });
   }
 
   mapPostData(post) {
@@ -102,5 +103,73 @@ export class PostService {
     this.router.navigate(["home"]);
   }
 
-  getPost(id) {}
+  get getAllUsers() {
+    return this.afDb
+      .collection("users")
+      .snapshotChanges()
+      .pipe(
+        map(doc => {
+          return doc.map(user => {
+            return user.payload.doc.data();
+          });
+        }),
+        map(users => {
+          return users.filter((user: IUser) => user.id !== this.currentUser.id);
+        })
+      );
+  }
+
+  getPost(id) {
+    return this.afDb
+      .collection("posts")
+      .doc(id)
+      .snapshotChanges();
+  }
+
+  addComment(comment, postId) {
+    return this.afDb
+      .collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .add(comment);
+  }
+
+  getAllComments(postId) {
+    return this.afDb
+      .collection("posts")
+      .doc(postId)
+      .collection("comments", ref => {
+        return ref.orderBy("createdOn", "asc");
+      })
+      .valueChanges();
+  }
+  // addFriend(user) {
+  //   this.afDb
+  //     .collection("users")
+  //     .doc(this.currentUser.id)
+  //     .collection("friends")
+  //     .doc(user.id)
+  //     .set(user, {
+  //       merge: true
+  //     });
+  // }
+
+  // isInFriendList(user) {
+  //   return this.afDb
+  //     .collection("users")
+  //     .doc(this.currentUser.id)
+  //     .collection("friends")
+  //     .doc(user.id)
+  //     .snapshotChanges();
+  // }
+
+  // deleteFriend(user) {
+  //   this.afDb
+  //     .collection("user")
+  //     .doc(this.currentUser.id)
+  //     .collection("friends")
+  //     .doc(user.id)
+  //     .delete();
+  //   this.router.navigate(["home"]);
+  // }
 }
