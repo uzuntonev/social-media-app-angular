@@ -1,0 +1,32 @@
+.wrapper {
+  margin: 0 auto;
+  max-width: 600px;
+  margin-bottom: 100px;
+}
+
+.content-comments {
+  font-size: 18px;
+}
+
+.comments {
+  margin-bottom: 15%;
+}
+
+.form-comment {
+  padding: 10px;
+  button {
+    margin: 0 10px;
+  }
+}
+.comments,
+.form-comment {
+  max-width: 600px;
+  margin: 5% 0 3% 0;
+  border-radius: 0.5em;
+  box-shadow: 0 0 1em gray;
+}
+.avatar-comments {
+    width: 60px;
+    height: 50px;
+  background-size: cover;
+}

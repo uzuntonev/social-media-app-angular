@@ -3,6 +3,5 @@ export interface IUser {
     email: string;
     avatar: string;
     emailVerified: boolean;
-    friends: string[];
     fullName?: string;
 }

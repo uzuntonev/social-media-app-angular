@@ -16,16 +16,16 @@
     fxHide.lt-sm
   >
     <li *ngIf="isAuth">
-      <a routerLink="/profile">
+    <a routerLink="/users/{{currentUser.id}}">
         <mat-icon>account_circle</mat-icon>
         My Profile</a
       >
     </li>
 
     <li *ngIf="isAuth">
-      <a routerLink="/my-friends">
+      <a routerLink="/users">
         <mat-icon>group</mat-icon>
-        My Friends</a
+        All Users</a
       >
     </li>
 
@@ -56,13 +56,21 @@
     </li>
   </ul>
   <div *ngIf="isAuth" fxLayout fxLayoutGap="20px">
-    <p class="welcome-msg" *ngIf="!!currentUser">
-      Hello {{ currentUser.fullName }}
-    </p>
-    <p fxLayout fxLayoutAlign="center" fxLayoutGap="10px">
+    <div
+      class="welcome-msg"
+      *ngIf="!!currentUser"
+      fxLayout
+      fxLayoutAlign="center center"
+      fxLayoutGap="20px"
+    >
+      <p>Hello</p>
+      <img src="{{ currentUser.avatar }}" class="avatar" alt="No Avatar" />
+      <p>{{ currentUser.fullName }}</p>
+    </div>
+    <div fxLayout fxLayoutAlign="center center" fxLayoutGap="10px">
       <a class="logout" (click)="signOut()"
         >Logout <span><mat-icon>cancel</mat-icon></span></a
       >
-    </p>
+    </div>
   </div>
 </mat-toolbar>

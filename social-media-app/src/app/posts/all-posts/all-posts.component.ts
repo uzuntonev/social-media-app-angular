@@ -1,9 +1,12 @@
-import { Component, OnInit, OnDestroy, DoCheck } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  DoCheck,
+} from "@angular/core";
 import { PostService } from "src/app/posts/post.service";
 import { IPost } from "src/app/core/models/post";
-import { IUser } from "src/app/core/models/user";
+import { tap } from "rxjs/operators";
 
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-all-posts",
@@ -11,27 +14,23 @@ import { Router } from "@angular/router";
   styleUrls: ["./all-posts.component.scss"]
 })
 export class AllPostsComponent implements OnInit, DoCheck {
-  allPost: IPost[] = [];
+  allPosts: IPost[] = [];
   private _allPosts: IPost[] = [];
-  allUsers: IUser[] = [];
-  private _allUsers: any[] = [];
-  isFriend: boolean;
-  constructor(private postService: PostService, private router: Router) {}
 
-  get author() {
-    return JSON.parse(localStorage.getItem("userData"))
-      ? JSON.parse(localStorage.getItem("userData")).id
-      : JSON.parse(localStorage.getItem("user")).uid;
-  }
+  // allUsers: IUser[] = [];
+  // private _allUsers: any[] = [];
+  // isFriend: boolean;
+
+  constructor(private postService: PostService) {}
 
   ngOnInit() {
-    this.postService.getAllPost.subscribe(allPost => {
-      allPost.map(post => {
-        this.postService
-          .mapPostData(post)
-          .subscribe(p => this._allPosts.push(p));
-      });
-    });
+    this.postService.getAllPost
+      .pipe(
+        tap(allPost =>
+          allPost.map(p => p.subscribe(x => this._allPosts.push(x)))
+        )
+      )
+      .subscribe();
 
     // this.postService.getAllUsers.subscribe((users: IUser[]) => {
     // this.allUsers = users;
@@ -39,8 +38,8 @@ export class AllPostsComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    // this.allUsers = [...this._allUsers];
-    this.allPost = [...this._allPosts];
+    this.allPosts = [...this._allPosts];
+    // console.log(this._allPosts);    // this.allUsers = [...this._allUsers];
   }
 
   likePost(id) {
@@ -48,9 +47,6 @@ export class AllPostsComponent implements OnInit, DoCheck {
   }
   dislikePost(id) {
     this.postService.dislikePost(id);
-  }
-  deletePost(id) {
-    this.postService.deletePost(id);
   }
 
   // addFriend(friend) {

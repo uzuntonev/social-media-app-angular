@@ -4,8 +4,7 @@ import { Upload } from "src/app/core/models/file";
 import { PostService } from "src/app/posts/post.service";
 import { IPost } from "src/app/core/models/post";
 import { Observable } from "rxjs";
-import { MatSnackBar } from '@angular/material';
-import { AuthService } from 'src/app/auth/auth.service';
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-create-post",
@@ -20,7 +19,7 @@ export class CreatePostComponent implements OnInit {
   constructor(
     private uploadService: UploadService,
     private postService: PostService,
-    private snackbar: MatSnackBar,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -32,27 +31,29 @@ export class CreatePostComponent implements OnInit {
   // Create stream of data for current post and pass them to the postService
 
   createPost(title, description) {
-    if(!this.isUpload){
-      this.snackbar.open('Please upload file', "Undo", {
+    if (!this.isUpload) {
+      this.snackbar.open("Please upload file", "Undo", {
         duration: 3000
-      })
+      });
       return;
     }
-    const post: Observable<IPost> = new Observable(subscriber => {
-      subscriber.next({
-        id: Math.random().toString(),
-        title: title,
-        description: description,
-        imgName: this.selectedFiles.item(0).name,
-        createdOn: new Date(),
-        likes: 0,
-        dislikes: 0,
-        comments: [],
-        createdByName: JSON.parse(localStorage.getItem("user")).displayName || JSON.parse(localStorage.getItem("userData")).fullName,
-        createdById: JSON.parse(localStorage.getItem("user")).uid,
-        avatar: JSON.parse(localStorage.getItem("user")).photoURL || JSON.parse(localStorage.getItem("userData")).avatar
-      });
-    });
+    const post: IPost = {
+      id: Math.random().toString(),
+      title: title,
+      description: description,
+      imgName: this.selectedFiles.item(0).name,
+      createdOn: new Date(),
+      likes: 0,
+      dislikes: 0,
+      createdByName:
+        JSON.parse(localStorage.getItem("user")).displayName ||
+        JSON.parse(localStorage.getItem("userData")).fullName,
+      createdById: JSON.parse(localStorage.getItem("user")).uid,
+      avatar:
+        JSON.parse(localStorage.getItem("user")).photoURL ||
+        JSON.parse(localStorage.getItem("userData")).avatar
+    };
+
     this.postService.createPost(post);
   }
 
@@ -65,10 +66,10 @@ export class CreatePostComponent implements OnInit {
   // Upload file to Firebase Storage
 
   uploadSingle() {
-    if(!this.selectedFiles){
-      this.snackbar.open('Please select file', "Undo", {
+    if (!this.selectedFiles) {
+      this.snackbar.open("Please select file", "Undo", {
         duration: 3000
-      })
+      });
       return;
     }
     this.isUpload = true;

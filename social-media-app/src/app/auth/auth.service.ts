@@ -39,7 +39,7 @@ export class AuthService {
   get currentUser() {
     return JSON.parse(localStorage.getItem("userData"));
   }
-  
+
   get userData() {
     return this._userData;
   }
@@ -58,7 +58,9 @@ export class AuthService {
           .subscribe(() => {
             return this.ChangeEmailVerifiedProp(result);
           });
-        this.SetUserInLocalStorage(result);
+        this.getUserData(result).subscribe(user =>
+          localStorage.setItem("userData", JSON.stringify(user.payload.data()))
+        );
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -74,14 +76,11 @@ export class AuthService {
       .set({ emailVerified: value.user.emailVerified }, { merge: true });
   }
 
-  SetUserInLocalStorage(value) {
+  private getUserData(value) {
     return this.afDb
       .collection("users")
       .doc(value.user.uid)
-      .snapshotChanges()
-      .subscribe(user =>
-        localStorage.setItem("userData", JSON.stringify(user.payload.data()))
-      );
+      .snapshotChanges();
   }
 
   // Sign up with email/password
@@ -165,14 +164,17 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afDb.doc(
       `users/${result.user.uid}`
     );
-    this.SetUserInLocalStorage(result);
+    
+    this.getUserData(result).subscribe(user =>
+      localStorage.setItem("userData", JSON.stringify(user.payload.data()))
+    );
+
     const userData: IUser = {
       id: result.user.uid,
       email: result.user.email,
       emailVerified: result.user.emailVerified,
       fullName: fullName || result.user.displayName,
-      avatar: avatar || result.user.photoURL,
-      friends: []
+      avatar: avatar || result.user.photoURL
     };
 
     return userRef.set(userData, {

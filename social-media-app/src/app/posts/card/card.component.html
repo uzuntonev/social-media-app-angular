@@ -1,0 +1,32 @@
+<div fxLayout>
+  <img src="{{ post.avatar }}" class="avatar" alt="No Avatar" />
+  <mat-card-header>
+    <mat-card-title>{{ post.title }}</mat-card-title>
+    <mat-card-subtitle
+      >Created on:
+      {{
+        post.createdOn.toDate() | date: "dd.MM.yyyy hh:mm:SS"
+      }}</mat-card-subtitle
+    >
+    <mat-card-subtitle>Created by: {{ post.createdByName }}</mat-card-subtitle>
+  </mat-card-header>
+</div>
+
+<img mat-card-image src="{{ post.imgName }}" alt="Photo of a Shiba Inu" />
+<mat-card-content>
+  <p>
+    {{ substringPost(post.description) }}
+  </p>
+</mat-card-content>
+<mat-card-actions fxLayout fxLayoutAlign="space-between">
+  <div class="like-dislike-btn">
+    <button (click)="likePost(post.id)" mat-button>LIKE</button>
+    {{ post.likes }}
+    <button (click)="dislikePost(post.id)" mat-button>DISLIKE</button>
+    {{ post.dislikes }}
+  </div>
+
+  <button mat-button>
+    <a class="redirect" routerLink="/posts/{{ post.id }}">DETAILS</a>
+  </button>
+</mat-card-actions>

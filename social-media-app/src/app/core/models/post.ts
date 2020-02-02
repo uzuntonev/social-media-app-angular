@@ -5,10 +5,8 @@ export interface IPost {
   createdOn: Date;
   likes: number;
   dislikes: number;
-  comments: string[];
   imgName?: string;
   createdByName: string;
   createdById: string;
   avatar: string;
-
 }

@@ -1,0 +1,40 @@
+<ng-container *ngIf="!users.length">
+    <app-loader></app-loader>
+  </ng-container>
+  <div class="wrapper" *ngFor="let user of users">
+
+    <div class="card">
+      <div class="card-info" fxLayoutAlign="space-evenly" fxLayoutGap="20px">
+        <div class="img-section">
+          <img class="avatar" src="{{ user.avatar }}" />
+        </div>
+        <div class="info-section">
+          <p class="label">Name:</p>
+          <span>{{ user.fullName }}</span>
+          <p class="label">Email:</p>
+          <span>{{ user.email }}</span>
+        </div>
+        <div class="post-section">
+          <p class="label">Posts:</p>
+          <ul fxLayout="column" fxLayoutAlign="start" fxLayoutGap="20px" *ngIf="!!user.posts.length">
+            <li *ngFor="let post of user.posts">
+              <a
+                routerLink="/posts/{{ post.id }}"
+                fxLayout
+                fxLayoutAlign="space-between"
+                fxLayoutGap="10px"
+              >
+                <div>
+                  <span>{{ post.description.substr(0, 20) + "..." }}</span>
+                  <p>
+                    Created on: {{ post.createdOn.toDate() | date: "dd.MM.yyyy" }}
+                  </p>
+                </div>
+                <button mat-fab color="primary">Read</button>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>

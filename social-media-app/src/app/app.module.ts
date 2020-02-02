@@ -10,10 +10,12 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FirebaseModule } from "./shared/firebase/firebase.module";
 import { SharedModule } from "./shared/shared.module";
 import { AuthModule } from "./auth/auth.module";
-
 import { PostsModule } from "./posts/posts.module";
 import { CoreModule } from "./core/core.module";
+import { UsersModule } from './users/users.module';
+
 import { NotFoundComponent } from './not-found/not-found.component';
+
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -27,7 +29,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     SharedModule,
     AuthModule,
     PostsModule,
-    CoreModule
+    CoreModule,
+    UsersModule
   ],
   providers: [],
   bootstrap: [AppComponent]

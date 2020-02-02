@@ -3,9 +3,9 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { IUser } from "../core/models/user";
 import { IPost } from "../core/models/post";
-import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { AngularFireStorage } from "@angular/fire/storage";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable({
   providedIn: "root"
@@ -14,31 +14,18 @@ export class PostService {
   constructor(
     private afDb: AngularFirestore,
     private router: Router,
-    private afs: AngularFireStorage
+    private afs: AngularFireStorage,
+    private authService: AuthService,
   ) {}
 
-  createPost(post: Observable<IPost>) {
-    this.router.navigate(["posts"]);
-    post.subscribe(post => this.addPost(post));
-  }
-
-  addPost(post) {
+  createPost(post: IPost) {
     this.afDb
-      .collection("users", ref => {
-        return ref.where("id", "==", post.createdById).limit(1);
-      })
-      .snapshotChanges()
-      .subscribe({
-        next: () => {
-          return this.afDb
-            .collection("posts")
-            .doc(post.id)
-            .set(post, {
-              merge: true
-            });
-        },
-        error: err => console.error(err)
+      .collection("posts")
+      .doc(post.id)
+      .set(post, {
+        merge: true
       });
+    this.router.navigate(["posts"]);
   }
 
   get getAllPost() {
@@ -46,14 +33,17 @@ export class PostService {
       .collection("posts", ref => {
         return ref.orderBy("createdOn", "asc");
       })
-      .valueChanges();
-    // .ref.get()
-    // .then(allPosts => {
-    //   return allPosts.docs.map(post => post.data());
-    // });
+      .valueChanges()
+      .pipe(
+        map(allPost => {
+          return allPost.map(post => {
+            return this.mapPostData(post);
+          });
+        })
+      );
   }
 
-  mapPostData(post) {
+  private mapPostData(post) {
     return this.afs
       .ref(`/uploads/${post.imgName}`)
       .getDownloadURL()
@@ -74,7 +64,7 @@ export class PostService {
       .get()
       .subscribe(x => {
         this[prop] = Number(x.data()[prop]) + 1;
-        this.router.navigate(["home"]);
+        this.router.navigate([''])
         return this.afDb
           .collection("posts")
           .doc(id)
@@ -100,30 +90,19 @@ export class PostService {
       .collection("posts")
       .doc(id)
       .delete();
-    this.router.navigate(["home"]);
-  }
-
-  get getAllUsers() {
-    return this.afDb
-      .collection("users")
-      .snapshotChanges()
-      .pipe(
-        map(doc => {
-          return doc.map(user => {
-            return user.payload.doc.data();
-          });
-        }),
-        map(users => {
-          return users.filter((user: IUser) => user.id !== this.currentUser.id);
-        })
-      );
+    this.router.navigate([""]);
   }
 
   getPost(id) {
     return this.afDb
       .collection("posts")
       .doc(id)
-      .snapshotChanges();
+      .valueChanges()
+      .pipe(
+        map(post => {
+          return this.mapPostData(post)
+        })
+      );
   }
 
   addComment(comment, postId) {
@@ -143,33 +122,5 @@ export class PostService {
       })
       .valueChanges();
   }
-  // addFriend(user) {
-  //   this.afDb
-  //     .collection("users")
-  //     .doc(this.currentUser.id)
-  //     .collection("friends")
-  //     .doc(user.id)
-  //     .set(user, {
-  //       merge: true
-  //     });
-  // }
 
-  // isInFriendList(user) {
-  //   return this.afDb
-  //     .collection("users")
-  //     .doc(this.currentUser.id)
-  //     .collection("friends")
-  //     .doc(user.id)
-  //     .snapshotChanges();
-  // }
-
-  // deleteFriend(user) {
-  //   this.afDb
-  //     .collection("user")
-  //     .doc(this.currentUser.id)
-  //     .collection("friends")
-  //     .doc(user.id)
-  //     .delete();
-  //   this.router.navigate(["home"]);
-  // }
 }

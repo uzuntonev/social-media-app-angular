@@ -8,14 +8,20 @@ import { FormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { SharedModule } from "src/app/shared/shared.module";
 import { RouterModule } from "@angular/router";
-import { DetailComponent } from "./detail/detail.component";
+import { DetailsComponent } from "./details/details.component";
+import { CommentsComponent } from './comments/comments.component';
+import { CardComponent } from './card/card.component';
+
 
 @NgModule({
   declarations: [
     MyPostsComponent,
     CreatePostComponent,
     AllPostsComponent,
-    DetailComponent
+    DetailsComponent,
+    CommentsComponent,
+    CardComponent,
+
   ],
   imports: [
     FlexLayoutModule,
@@ -23,7 +29,7 @@ import { DetailComponent } from "./detail/detail.component";
     FormsModule,
     MaterialModule,
     SharedModule,
-    RouterModule
+    RouterModule,
   ],
   exports: []
 })
