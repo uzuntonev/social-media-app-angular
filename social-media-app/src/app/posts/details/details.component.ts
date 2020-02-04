@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PostService } from "../post.service";
 import { IPost } from "src/app/core/models/post";
 import { ActivatedRoute } from "@angular/router";
-
+import { mergeMap } from "rxjs/operators";
 
 @Component({
   selector: "app-details",
@@ -14,7 +14,7 @@ export class DetailsComponent implements OnInit {
   postId: string = this.activateRoute.snapshot.params.id;
   constructor(
     private postService: PostService,
-    private activateRoute: ActivatedRoute,
+    private activateRoute: ActivatedRoute
   ) {}
 
   get author() {
@@ -22,15 +22,18 @@ export class DetailsComponent implements OnInit {
       ? JSON.parse(localStorage.getItem("userData")).id
       : JSON.parse(localStorage.getItem("user")).uid;
   }
-  
+
   ngOnInit() {
-    this.postService.getPost(this.postId).subscribe(post => {
-      post.subscribe(post => (this.post = post));
-    });
+    this.postService
+      .getPost(this.postId)
+      .pipe(mergeMap(post => post))
+      .subscribe(post => {
+        this.post = post;
+      });
   }
 
-  deletePost(id) {
-    this.postService.deletePost(id);
+  deletePost() {
+    this.postService.deletePost(this.post);
   }
 
   likePost(id) {
@@ -39,5 +42,4 @@ export class DetailsComponent implements OnInit {
   dislikePost(id) {
     this.postService.dislikePost(id);
   }
-
 }

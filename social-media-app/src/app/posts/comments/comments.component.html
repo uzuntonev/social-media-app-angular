@@ -35,7 +35,7 @@
       fxLayoutGap="10px"
       fxLayoutAlign="center"
     >
-      <mat-card *ngFor="let comment of allComments">
+      <mat-card *ngFor="let comment of allComments$ | async">
         <div fxLayout>
           <img src="{{ comment.avatar }}" class="avatar-comments" alt="No Avatar" />
           <mat-card-header>

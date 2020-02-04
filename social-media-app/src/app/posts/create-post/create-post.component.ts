@@ -14,7 +14,6 @@ import { MatSnackBar } from "@angular/material";
 export class CreatePostComponent implements OnInit {
   selectedFiles: FileList;
   currentUpload: Upload;
-  basePath: string = "/uploads";
   isUpload: boolean = false;
   constructor(
     private uploadService: UploadService,
@@ -23,9 +22,6 @@ export class CreatePostComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.afs.ref("/uploads/Screenshot (1).png").getDownloadURL().subscribe(x =>{
-    //   console.log(x)
-    // })
   }
 
   // Create stream of data for current post and pass them to the postService

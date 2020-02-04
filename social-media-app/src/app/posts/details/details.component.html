@@ -25,7 +25,7 @@
       </mat-card-header>
     </div>
 
-    <img mat-card-image src="{{ post.imgName }}" alt="Photo of a Shiba Inu" />
+    <img mat-card-image src="{{ post.imageLink }}" alt="Photo of a Shiba Inu" />
     <mat-card-content>
       <p>
         {{ post.description }}
@@ -43,7 +43,7 @@
 
       <button
         *ngIf="author === post.createdById"
-        (click)="deletePost(post.id)"
+        (click)="deletePost()"
         mat-button
       >
         DELETE

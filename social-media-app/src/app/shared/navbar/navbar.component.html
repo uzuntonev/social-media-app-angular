@@ -1,4 +1,4 @@
-<mat-toolbar fxLayout color="primary" class="toolbar">
+<mat-toolbar fxLayout color="primary" class="toolbar" >
   <div fxHide.gt-xs>
     <button mat-icon-button (click)="toggleSidenav()">
       <mat-icon>menu</mat-icon>
@@ -15,7 +15,7 @@
     fxShow
     fxHide.lt-sm
   >
-    <li *ngIf="isAuth">
+    <li *ngIf="isAuth && !!currentUser">
     <a routerLink="/users/{{currentUser.id}}">
         <mat-icon>account_circle</mat-icon>
         My Profile</a

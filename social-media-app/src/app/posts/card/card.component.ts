@@ -1,26 +1,45 @@
-import { Component, OnInit, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ElementRef,
+  AfterViewInit
+} from "@angular/core";
 import { IPost } from "src/app/core/models/post";
-import { PostService } from '../post.service';
+import { PostService } from "../post.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-card",
   templateUrl: "./card.component.html",
   styleUrls: ["./card.component.scss"]
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, AfterViewInit {
   @Input() post: IPost;
-  constructor(private postService: PostService) {}
+  @ViewChild("likes", { static: false }) likes: ElementRef;
+  @ViewChild("dislikes", { static: false }) dislikes: ElementRef;
+  constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit() {}
-
+  ngAfterViewInit() {
+    // console.log();
+  }
   likePost(id) {
+    // this.likes.nativeElement.textContent = +this.likes.nativeElement.textContent + 1
     this.postService.likePost(id);
   }
+
   dislikePost(id) {
+    // this.dislikes.nativeElement.textContent = +this.dislikes.nativeElement.textContent + 1
     this.postService.dislikePost(id);
   }
 
   substringPost(post) {
     return post.length > 100 ? post.substring(0, 200) + "..." : post;
+  }
+
+  getDetails(postId) {
+    this.router.navigate(["posts", postId]);
   }
 }

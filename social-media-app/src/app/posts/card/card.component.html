@@ -12,21 +12,26 @@
   </mat-card-header>
 </div>
 
-<img mat-card-image src="{{ post.imgName }}" alt="Photo of a Shiba Inu" />
+<img mat-card-image src="{{ post.imageLink }}" alt="Photo of a Shiba Inu" />
 <mat-card-content>
   <p>
     {{ substringPost(post.description) }}
   </p>
 </mat-card-content>
 <mat-card-actions fxLayout fxLayoutAlign="space-between">
-  <div class="like-dislike-btn">
+  <div class="like-dislike-btn" >
     <button (click)="likePost(post.id)" mat-button>LIKE</button>
-    {{ post.likes }}
+    <span #likes class="likes">
+      {{ post.likes }}
+    </span>
+
     <button (click)="dislikePost(post.id)" mat-button>DISLIKE</button>
-    {{ post.dislikes }}
+    <span #dislikes class="dislikes">
+      {{ post.dislikes }}
+    </span>
   </div>
 
   <button mat-button>
-    <a class="redirect" routerLink="/posts/{{ post.id }}">DETAILS</a>
+    <button (click)="getDetails(post.id)" mat-button>DETAILS</button>
   </button>
 </mat-card-actions>

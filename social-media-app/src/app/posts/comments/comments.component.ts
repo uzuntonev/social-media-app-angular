@@ -3,6 +3,8 @@ import { IComment } from "src/app/core/models/comment";
 import { PostService } from "../post.service";
 import { IPost } from "src/app/core/models/post";
 import { AuthService } from "src/app/auth/auth.service";
+import { Observable } from 'rxjs';
+import { DocumentData } from '@angular/fire/firestore';
 
 @Component({
   selector: "app-comments",
@@ -11,24 +13,17 @@ import { AuthService } from "src/app/auth/auth.service";
 })
 export class CommentsComponent implements OnInit {
   @Input() post: IPost;
-  private _allComments: IComment[] = [];
-  allComments: IComment[] = [];
+  allComments$: Observable<DocumentData[]>;
   constructor(
     private postService: PostService,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.postService
-      .getAllComments(this.post.id)
-      .subscribe((allComments: IComment[]) => {
-        this._allComments = [...allComments];
-      });
+  this.allComments$ =  this.postService
+      .getAllComments(this.post.id) 
   }
 
-  ngDoCheck() {
-    this.allComments = [...this._allComments];
-  }
   addComment(value) {
     const comment: IComment = {
       avatar: this.authService.currentUser.avatar,

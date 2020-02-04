@@ -4,7 +4,8 @@ import { AuthService } from "../../auth/auth.service";
 import { PostService } from "../../posts/post.service";
 import { IPost } from "../../core/models/post";
 import { UsersService } from "../users.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { mergeMap, filter, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-profile",
@@ -18,7 +19,8 @@ export class ProfileComponent implements OnInit, DoCheck {
   constructor(
     private postService: PostService,
     private userService: UsersService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -27,18 +29,21 @@ export class ProfileComponent implements OnInit, DoCheck {
       .subscribe((user: IUser[]) => {
         this.user = user[0];
       });
-    this.postService.getAllPost.subscribe(allPost => {
-      allPost.map(post => {
-        post.subscribe(p => {
-          if (p.createdById === this.activateRoute.snapshot.params.id) {
-            this._posts.push(p);
-          }
-        });
-      });
-    });
+    this.postService.getAllPost
+      .pipe(
+        filter(
+          post => post.createdById === this.activateRoute.snapshot.params.id
+        ),
+        tap(post => this._posts.push(post))
+      )
+      .subscribe();
   }
 
   ngDoCheck() {
     this.posts = [...this._posts].sort();
+  }
+
+  getDetails(postId) {
+    this.router.navigate(["posts", postId]);
   }
 }

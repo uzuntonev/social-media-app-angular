@@ -6,6 +6,7 @@ export interface IPost {
   likes: number;
   dislikes: number;
   imgName?: string;
+  imageLink?: string;
   createdByName: string;
   createdById: string;
   avatar: string;

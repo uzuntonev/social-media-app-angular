@@ -1,11 +1,9 @@
 import { Injectable, NgZone } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { IUser } from "../core/models/user";
 import { IPost } from "../core/models/post";
-import { map } from "rxjs/operators";
+import { map, mergeMap, tap } from "rxjs/operators";
 import { AngularFireStorage } from "@angular/fire/storage";
-import { AuthService } from "../auth/auth.service";
 
 @Injectable({
   providedIn: "root"
@@ -14,8 +12,7 @@ export class PostService {
   constructor(
     private afDb: AngularFirestore,
     private router: Router,
-    private afs: AngularFireStorage,
-    private authService: AuthService,
+    private afs: AngularFireStorage
   ) {}
 
   createPost(post: IPost) {
@@ -35,11 +32,12 @@ export class PostService {
       })
       .valueChanges()
       .pipe(
-        map(allPost => {
+        mergeMap(allPost => {
           return allPost.map(post => {
             return this.mapPostData(post);
           });
-        })
+        }),
+        mergeMap(post => post)
       );
   }
 
@@ -51,7 +49,7 @@ export class PostService {
         map(x => {
           return {
             ...post,
-            imgName: x
+            imageLink: x,
           };
         })
       );
@@ -64,7 +62,7 @@ export class PostService {
       .get()
       .subscribe(x => {
         this[prop] = Number(x.data()[prop]) + 1;
-        this.router.navigate([''])
+        this.router.navigate([""]);
         return this.afDb
           .collection("posts")
           .doc(id)
@@ -85,11 +83,13 @@ export class PostService {
     this.increaseLikesDislikes(id, "dislikes");
   }
 
-  deletePost(id) {
+  deletePost(post) {
     this.afDb
       .collection("posts")
-      .doc(id)
+      .doc(post.id)
       .delete();
+
+    this.afs.ref(`/uploads/${post.imgName}`).delete();
     this.router.navigate([""]);
   }
 
@@ -100,7 +100,7 @@ export class PostService {
       .valueChanges()
       .pipe(
         map(post => {
-          return this.mapPostData(post)
+          return this.mapPostData(post);
         })
       );
   }
@@ -122,5 +122,4 @@ export class PostService {
       })
       .valueChanges();
   }
-
 }
