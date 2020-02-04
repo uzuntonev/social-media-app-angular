@@ -6,9 +6,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   declarations: [UsersListComponent, ProfileComponent],
-  imports: [CommonModule, MaterialModule, FlexLayoutModule, SharedModule,RouterModule]
+  imports: [CommonModule, MaterialModule, FlexLayoutModule, SharedModule,RouterModule, UserRoutingModule]
 })
 export class UsersModule {}

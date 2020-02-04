@@ -7,7 +7,8 @@ import { CommonModule } from "@angular/common";
 import { MaterialModule } from "../shared/material/material.module";
 import { FormsModule } from "@angular/forms";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { RouterModule } from '@angular/router';
+import { RouterModule } from "@angular/router";
+import { AuthRoutingModule } from "./auth-routing.module";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,14 @@ import { RouterModule } from '@angular/router';
     SignUpComponent,
     VerifyEmailComponent
   ],
-  imports: [CommonModule, MaterialModule, FormsModule, FlexLayoutModule, RouterModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    FlexLayoutModule,
+    RouterModule,
+    AuthRoutingModule
+  ],
   exports: [SignInComponent]
 })
 export class AuthModule {}

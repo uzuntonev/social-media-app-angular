@@ -11,6 +11,7 @@ import { RouterModule } from "@angular/router";
 import { DetailsComponent } from "./details/details.component";
 import { CommentsComponent } from './comments/comments.component';
 import { CardComponent } from './card/card.component';
+import { PostRoutingModule } from './post-routing.module';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { CardComponent } from './card/card.component';
     MaterialModule,
     SharedModule,
     RouterModule,
+    PostRoutingModule
   ],
   exports: []
 })
-export class PostsModule {}
+export class PostModule {}
