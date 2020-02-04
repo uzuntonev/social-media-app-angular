@@ -1,39 +1,44 @@
-<ng-container *ngIf="!posts.length">
+<ng-template #loader>
   <app-loader></app-loader>
-</ng-container>
-<div class="wrapper" *ngIf="!!posts.length">
-  <div class="card">
-    <div class="card-info" fxLayoutAlign="space-evenly" fxLayoutGap="20px">
-      <div class="img-section">
-        <img class="avatar" src="{{ user.avatar }}" />
-      </div>
-      <div class="info-section">
-        <p class="label">Name:</p>
-        <span>{{ user.fullName }}</span>
-        <p class="label">Email:</p>
-        <span>{{ user.email }}</span>
-      </div>
-      <div class="post-section">
-        <p class="label">Posts:</p>
-        <ul fxLayout="column" fxLayoutAlign="start" fxLayoutGap="20px" *ngIf="posts.length > 0">
-          <li *ngFor="let post of posts">
-            <div
-              
-              fxLayout
-              fxLayoutAlign="space-between"
-              fxLayoutGap="10px"
-            >
-              <div>
-                <span>{{ post.description.substr(0, 20) + "..." }}</span>
-                <p>
-                  Created on: {{ post.createdOn.toDate() | date: "dd.MM.yyyy" }}
-                </p>
+</ng-template>
+
+<ng-template #profile>
+  <div class="wrapper">
+    <div class="card">
+      <div class="card-info" fxLayoutAlign="space-evenly" fxLayoutGap="20px">
+        <div class="img-section">
+          <img class="avatar" src="{{ user.avatar }}" />
+        </div>
+        <div class="info-section">
+          <p class="label">Name:</p>
+          <span>{{ user.name }}</span>
+          <p class="label">Email:</p>
+          <span>{{ user.email }}</span>
+        </div>
+        <div class="post-section">
+          <p class="label">Posts:</p>
+          <div *ngIf="!posts.length"><p>This user no posts</p></div>
+
+          <ul fxLayout="column" fxLayoutAlign="start" fxLayoutGap="20px">
+            <li *ngFor="let post of posts">
+              <div fxLayout fxLayoutAlign="space-between" fxLayoutGap="10px">
+                <div>
+                  <span>{{ post.description.substr(0, 20) + "..." }}</span>
+                  <p>
+                    Created on:
+                    {{ post.createdOn.toDate() | date: "dd.MM.yyyy" }}
+                  </p>
+                </div>
+                <button mat-fab color="primary" (click)="getDetails(post.id)">
+                  Read
+                </button>
               </div>
-              <button mat-fab color="primary" (click)="getDetails(post.id)">Read</button>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
+
+<ng-container *ngIf="!user; then loader; else profile"></ng-container>

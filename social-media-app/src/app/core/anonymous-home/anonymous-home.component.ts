@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 export class AnonymousHomeComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { 
-    if(authService.isLoggedIn){
-      router.navigate(['posts'])
+    if(this.authService.isLoggedIn){
+      this.router.navigate(['posts'])
     }
   }
 

@@ -43,13 +43,12 @@ export class CreatePostComponent implements OnInit {
       dislikes: 0,
       createdByName:
         JSON.parse(localStorage.getItem("user")).displayName ||
-        JSON.parse(localStorage.getItem("userData")).fullName,
+        JSON.parse(localStorage.getItem("userData")).name,
       createdById: JSON.parse(localStorage.getItem("user")).uid,
       avatar:
         JSON.parse(localStorage.getItem("user")).photoURL ||
         JSON.parse(localStorage.getItem("userData")).avatar
     };
-
     this.postService.createPost(post);
   }
 

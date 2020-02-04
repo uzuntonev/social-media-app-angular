@@ -1,7 +1,6 @@
 import { Component, OnInit, DoCheck } from "@angular/core";
 import { PostService } from "src/app/posts/post.service";
 import { IPost } from "src/app/core/models/post";
-import { tap, merge,  } from "rxjs/operators";
 
 @Component({
   selector: "app-all-posts",
@@ -15,11 +14,7 @@ export class AllPostsComponent implements OnInit, DoCheck {
   constructor(private postService: PostService) {}
 
   ngOnInit() {
-    this.postService.getAllPost
-      .pipe(
-        tap(post => this._allPosts.push(post)),
-      )
-      .subscribe();
+    this.postService.getAllPost.subscribe((post: IPost) => this._allPosts.push(post));
   }
 
   ngDoCheck() {

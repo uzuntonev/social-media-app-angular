@@ -24,11 +24,11 @@ export class CommentsComponent implements OnInit {
       .getAllComments(this.post.id) 
   }
 
-  addComment(value) {
+  addComment(value: string) {
     const comment: IComment = {
       avatar: this.authService.currentUser.avatar,
       content: value,
-      createdBy: this.authService.currentUser.fullName,
+      createdBy: this.authService.currentUser.name,
       createdOn: new Date()
     };
 

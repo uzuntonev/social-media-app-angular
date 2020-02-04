@@ -27,7 +27,7 @@ export class DetailsComponent implements OnInit {
     this.postService
       .getPost(this.postId)
       .pipe(mergeMap(post => post))
-      .subscribe(post => {
+      .subscribe((post: IPost) => {
         this.post = post;
       });
   }

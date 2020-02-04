@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   Input,
-  DoCheck
+  DoCheck,
+  AfterViewInit
 } from "@angular/core";
 import { AuthService } from "../../auth/auth.service";
 import { IUser } from "src/app/core/models/user";
@@ -14,7 +15,7 @@ import { IUser } from "src/app/core/models/user";
   templateUrl: "./navbar.component.html",
   styleUrls: ["./navbar.component.scss"]
 })
-export class NavbarComponent implements OnInit, DoCheck {
+export class NavbarComponent implements OnInit, DoCheck, AfterViewInit {
   @Output() sidenavToggle = new EventEmitter<void>();
   @Input() isAuth: boolean;
   currentUser: IUser;
@@ -25,6 +26,9 @@ export class NavbarComponent implements OnInit, DoCheck {
     this.isAuth = this.authService.isLoggedIn;
   }
 
+  ngAfterViewInit(){
+
+  }
   ngDoCheck() {
     this.currentUser = this.authService.currentUser
 

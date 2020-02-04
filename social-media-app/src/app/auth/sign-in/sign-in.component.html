@@ -1,5 +1,5 @@
 <div class="container" gdAlignColumns="center">
-  <section
+  <div
     class="sign-in-section"
     fxFlex
     fxLayout="column"
@@ -10,34 +10,54 @@
     <form
       class="example-form"
       #loginForm="ngForm"
-      (ngSubmit)="
-        signIn(loginForm.value.email, loginForm.value.pass)
-      "
+      (ngSubmit)="signIn(loginForm.value)"
       fxLayout="column"
     >
-      <mat-form-field class="example-full-width">
+      <mat-form-field>
         <input
+          #emailInput="ngModel"
           matInput
           ngModel
           id="email"
           type="email"
           name="email"
           required
+          email
           placeholder="Email address"
         />
+
+        <mat-error *ngIf="emailInput.hasError('required')"
+          >Email is required.</mat-error
+        >
+        <mat-error *ngIf="emailInput.hasError('email')"
+        >Enter valid email.</mat-error
+      >
       </mat-form-field>
-      <mat-form-field class="example-full-width">
+      <mat-form-field>
         <input
+          #passwordInput="ngModel"
           matInput
           ngModel
           id="password"
           type="password"
-          name="pass"
+          name="password"
           required
+          minlength="6"
           placeholder="Password"
         />
+        <mat-error *ngIf="passwordInput.hasError('required')"
+          >Password is required.</mat-error
+        >
+        <mat-error *ngIf="passwordInput.hasError('minlength')"
+          >Password must be at least 6 symbols.</mat-error
+        >
       </mat-form-field>
-      <button class="btn-sign-in" mat-raised-button color="primary" [disabled]="loginForm.invalid">
+      <button
+        class="btn-sign-in"
+        mat-raised-button
+        color="primary"
+        [disabled]="loginForm.invalid"
+      >
         Log In
       </button>
     </form>
@@ -49,11 +69,7 @@
     </div>
 
     <div fxFlex fxLayoutAlign="center">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="signInGoogle()"
-      >
+      <button mat-raised-button color="primary" (click)="signInGoogle()">
         Sign in with Google
       </button>
     </div>
@@ -66,8 +82,9 @@
 
     <div fxFlex fxLayoutAlign="center">
       <span
-        >Don't have an account? <a class="redirect" routerLink="/register-user">Sign Up</a></span
+        >Don't have an account?
+        <a class="redirect" routerLink="/register-user">Sign Up</a></span
       >
     </div>
-  </section>
+  </div>
 </div>

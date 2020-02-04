@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/auth/auth.service";
-import { auth } from 'firebase';
 
 @Component({
   selector: "app-sign-up",
@@ -22,17 +21,11 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {}
 
-  signUp(
-    email: string,
-    password: string,
-    repassword: string,
-    name: string,
-    avatar
-  ) {
-    this.authService.SignUp(email, password, repassword, name, avatar);
+  signUp(value) {
+    this.authService.SignUp(value);
   }
 
-  signUpGoogle(){
-    this.authService.GoogleAuth()
+  signUpGoogle() {
+    this.authService.GoogleAuth();
   }
 }

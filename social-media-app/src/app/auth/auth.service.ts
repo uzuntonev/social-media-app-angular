@@ -15,7 +15,6 @@ import { map } from "rxjs/operators";
 })
 export class AuthService {
   private _userData: any; // Save logged in user data
-
   constructor(
     private afDb: AngularFirestore, // Inject Firestore service
     private afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -44,23 +43,15 @@ export class AuthService {
     return this._userData;
   }
   // Sign in with email/password
-  SignIn(email, password) {
+  SignIn(value) {
     return this.afAuth.auth
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(value.email, value.password)
       .then(result => {
-        this.router.navigate(["posts"]);
-        this.afDb
-          .collection("users", ref =>
-            ref.where("id", "==", result.user.uid).limit(1)
-          )
-          .snapshotChanges()
-          .pipe(map(user => user[0].payload.doc.data()))
-          .subscribe(() => {
-            return this.ChangeEmailVerifiedProp(result);
-          });
-        this.getUserData(result).subscribe(user =>
-          localStorage.setItem("userData", JSON.stringify(user.payload.data()))
-        );
+        this.ChangeEmailVerifiedProp(result);
+        this.getUserData(result).subscribe(user => {
+          localStorage.setItem("userData", JSON.stringify(user.payload.data()));
+          this.router.navigate([""]);
+        });
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -69,32 +60,33 @@ export class AuthService {
       });
   }
 
-  ChangeEmailVerifiedProp(value) {
+  private ChangeEmailVerifiedProp(result) {
     return this.afDb
       .collection("users")
-      .doc(value.user.uid)
-      .set({ emailVerified: value.user.emailVerified }, { merge: true });
+      .doc(result.user.uid)
+      .set({ emailVerified: result.user.emailVerified }, { merge: true });
   }
 
-  private getUserData(value) {
+  private getUserData(result) {
     return this.afDb
       .collection("users")
-      .doc(value.user.uid)
+      .doc(result.user.uid)
       .snapshotChanges();
   }
 
   // Sign up with email/password
-  SignUp(email, password, repassword, name, avatar) {
-    if (!password === repassword) {
+  SignUp(value) {
+    if (value.password !== value.repassword) {
       this.snackbar.open("Password do not match", "Undo", {
         duration: 3000
       });
+      return;
     }
     return this.afAuth.auth
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(value.email, value.password)
       .then(result => {
         this.SendVerificationMail();
-        this.SetUserData(result, name, avatar);
+        this.SetUserData(result, value.name, value.avatar);
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -160,11 +152,11 @@ export class AuthService {
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(result, fullName?: string, avatar?: string) {
+  SetUserData(result, name?: string, avatar?: string) {
     const userRef: AngularFirestoreDocument<any> = this.afDb.doc(
       `users/${result.user.uid}`
     );
-    
+
     this.getUserData(result).subscribe(user =>
       localStorage.setItem("userData", JSON.stringify(user.payload.data()))
     );
@@ -173,7 +165,7 @@ export class AuthService {
       id: result.user.uid,
       email: result.user.email,
       emailVerified: result.user.emailVerified,
-      fullName: fullName || result.user.displayName,
+      name: name || result.user.displayName,
       avatar: avatar || result.user.photoURL
     };
 

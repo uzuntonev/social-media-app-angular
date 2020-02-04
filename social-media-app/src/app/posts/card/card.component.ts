@@ -35,11 +35,13 @@ export class CardComponent implements OnInit, AfterViewInit {
     this.postService.dislikePost(id);
   }
 
-  substringPost(post) {
-    return post.length > 100 ? post.substring(0, 200) + "..." : post;
+  substringPost(description: string) {
+    return description.length > 200
+      ? description.substring(0, 200) + "..."
+      : description;
   }
 
-  getDetails(postId) {
+  getDetails(postId: string) {
     this.router.navigate(["posts", postId]);
   }
 }
