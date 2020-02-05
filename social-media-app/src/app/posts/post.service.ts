@@ -2,7 +2,7 @@ import { Injectable, NgZone } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { IPost } from "../core/models/post";
-import { map, mergeMap } from "rxjs/operators";
+import { map, mergeMap, delay } from "rxjs/operators";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { IComment } from "../core/models/comment";
 
@@ -29,7 +29,7 @@ export class PostService {
   get getAllPost() {
     return this.afDb
       .collection("posts", ref => {
-        return ref.orderBy("createdOn", "asc");
+        return ref.orderBy("createdOn", "desc");
       })
       .valueChanges()
       .pipe(
@@ -93,7 +93,7 @@ export class PostService {
       .doc(post.id)
       .delete();
 
-    // this.afs.ref(`/uploads/${post.imgName}`).delete();
+    this.afs.ref(`/uploads/${post.imgName}`).delete();
     this.router.navigate([""]);
   }
 
@@ -105,7 +105,8 @@ export class PostService {
       .pipe(
         map((post: IPost) => {
           return this.mapPostData(post);
-        })
+        }),
+        mergeMap(post => post)
       );
   }
 

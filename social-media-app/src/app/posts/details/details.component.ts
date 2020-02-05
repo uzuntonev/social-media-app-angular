@@ -11,7 +11,7 @@ import { mergeMap } from "rxjs/operators";
 })
 export class DetailsComponent implements OnInit {
   post: IPost;
-  postId: string = this.activateRoute.snapshot.params.id;
+
   constructor(
     private postService: PostService,
     private activateRoute: ActivatedRoute
@@ -24,9 +24,9 @@ export class DetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+   const postId: string = this.activateRoute.snapshot.params.id;
     this.postService
-      .getPost(this.postId)
-      .pipe(mergeMap(post => post))
+      .getPost(postId)
       .subscribe((post: IPost) => {
         this.post = post;
       });

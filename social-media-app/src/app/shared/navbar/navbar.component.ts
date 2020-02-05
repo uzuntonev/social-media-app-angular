@@ -18,7 +18,7 @@ import { IUser } from "src/app/core/models/user";
 export class NavbarComponent implements OnInit, DoCheck, AfterViewInit {
   @Output() sidenavToggle = new EventEmitter<void>();
   @Input() isAuth: boolean;
-  currentUser: IUser;
+  @Input() currentUser: IUser;
 
   constructor(private authService: AuthService) {}
 
@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit, DoCheck, AfterViewInit {
 
   }
   ngDoCheck() {
-    this.currentUser = this.authService.currentUser
+   
 
   }
 

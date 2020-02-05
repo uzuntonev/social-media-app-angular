@@ -55,7 +55,7 @@
       >
     </li>
   </ul>
-  <div *ngIf="isAuth" fxLayout fxLayoutGap="20px">
+  <div *ngIf="isAuth" fxLayout fxLayoutGap="20px" fxShow fxHide.lt-sm>
     <div
       class="welcome-msg"
       *ngIf="!!currentUser"

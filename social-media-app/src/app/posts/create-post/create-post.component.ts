@@ -3,7 +3,6 @@ import { UploadService } from "src/app/posts/upload.service";
 import { Upload } from "src/app/core/models/file";
 import { PostService } from "src/app/posts/post.service";
 import { IPost } from "src/app/core/models/post";
-import { Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material";
 
 @Component({
