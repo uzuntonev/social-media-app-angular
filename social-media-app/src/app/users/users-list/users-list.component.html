@@ -1,13 +1,20 @@
-<ng-container *ngIf="!users.length">
-  <app-loader></app-loader>
-</ng-container>
 <div class="wrapper">
-  <form fxLayoutAlign="center" class="card search-from">
+  <form #searchForm="ngForm" fxLayoutAlign="center" class="card search-from">
     <mat-form-field class="search-bar">
-      <input matInput placeholder="Search user..." />
+      <input
+        #searchInput
+        ngModel
+        name="searchBar"
+        matInput
+        placeholder="Search user..."
+      />
     </mat-form-field>
   </form>
 </div>
+
+<ng-container *ngIf="!users.length">
+  <app-loader></app-loader>
+</ng-container>
 
 <div class="wrapper" *ngFor="let user of users">
   <div class="card">

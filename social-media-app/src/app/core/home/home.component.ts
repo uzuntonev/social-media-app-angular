@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { AuthService } from "src/app/auth/auth.service";
 import { IUser } from "../models/user";
 
@@ -7,14 +7,14 @@ import { IUser } from "../models/user";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"]
 })
-export class HomeComponent implements OnInit {
-  currentUser: IUser;
+export class HomeComponent {
   constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-    this.currentUser = this.authService.currentUser;
-  }
   get isAuth() {
     return this.authService.isLoggedIn;
+  }
+
+  get currentUser() {
+    return this.authService.userData;
   }
 }

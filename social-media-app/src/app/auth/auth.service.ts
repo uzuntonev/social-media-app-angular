@@ -8,7 +8,7 @@ import {
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -23,35 +23,33 @@ export class AuthService {
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
+
     this.afAuth.authState.subscribe(user => {
       if (user) {
+        this.getUserData(user).subscribe();
         this._userData = user;
         localStorage.setItem("user", JSON.stringify(this._userData));
-        // JSON.parse(localStorage.getItem('user'));
       } else {
         localStorage.setItem("user", null);
-        // JSON.parse(localStorage.getItem('user'));
       }
     });
   }
 
-  get currentUser() {
+  get userData() {
     return JSON.parse(localStorage.getItem("userData"));
   }
 
-  get userData() {
+  get afUserData() {
     return this._userData;
   }
+
   // Sign in with email/password
   SignIn(value) {
     return this.afAuth.auth
       .signInWithEmailAndPassword(value.email, value.password)
       .then(result => {
         this.ChangeEmailVerifiedProp(result);
-        this.getUserData(result).subscribe(user => {
-          localStorage.setItem("userData", JSON.stringify(user.payload.data()));
-          this.router.navigate([""]);
-        });
+        this.router.navigate(["posts"]);
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -67,11 +65,16 @@ export class AuthService {
       .set({ emailVerified: result.user.emailVerified }, { merge: true });
   }
 
-  private getUserData(result) {
+  private getUserData(user) {
     return this.afDb
       .collection("users")
-      .doc(result.user.uid)
-      .snapshotChanges();
+      .doc(user.uid)
+      .snapshotChanges()
+      .pipe(
+        tap(user => {
+          localStorage.setItem("userData", JSON.stringify(user.payload.data()));
+        })
+      );
   }
 
   // Sign up with email/password
@@ -85,8 +88,8 @@ export class AuthService {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(value.email, value.password)
       .then(result => {
-        this.SendVerificationMail();
         this.SetUserData(result, value.name, value.avatar);
+        this.SendVerificationMail();
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -139,8 +142,8 @@ export class AuthService {
     return this.afAuth.auth
       .signInWithPopup(provider)
       .then(result => {
-        this.router.navigate(["posts"]);
         this.SetUserData(result);
+        this.router.navigate(["posts"]);
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -157,9 +160,7 @@ export class AuthService {
       `users/${result.user.uid}`
     );
 
-    this.getUserData(result).subscribe(user =>
-      localStorage.setItem("userData", JSON.stringify(user.payload.data()))
-    );
+    // this.getUserData(result).subscribe();
 
     const userData: IUser = {
       id: result.user.uid,

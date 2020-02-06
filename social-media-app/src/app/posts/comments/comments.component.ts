@@ -26,9 +26,9 @@ export class CommentsComponent implements OnInit {
 
   addComment(value: string) {
     const comment: IComment = {
-      avatar: this.authService.currentUser.avatar,
+      avatar: this.authService.userData.avatar,
       content: value,
-      createdBy: this.authService.currentUser.name,
+      createdBy: this.authService.userData.name,
       createdOn: new Date()
     };
 

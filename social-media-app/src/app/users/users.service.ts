@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { IUser } from "../core/models/user";
-import { AuthService } from "../auth/auth.service";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { mergeMap, map } from "rxjs/operators";
 

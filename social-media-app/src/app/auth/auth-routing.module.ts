@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: "verify-email-address",
     component: VerifyEmailComponent,
-    canActivate: [SecureInnerGuard]
+    canActivate: []
   }
 ];
 export const AuthRoutingModule = RouterModule.forChild(routes);

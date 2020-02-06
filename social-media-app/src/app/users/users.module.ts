@@ -7,9 +7,10 @@ import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { UserRoutingModule } from './user-routing.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [UsersListComponent, ProfileComponent],
-  imports: [CommonModule, MaterialModule, FlexLayoutModule, SharedModule,RouterModule, UserRoutingModule]
+  imports: [CommonModule, MaterialModule, FlexLayoutModule, SharedModule,RouterModule, UserRoutingModule, FormsModule]
 })
 export class UsersModule {}

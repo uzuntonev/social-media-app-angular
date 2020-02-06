@@ -7,32 +7,31 @@
 >
   <h3 fxLayoutAlign="center">Thank You for Registering</h3>
 
-  <div
-    class="formGroup"
-    *ngIf="currentUser as user"
-    fxLayout="column"
-    
-  >
+  <div class="formGroup" *ngIf="currentUser as user" fxLayout="column">
     <p class="text-center" fxLayoutAlign="center" fxLayoutGap="8px">
-      <span>We have sent a confirmation email to</span>  <strong>{{ user.email }}</strong>.
+      <span>We have sent a confirmation email to</span>
+      <strong>{{ user.email }}</strong
+      >.
     </p>
     <p class="text-center" fxLayoutAlign="center">
       Please check your email and click on the link to verify your email
       address.
     </p>
   </div>
+
   <div fxLayoutAlign="center">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="sendVerificationMail()"
-    >
+    <button mat-raised-button color="primary" (click)="sendVerificationMail()">
       Resend Verification Email
     </button>
   </div>
 
-  <div class="redirectToLogin" fxLayoutAlign="center">
-    <span
-      >Go back to?<a class="redirect" routerLink="/sign-in"> Sign in</a></span>
+  <div fxLayoutAlign="center">
+    <button type="button" mat-raised-button color="primary" >
+     <a routerLink="/posts"> Go Home Page!</a>
+    </button>
   </div>
 </div>
+
+// <div class="redirectToLogin" fxLayoutAlign="center">
+//   <span>Go back to?<a class="redirect" routerLink="/sign-in"> Sign in</a></span>
+// </div>

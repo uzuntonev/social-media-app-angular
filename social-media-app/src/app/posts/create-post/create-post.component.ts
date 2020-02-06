@@ -4,6 +4,8 @@ import { Upload } from "src/app/core/models/file";
 import { PostService } from "src/app/posts/post.service";
 import { IPost } from "src/app/core/models/post";
 import { MatSnackBar } from "@angular/material";
+import { AuthService } from "src/app/auth/auth.service";
+import { IUser } from "src/app/core/models/user";
 
 @Component({
   selector: "app-create-post",
@@ -14,14 +16,19 @@ export class CreatePostComponent implements OnInit {
   selectedFiles: FileList;
   currentUpload: Upload;
   isUpload: boolean = false;
+  private userData: IUser;
+  private afUserData: any;
   constructor(
     private uploadService: UploadService,
     private postService: PostService,
-    private snackbar: MatSnackBar
-  ) {}
-
-  ngOnInit() {
+    private snackbar: MatSnackBar,
+    private authService: AuthService
+  ) {
+    this.userData = this.authService.userData;
+    this.afUserData = this.authService.afUserData;
   }
+
+  ngOnInit() {}
 
   // Create stream of data for current post and pass them to the postService
 
@@ -40,14 +47,11 @@ export class CreatePostComponent implements OnInit {
       createdOn: new Date(),
       likes: 0,
       dislikes: 0,
-      createdByName:
-        JSON.parse(localStorage.getItem("user")).displayName ||
-        JSON.parse(localStorage.getItem("userData")).name,
-      createdById: JSON.parse(localStorage.getItem("user")).uid,
-      avatar:
-        JSON.parse(localStorage.getItem("user")).photoURL ||
-        JSON.parse(localStorage.getItem("userData")).avatar
+      createdByName: this.afUserData.displayName || this.userData.name,
+      createdById: this.afUserData.uid,
+      avatar: this.afUserData.photoURL || this.userData.avatar
     };
+
     this.postService.createPost(post);
   }
 

@@ -1,5 +1,4 @@
 import { NgModule } from "@angular/core";
-import { MyPostsComponent } from "./my-posts/my-posts.component";
 import { CreatePostComponent } from "./create-post/create-post.component";
 import { AllPostsComponent } from "./all-posts/all-posts.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -16,7 +15,6 @@ import { PostRoutingModule } from './post-routing.module';
 
 @NgModule({
   declarations: [
-    MyPostsComponent,
     CreatePostComponent,
     AllPostsComponent,
     DetailsComponent,
