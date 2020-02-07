@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from "@angular/router";
 import { SignInComponent } from "./sign-in/sign-in.component";
-import { SecureInnerGuard } from "../core/guards/secure-inner.guard";
+import { SecureInnerGuard } from "../shared/guards/secure-inner.guard";
 import { SignUpComponent } from "./sign-up/sign-up.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { VerifyEmailComponent } from "./verify-email/verify-email.component";

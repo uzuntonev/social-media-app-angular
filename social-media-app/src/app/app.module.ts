@@ -12,7 +12,7 @@ import { SharedModule } from "./shared/shared.module";
 import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./posts/post.module";
 import { CoreModule } from "./core/core.module";
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/user.module';
 
 import { NotFoundComponent } from './not-found/not-found.component';
 
@@ -26,11 +26,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FlexLayoutModule,
     MaterialModule,
     FirebaseModule,
+    CoreModule,
     SharedModule,
     AuthModule,
     PostModule,
-    CoreModule,
-    UsersModule
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

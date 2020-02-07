@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { PostService } from "src/app/posts/post.service";
-import { IPost } from "src/app/core/models/post";
+import { PostService } from "../services/post.service";
+import { IPost } from "../../shared/models/post";
 import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-all-posts",
-  templateUrl: "./all-posts.component.html",
-  styleUrls: ["./all-posts.component.scss"]
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.scss"]
 })
-export class AllPostsComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit, OnDestroy {
   allPosts: IPost[] = [];
   private subscription: Subscription;
 

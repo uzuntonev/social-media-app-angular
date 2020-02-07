@@ -6,11 +6,21 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { AuthModule } from "../auth/auth.module";
 import { SharedModule } from "../shared/shared.module";
 import { RouterModule } from "@angular/router";
-import { SubstringPipe } from "./pipes/substring.pipe";
+import { FooterComponent } from "./footer/footer.component";
+import { NavbarComponent } from "./navbar/navbar.component";
+import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [AnonymousHomeComponent, HomeComponent, SubstringPipe],
+  declarations: [
+    AnonymousHomeComponent,
+    HomeComponent,
+    FooterComponent,
+    NavbarComponent,
+    SidenavListComponent
+  ],
   imports: [
+    CommonModule,
     MaterialModule,
     FlexLayoutModule,
     AuthModule,

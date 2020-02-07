@@ -15,11 +15,11 @@
 <img mat-card-image src="{{ post.imageLink }}" alt="Photo of a Shiba Inu" />
 <mat-card-content>
   <p>
-    {{ substringPost(post.description) }}
+    {{ post.description | substring: 200 }}
   </p>
 </mat-card-content>
 <mat-card-actions fxLayout fxLayoutAlign="space-between">
-  <div class="like-dislike-btn" >
+  <div class="like-dislike-btn">
     <button (click)="likePost(post.id)" mat-button>LIKE</button>
     <span #likes class="likes">
       {{ post.likes }}
@@ -30,6 +30,10 @@
       {{ post.dislikes }}
     </span>
   </div>
+
+  <!-- <button *ngIf="author === post.createdById" (click)="deletePost()" mat-button>
+    DELETE
+  </button> -->
 
   <button mat-button>
     <button (click)="getDetails(post.id)" mat-button>DETAILS</button>

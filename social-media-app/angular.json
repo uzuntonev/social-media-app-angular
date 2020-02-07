@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "social-media-app": {
+    "social-network-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/social-media-app",
+            "outputPath": "dist/social-network-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "social-media-app:build"
+            "browserTarget": "social-network-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "social-media-app:build:production"
+              "browserTarget": "social-network-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "social-media-app:build"
+            "browserTarget": "social-network-app:build"
           }
         },
         "test": {
@@ -117,16 +117,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "social-media-app:serve"
+            "devServerTarget": "social-network-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "social-media-app:serve:production"
+              "devServerTarget": "social-network-app:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "social-media-app"
+  "defaultProject": "social-network-app"
 }

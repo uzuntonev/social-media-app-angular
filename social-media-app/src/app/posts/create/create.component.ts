@@ -1,18 +1,18 @@
 import { Component, OnInit } from "@angular/core";
-import { UploadService } from "src/app/posts/upload.service";
-import { Upload } from "src/app/core/models/file";
-import { PostService } from "src/app/posts/post.service";
-import { IPost } from "src/app/core/models/post";
+import { UploadService } from "../services/upload.service";
+import { Upload } from "../../shared/models/file";
+import { PostService } from "../services/post.service";
+import { IPost } from "../../shared/models/post";
 import { MatSnackBar } from "@angular/material";
-import { AuthService } from "src/app/auth/auth.service";
-import { IUser } from "src/app/core/models/user";
+import { AuthService } from "../../auth/services/auth.service";
+import { IUser } from "../../shared/models/user";
 
 @Component({
   selector: "app-create-post",
-  templateUrl: "./create-post.component.html",
-  styleUrls: ["./create-post.component.scss"]
+  templateUrl: "./create.component.html",
+  styleUrls: ["./create.component.scss"]
 })
-export class CreatePostComponent implements OnInit {
+export class CreateComponent implements OnInit {
   selectedFiles: FileList;
   currentUpload: Upload;
   isUpload: boolean = false;

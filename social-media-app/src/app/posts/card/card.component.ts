@@ -1,13 +1,6 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  ElementRef,
-  AfterViewInit
-} from "@angular/core";
-import { IPost } from "src/app/core/models/post";
-import { PostService } from "../post.service";
+import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
+import { IPost } from "src/app/shared/models/post";
+import { PostService } from "../services/post.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -15,33 +8,32 @@ import { Router } from "@angular/router";
   templateUrl: "./card.component.html",
   styleUrls: ["./card.component.scss"]
 })
-export class CardComponent implements OnInit, AfterViewInit {
+export class CardComponent implements OnInit {
   @Input() post: IPost;
   @ViewChild("likes", { static: false }) likes: ElementRef;
   @ViewChild("dislikes", { static: false }) dislikes: ElementRef;
+
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit() {}
-  ngAfterViewInit() {
-    // console.log();
-  }
+
   likePost(id) {
-    // this.likes.nativeElement.textContent = +this.likes.nativeElement.textContent + 1
-    this.postService.likePost(id);
+    this.postService
+      .updateLikeDislike(id, "likes")
+      .subscribe(_ => this.router.navigate([""]));
   }
 
   dislikePost(id) {
-    // this.dislikes.nativeElement.textContent = +this.dislikes.nativeElement.textContent + 1
-    this.postService.dislikePost(id);
-  }
-
-  substringPost(description: string) {
-    return description.length > 200
-      ? description.substring(0, 200) + "..."
-      : description;
+    this.postService
+      .updateLikeDislike(id, "dislikes")
+      .subscribe(_ => this.router.navigate([""]));
   }
 
   getDetails(postId: string) {
     this.router.navigate(["posts", postId]);
+  }
+
+  deletePost() {
+    this.postService.deletePost(this.post);
   }
 }

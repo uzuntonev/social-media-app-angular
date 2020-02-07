@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from "@angular/core";
-import { AuthService } from "src/app/auth/auth.service";
-import { IUser } from "../models/user";
+import { AuthService } from "src/app/auth/services/auth.service";
+import { IUser } from "../../shared/models/user";
 
 @Component({
   selector: "app-home",

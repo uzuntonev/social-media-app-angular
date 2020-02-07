@@ -1,15 +1,17 @@
 import { Injectable, NgZone } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
+import { AngularFirestore, DocumentData } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { IPost } from "../core/models/post";
-import { map, mergeMap, delay } from "rxjs/operators";
+import { IPost } from "../../shared/models/post";
+import { map, mergeMap, delay, tap } from "rxjs/operators";
 import { AngularFireStorage } from "@angular/fire/storage";
-import { IComment } from "../core/models/comment";
+import { IComment } from "../../shared/models/comment";
 
 @Injectable({
   providedIn: "root"
 })
 export class PostService {
+  likes: number;
+  dislikes: number;
   constructor(
     private afDb: AngularFirestore,
     private router: Router,
@@ -62,32 +64,26 @@ export class PostService {
       );
   }
 
-  increaseLikesDislikes(id: string, prop: string) {
+  // Update likes and dislikes prop every time when button is clicked
+  updateLikeDislike(id: string, prop: string) {
     return this.afDb
-      .collection("posts")
+      .collection("posts", ref => {
+        return ref.where("createdById", "==", id);
+      })
       .doc(id)
       .get()
-      .subscribe(x => {
-        this[prop] = Number(x.data()[prop]) + 1;
-        this.afDb
-          .collection("posts")
-          .doc(id)
-          .set(
-            {
-              [prop]: this[prop]
-            },
-            { merge: true }
-          );
-        this.router.navigate([""]);
-      });
-  }
-
-  likePost(id: string) {
-    this.increaseLikesDislikes(id, "likes");
-  }
-
-  dislikePost(id: string) {
-    this.increaseLikesDislikes(id, "dislikes");
+      .pipe(
+        mergeMap((doc: DocumentData) => {
+          const post = doc.data();
+          return this.afDb
+            .collection("posts")
+            .doc(id)
+            .update({
+              [prop]: +post[prop] + 1
+            });
+        })
+      )
+  
   }
 
   // Pass post in params and delete it from DB and delete image from storage

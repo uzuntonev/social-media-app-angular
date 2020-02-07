@@ -5,7 +5,7 @@ import {
   ViewChild,
   DoCheck
 } from "@angular/core";
-import { UsersService } from "../users.service";
+import { UsersService } from "../services/users.service";
 import { fromEvent } from "rxjs";
 import {
   distinctUntilChanged,
@@ -14,14 +14,14 @@ import {
   map,
   tap
 } from "rxjs/operators";
-import { IUser } from "src/app/core/models/user";
+import { IUser } from "src/app/shared/models/user";
 
 @Component({
   selector: "app-users-list",
-  templateUrl: "./users-list.component.html",
-  styleUrls: ["./users-list.component.scss"]
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.scss"]
 })
-export class UsersListComponent implements OnInit {
+export class ListComponent implements OnInit {
   @ViewChild("searchInput", { static: true }) searchInput: ElementRef;
   users: any[] = [];
   constructor(private userService: UsersService) {}

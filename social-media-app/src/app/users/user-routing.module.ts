@@ -1,9 +1,9 @@
 import { Routes, RouterModule } from "@angular/router";
 import { ProfileComponent } from "./profile/profile.component";
-import { UsersListComponent } from "./users-list/users-list.component";
-import { AuthGuard } from "../core/guards/auth.guard";
+import { ListComponent } from "./list/list.component";
+import { AuthGuard } from "../shared/guards/auth.guard";
 const routes: Routes = [
-  { path: "users", component: UsersListComponent, canActivate: [AuthGuard] },
+  { path: "users", component: ListComponent, canActivate: [AuthGuard] },
   { path: "users/:id", component: ProfileComponent, canActivate: [AuthGuard] }
 ];
 

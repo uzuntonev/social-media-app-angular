@@ -1,26 +1,28 @@
 import { NgModule } from "@angular/core";
-import { CreatePostComponent } from "./create-post/create-post.component";
-import { AllPostsComponent } from "./all-posts/all-posts.component";
+import { CreateComponent } from "./create/create.component";
+import { ListComponent } from "./list/list.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { MaterialModule } from "src/app/shared/material/material.module";
-import { SharedModule } from "src/app/shared/shared.module";
+import { MaterialModule } from "../shared/material/material.module";
+import { SharedModule } from "../shared/shared.module";
 import { RouterModule } from "@angular/router";
-import { DetailsComponent } from "./details/details.component";
-import { CommentsComponent } from './comments/comments.component';
-import { CardComponent } from './card/card.component';
-import { PostRoutingModule } from './post-routing.module';
-
+import { DetailComponent } from "./detail/detail.component";
+import { CommentsComponent } from "./comments/comments.component";
+import { CardComponent } from "./card/card.component";
+import { PostRoutingModule } from "./post-routing.module";
+import { SubstringPipe } from "../shared/pipes/substring.pipe";
+import { LikeDislikePipe } from '../shared/pipes/like-dislike.pipe';
 
 @NgModule({
   declarations: [
-    CreatePostComponent,
-    AllPostsComponent,
-    DetailsComponent,
+    CreateComponent,
+    ListComponent,
+    DetailComponent,
     CommentsComponent,
     CardComponent,
-
+    SubstringPipe,
+    LikeDislikePipe,
   ],
   imports: [
     FlexLayoutModule,

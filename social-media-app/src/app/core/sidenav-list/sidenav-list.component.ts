@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { AuthService } from "src/app/auth/auth.service";
-import { IUser } from "src/app/core/models/user";
+import { AuthService } from "src/app/auth/services/auth.service";
+import { IUser } from "src/app/shared/models/user";
 
 @Component({
   selector: "app-sidenav-list",

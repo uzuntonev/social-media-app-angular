@@ -7,8 +7,8 @@ import {
   DoCheck,
   AfterViewInit
 } from "@angular/core";
-import { AuthService } from "../../auth/auth.service";
-import { IUser } from "src/app/core/models/user";
+import { AuthService } from "../../auth/services/auth.service";
+import { IUser } from "src/app/shared/models/user";
 
 @Component({
   selector: "app-navbar",
