@@ -16,28 +16,28 @@
     fxHide.lt-sm
   >
     <li *ngIf="isAuth && !!currentUser">
-      <a [routerLink]="['/users', currentUser.id]">
+      <a [routerLink]="['/user', currentUser.id]">
         <mat-icon>account_circle</mat-icon>
         My Profile</a
       >
     </li>
 
     <li *ngIf="isAuth">
-      <a routerLink="/users">
+      <a routerLink="/user/list">
         <mat-icon>group</mat-icon>
         All Users</a
       >
     </li>
 
     <li *ngIf="isAuth">
-      <a routerLink="/posts">
+      <a routerLink="/post/list">
         <mat-icon>group</mat-icon>
         All Posts</a
       >
     </li>
 
     <li *ngIf="isAuth">
-      <a routerLink="/create-post">
+      <a routerLink="/post/create">
         <mat-icon>create</mat-icon>
         Create Post</a
       >
@@ -46,11 +46,11 @@
     <li *ngIf="isAuth"></li>
 
     <li *ngIf="!isAuth">
-      <a routerLink="/sign-in"> <mat-icon>person_pin</mat-icon>Login</a>
+      <a routerLink="/auth/sign-in"> <mat-icon>person_pin</mat-icon>Login</a>
     </li>
 
     <li *ngIf="!isAuth">
-      <a routerLink="/register-user">
+      <a routerLink="/auth/signup">
         <mat-icon>perm_identity</mat-icon>Register</a
       >
     </li>

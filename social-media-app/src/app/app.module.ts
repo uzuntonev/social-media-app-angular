@@ -10,9 +10,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FirebaseModule } from "./shared/firebase/firebase.module";
 import { SharedModule } from "./shared/shared.module";
 import { AuthModule } from "./auth/auth.module";
-import { PostModule } from "./posts/post.module";
 import { CoreModule } from "./core/core.module";
-import { UserModule } from './users/user.module';
 
 import { NotFoundComponent } from './not-found/not-found.component';
 
@@ -29,8 +27,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
     CoreModule,
     SharedModule,
     AuthModule,
-    PostModule,
-    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

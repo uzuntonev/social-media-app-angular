@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   getDetails(postId) {
-    this.router.navigate(["posts", postId]);
+    this.router.navigate(["post", postId]);
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

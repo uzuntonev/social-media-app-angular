@@ -9,15 +9,18 @@ import { IUser } from "src/app/shared/models/user";
 })
 export class SidenavListComponent implements OnInit {
   @Input() isAuth: boolean;
-  currentUser: IUser;
+
   constructor(private authService: AuthService) {
-    this.currentUser = this.authService.userData;
+ 
   }
 
   ngOnInit() {
     this.isAuth = this.authService.isLoggedIn;
   }
 
+  get currentUser(){
+    return this.authService.userData;
+  }
   signOut() {
     this.authService.SignOut();
   }

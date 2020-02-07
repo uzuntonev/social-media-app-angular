@@ -30,7 +30,7 @@ export class CardComponent implements OnInit {
   }
 
   getDetails(postId: string) {
-    this.router.navigate(["posts", postId]);
+    this.router.navigate(["post", postId]);
   }
 
   deletePost() {

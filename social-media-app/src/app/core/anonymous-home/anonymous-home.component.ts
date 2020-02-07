@@ -11,7 +11,7 @@ export class AnonymousHomeComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { 
     if(this.authService.isLoggedIn){
-      this.router.navigate(['posts'])
+      this.router.navigate(['post', 'list'])
     }
   }
 

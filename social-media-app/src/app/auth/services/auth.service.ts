@@ -49,7 +49,7 @@ export class AuthService {
       .signInWithEmailAndPassword(value.email, value.password)
       .then(result => {
         this.ChangeEmailVerifiedProp(result);
-        this.router.navigate(["posts"]);
+        this.router.navigate(["post", "list"]);
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {

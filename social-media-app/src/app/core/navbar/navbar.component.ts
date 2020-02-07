@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit, DoCheck, AfterViewInit {
 
   ngOnInit() {
     this.isAuth = this.authService.isLoggedIn;
+    console.log(this.isAuth);
   }
 
   ngAfterViewInit(){

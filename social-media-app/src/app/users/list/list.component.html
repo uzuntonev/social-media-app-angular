@@ -39,7 +39,7 @@
         >
           <li *ngFor="let post of user.posts">
             <a
-              routerLink="/posts/{{ post.id }}"
+              [routerLink]="['/post', post.id]"
               fxLayout
               fxLayoutAlign="space-between"
               fxLayoutGap="10px"

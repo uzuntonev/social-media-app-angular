@@ -6,24 +6,34 @@ import { ForgotPasswordComponent } from "./forgot-password/forgot-password.compo
 import { VerifyEmailComponent } from "./verify-email/verify-email.component";
 const routes: Routes = [
   {
-    path: "sign-in",
-    component: SignInComponent,
-    canActivate: [SecureInnerGuard]
-  },
-  {
-    path: "register-user",
-    component: SignUpComponent,
-    canActivate: [SecureInnerGuard]
-  },
-  {
-    path: "forgot-password",
-    component: ForgotPasswordComponent,
-    canActivate: [SecureInnerGuard]
-  },
-  {
-    path: "verify-email-address",
-    component: VerifyEmailComponent,
-    canActivate: []
+    path: "auth",
+    children: [
+      {
+        path: "",
+        pathMatch: "full",
+        redirectTo: "sign-in"
+      },
+      {
+        path: "sign-in",
+        component: SignInComponent,
+        canActivate: [SecureInnerGuard]
+      },
+      {
+        path: "signup",
+        component: SignUpComponent,
+        canActivate: [SecureInnerGuard]
+      },
+      {
+        path: "forgot-password",
+        component: ForgotPasswordComponent,
+        canActivate: [SecureInnerGuard]
+      },
+      {
+        path: "verify-email-address",
+        component: VerifyEmailComponent,
+        canActivate: []
+      }
+    ]
   }
 ];
 export const AuthRoutingModule = RouterModule.forChild(routes);
