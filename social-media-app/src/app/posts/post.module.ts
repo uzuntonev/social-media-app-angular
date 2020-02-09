@@ -12,7 +12,8 @@ import { CommentsComponent } from "./comments/comments.component";
 import { CardComponent } from "./card/card.component";
 import { PostRoutingModule } from "./post-routing.module";
 import { SubstringPipe } from "../shared/pipes/substring.pipe";
-import { LikeDislikePipe } from '../shared/pipes/like-dislike.pipe';
+
+
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { LikeDislikePipe } from '../shared/pipes/like-dislike.pipe';
     CommentsComponent,
     CardComponent,
     SubstringPipe,
-    LikeDislikePipe,
+
   ],
   imports: [
     FlexLayoutModule,

@@ -1,41 +1,53 @@
-<div fxLayout>
-  <img src="{{ post.avatar }}" class="avatar" alt="No Avatar" />
-  <mat-card-header>
-    <mat-card-title>{{ post.title }}</mat-card-title>
-    <mat-card-subtitle
-      >Created on:
-      {{
-        post.createdOn.toDate() | date: "dd.MM.yyyy hh:mm:SS"
-      }}</mat-card-subtitle
-    >
-    <mat-card-subtitle>Created by: {{ post.createdByName }}</mat-card-subtitle>
-  </mat-card-header>
-</div>
-
-<img mat-card-image src="{{ post.imageLink }}" alt="Photo of a Shiba Inu" />
-<mat-card-content>
-  <p>
-    {{ post.description | substring: 200 }}
-  </p>
-</mat-card-content>
-<mat-card-actions fxLayout fxLayoutAlign="space-between">
-  <div class="like-dislike-btn">
-    <button (click)="likePost(post.id)" mat-button>LIKE</button>
-    <span #likes class="likes">
-      {{ post.likes }}
-    </span>
-
-    <button (click)="dislikePost(post.id)" mat-button>DISLIKE</button>
-    <span #dislikes class="dislikes">
-      {{ post.dislikes }}
-    </span>
+<mat-card class="card wrapper">
+  <div fxLayout>
+    <img src="{{ post.avatar }}" class="avatar" alt="No Avatar" />
+    <mat-card-header>
+      <mat-card-title>{{ post.title }}</mat-card-title>
+      <mat-card-subtitle
+        >Created on:
+        {{
+          post.createdOn.toDate() | date: "dd.MM.yyyy hh:mm:SS"
+        }}</mat-card-subtitle
+      >
+      <mat-card-subtitle
+        >Created by: {{ post.createdByName }}</mat-card-subtitle
+      >
+    </mat-card-header>
   </div>
 
-  <!-- <button *ngIf="author === post.createdById" (click)="deletePost()" mat-button>
-    DELETE
-  </button> -->
+  <img mat-card-image src="{{ post.imageLink }}" alt="Photo of a Shiba Inu" />
+  <mat-card-content>
+    <p>
+      {{ post.description | substring: 200 }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="action-btn" fxLayout fxLayoutAlign="space-between">
+    <div class="like-dislike-btn">
+      <button (click)="likePost(post.id)" mat-button>
+        <mat-icon>thumb_up_alt</mat-icon>
+      </button>
+      <span #likes class="likes">
+        {{ post.likes }}
+      </span>
 
-  <button mat-button>
-    <button (click)="getDetails(post.id)" mat-button>DETAILS</button>
-  </button>
-</mat-card-actions>
+      <button (click)="dislikePost(post.id)" mat-button>
+        <mat-icon>thumb_down_alt</mat-icon>
+      </button>
+      <span #dislikes class="dislikes">
+        {{ post.dislikes }}
+      </span>
+    </div>
+
+    <button
+      *ngIf="author === post.createdById && isDetailPage"
+      (click)="deletePost()"
+      mat-button
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <button *ngIf="!isDetailPage" (click)="getDetails(post.id)" mat-button>
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

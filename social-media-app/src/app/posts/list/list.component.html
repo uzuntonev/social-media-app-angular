@@ -3,36 +3,12 @@
 </ng-template>
 
 <ng-template #posts>
-  <div
-  class="wrapper"
-  fxLayoutAlign="center"
-  fxLayout
-  *ngIf="allPosts.length > 0"
->
-  <div class="main-content">
-    <mat-card class="card" *ngFor="let post of allPosts">
-      <app-card [post]="post"></app-card>
-    </mat-card>
+  <div class="wrapper" fxLayout="column">
+    <app-card *ngFor="let post of allPosts$ | async" [post]="post"></app-card>
   </div>
-
-  <!-- <div class="side-bar">
-  <mat-card class="example-card" *ngFor="let user of allUsers">
-    <div fxLayout fxLayoutAlign="center">
-      <img src="{{ user.avatar }}" alt="No avatar" class="avatar" />
-      <mat-card-header>
-        <mat-card-title>{{ user.fullName }}</mat-card-title>
-      </mat-card-header>
-    </div>
-    <mat-card-actions fxLayoutAlign="end">
-      <button mat-button  (click)="addFriend(user)">{{user.isFriend ? "You already friends" : "Add friend"}}</button>
-      <button mat-button *ngIf="!user.isFriend" (click)="deleteFriend(user)">Add Friend</button>
-    </mat-card-actions>
-  </mat-card>
-</div> -->
-</div>
 </ng-template>
 
-<ng-container *ngIf="!allPosts.length then loader; else posts"></ng-container>
+<ng-container *ngIf="!allPosts$; then loader; else posts"></ng-container>
 
 <!-- <ng-container *ngIf="!allPosts.length">
 </ng-container>

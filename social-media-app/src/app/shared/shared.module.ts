@@ -5,11 +5,11 @@ import { RouterModule } from "@angular/router";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from "./material/material.module";
 import { LoaderComponent } from "./loader/loader.component";
-
+import { PasswordMatchDirective } from "./directives/password-match.directive";
 
 @NgModule({
-  declarations: [LoaderComponent],
+  declarations: [LoaderComponent, PasswordMatchDirective],
   imports: [MaterialModule, CommonModule, RouterModule, FlexLayoutModule],
-  exports: [LoaderComponent]
+  exports: [LoaderComponent, PasswordMatchDirective]
 })
 export class SharedModule {}

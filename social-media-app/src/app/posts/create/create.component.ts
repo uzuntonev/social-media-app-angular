@@ -41,15 +41,16 @@ export class CreateComponent implements OnInit {
     }
     const post: IPost = {
       id: Math.random().toString(),
+      avatar: this.afUserData.photoURL || this.userData.avatar,
+      createdOn: new Date(),
+      createdByName: this.afUserData.displayName || this.userData.name,
+      createdById: this.afUserData.uid,
       title: title,
       description: description,
       imgName: this.selectedFiles.item(0).name,
-      createdOn: new Date(),
+      imageLink: null,
       likes: 0,
       dislikes: 0,
-      createdByName: this.afUserData.displayName || this.userData.name,
-      createdById: this.afUserData.uid,
-      avatar: this.afUserData.photoURL || this.userData.avatar
     };
 
     this.postService.createPost(post);

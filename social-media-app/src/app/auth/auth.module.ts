@@ -9,13 +9,14 @@ import { FormsModule } from "@angular/forms";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { RouterModule } from "@angular/router";
 import { AuthRoutingModule } from "./auth-routing.module";
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     ForgotPasswordComponent,
     SignInComponent,
     SignUpComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +24,8 @@ import { AuthRoutingModule } from "./auth-routing.module";
     FormsModule,
     FlexLayoutModule,
     RouterModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule
   ],
   exports: [SignInComponent]
 })

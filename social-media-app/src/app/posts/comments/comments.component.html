@@ -5,25 +5,34 @@
     ngForm
     class="form-comment"
     #commentForm="ngForm"
-    (ngSubmit)="addComment(commentForm.value.comment); commentForm.reset()"
+    (ngSubmit)="addComment(commentForm)"
     fxLayout="column"
     fxLayoutAlign="center"
   >
     <mat-form-field>
       <textarea
-        #textArea
+        class="textarea-comment"
+        #textareaInput="ngModel"
         ngModel
         matInput
         name="comment"
         id="comment"
         rows="5"
-        maxlength="250"
+        maxlength="150"
         required
+        minlength="10"
         placeholder="Write Comment"
       ></textarea>
       <div class="hint" fxLayoutAlign="end">
-        <mat-hint>{{ textArea.value.length }} / 250</mat-hint>
+        <mat-hint>{{ textareaInput?.value?.length }} / 150</mat-hint>
       </div>
+      <mat-error *ngIf="textareaInput.hasError('required')"
+        >Please write a comment</mat-error
+      >
+      <mat-error *ngIf="textareaInput.hasError('minlength')"
+        >Comment must be at least 10 symbols long</mat-error
+      >
+
     </mat-form-field>
     <button
       class="btn-sign-up"
@@ -60,6 +69,32 @@
       <mat-card-content class="content-comments">{{
         comment.content
       }}</mat-card-content>
+        <!-- <mat-card-actions class="action-btn" fxLayout fxLayoutAlign="space-between">
+          <div class="like-dislike-btn">
+            <button (click)="likeComment(comment.id)" mat-button>
+              <mat-icon>thumb_up_alt</mat-icon>
+            </button>
+            <span #likes class="likes">
+              {{ comment.likes }}
+            </span>
+      
+            <button (click)="dislikeComment(comment.id)" mat-button>
+              <mat-icon>thumb_down_alt</mat-icon>
+            </button>
+            <span #dislikes class="dislikes">
+              {{ comment.dislikes }}
+            </span>
+          </div>
+      
+          <button
+            *ngIf="author === comment.createdById && isDetailPage"
+            (click)="deleteComment()"
+            mat-button
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+      
+        </mat-card-actions> -->
     </mat-card>
   </div>
 </div>

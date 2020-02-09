@@ -101,7 +101,7 @@ export class AuthService {
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
     return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
-      this.router.navigate(["verify-email-address"]);
+      this.router.navigate(["auth","verify-email-address"]);
     });
   }
 
@@ -143,7 +143,7 @@ export class AuthService {
       .signInWithPopup(provider)
       .then(result => {
         this.SetUserData(result);
-        this.router.navigate(["posts"]);
+        this.router.navigate(["post", "list"]);
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -159,8 +159,6 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afDb.doc(
       `users/${result.user.uid}`
     );
-
-    // this.getUserData(result).subscribe();
 
     const userData: IUser = {
       id: result.user.uid,

@@ -3,18 +3,12 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
-  DoCheck
+  OnDestroy
 } from "@angular/core";
 import { UsersService } from "../services/users.service";
-import { fromEvent } from "rxjs";
-import {
-  distinctUntilChanged,
-  debounceTime,
-  filter,
-  map,
-  tap
-} from "rxjs/operators";
-import { IUser } from "src/app/shared/models/user";
+import { Observable, Subscription, of } from "rxjs";
+import { filter, tap, mergeMapTo, mergeMap, map } from "rxjs/operators";
+import { IPost } from "src/app/shared/models/post";
 
 @Component({
   selector: "app-users-list",
@@ -22,34 +16,33 @@ import { IUser } from "src/app/shared/models/user";
   styleUrls: ["./list.component.scss"]
 })
 export class ListComponent implements OnInit {
+  options: { text: string; value: string }[] = [
+    { text: "Name", value: "name" },
+    { text: "Email", value: "email" },
+    { text: "Title", value: "title" }
+  ];
   @ViewChild("searchInput", { static: true }) searchInput: ElementRef;
-  users: any[] = [];
+  users$: Observable<any>;
+  private _allUsers: any[] = [];
+  private userListSubscription: Subscription;
   constructor(private userService: UsersService) {}
 
   ngOnInit() {
-    fromEvent(this.searchInput.nativeElement, "keyup")
-      .pipe(
-        map((event: KeyboardEvent) => (event.target as HTMLInputElement).value),
-        // if character length greater then 2
-        filter((res: string) => res.length > 2),
-        // Time in milliseconds between key events
-        debounceTime(1000),
-        // If previous query is diffent from current
-        distinctUntilChanged()
-        // subscription for response
-      )
-      .subscribe(query => {
-        if (query != "") {
-          this.users = [];
-          this.userService.getAllUsers
-            .pipe(filter((user: IUser) => user.name.includes(query)))
-            .subscribe((user: IUser) => {
-              this.users.push(user);
-            });
-        }
-      });
-    this.userService.getAllUsers.subscribe(user => {
-      this.users.push(user);
+    this.userListSubscription = this.userService.getAllUsers.subscribe(user => {
+      this._allUsers = this._allUsers.concat(user);
     });
+    this.users$ = this.userService.userStore;
+  }
+
+  searchUser(value) {
+    this.users$ = this.userService.searchUser(
+      this.users$,
+      this._allUsers,
+      value
+    );
+  }
+
+  ngOnDestroy() {
+    this.userListSubscription.unsubscribe();
   }
 }

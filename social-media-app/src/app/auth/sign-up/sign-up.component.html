@@ -34,46 +34,60 @@
               >Enter valid email.</mat-error
             >
           </mat-form-field>
+          <div
+            #passwordsGroup="ngModelGroup"
+            ngModelGroup="passwords"
+            appPasswordMatch
+          >
+            <mat-form-field>
+              <input
+                #passwordInput="ngModel"
+                matInput
+                ngModel
+                id="password"
+                name="password"
+                type="password"
+                required
+                minlength="6"
+                placeholder="Password"
+              />
+              <mat-error *ngIf="passwordInput.hasError('required')"
+                >Password is required.</mat-error
+              >
+              <mat-error *ngIf="passwordInput.hasError('minlength')"
+                >Password must be at least 6 symbols.</mat-error
+              >
+            </mat-form-field>
 
-          <mat-form-field>
-            <input
-              #passwordInput="ngModel"
-              matInput
-              ngModel
-              id="password"
-              name="password"
-              type="password"
-              required
-              minlength="6"
-              placeholder="Password"
-            />
-            <mat-error *ngIf="passwordInput.hasError('required')"
-              >Password is required.</mat-error
-            >
-            <mat-error *ngIf="passwordInput.hasError('minlength')"
-              >Password must be at least 6 symbols.</mat-error
-            >
-          </mat-form-field>
+            <mat-form-field>
+              <input
+                #rePasswordInput="ngModel"
+                matInput
+                ngModel
+                id="repassword"
+                name="repassword"
+                type="password"
+                required
+                minlength="6"
+                placeholder="Repeat password"
+              />
+              <mat-error *ngIf="rePasswordInput.hasError('required')"
+                >RePassword is required.</mat-error
+              >
+              <mat-error *ngIf="rePasswordInput.hasError('minlength')"
+                >RePassword must be at least 6 symbols.</mat-error
+              >
+            </mat-form-field>
 
-          <mat-form-field>
-            <input
-              #rePasswordInput="ngModel"
-              matInput
-              ngModel
-              id="repassword"
-              name="repassword"
-              type="password"
-              required
-              minlength="6"
-              placeholder="Repeat password"
-            />
-            <mat-error *ngIf="rePasswordInput.hasError('required')"
-              >RePassword is required.</mat-error
+            <mat-error
+              *ngIf="
+                passwordsGroup.hasError('passwordMatch') &&
+                !passwordInput.invalid &&
+                !rePasswordInput.invalid
+              "
+              >Your password don`t match.</mat-error
             >
-            <mat-error *ngIf="rePasswordInput.hasError('minlength')"
-              >RePassword must be at least 6 symbols.</mat-error
-            >
-          </mat-form-field>
+          </div>
         </div>
         <div class="right" fxLayout="column">
           <mat-form-field>

@@ -5,48 +5,52 @@ import { IPost } from "../../shared/models/post";
 import { map, mergeMap, delay, tap } from "rxjs/operators";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { IComment } from "../../shared/models/comment";
+import { Subject, Subscription } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class PostService {
-  likes: number;
-  dislikes: number;
   constructor(
     private afDb: AngularFirestore,
     private router: Router,
     private afs: AngularFireStorage
   ) {}
 
-  // Create new post and redirect to "/posts"
+  // Create new post and redirect to "/post/list"
   createPost(post: IPost) {
+    let subscription: Subscription;
     this.afDb
-      .collection("posts")
+      .collection<IPost>("posts")
       .doc(post.id)
       .set(post, {
         merge: true
-      });
-    this.router.navigate(["posts"]);
+      })
+      .then(() => {
+        subscription = this.mapPostData(post).subscribe(
+          updatedPost => {
+            this.afDb
+              .collection<IPost>("posts")
+              .doc(post.id)
+              .update({
+                imageLink: updatedPost.imageLink
+              });
+          },
+          err => console.log(err),
+          () => subscription.unsubscribe()
+        );
+        this.router.navigate(["post", "list"]);
+      })
+      .catch(err => console.error(err));
   }
 
   // Getter for all posts in DB in getter iteration over each post and map it. Add property imageLink
   get getAllPost() {
     return this.afDb
-      .collection("posts", ref => {
+      .collection<IPost>("posts", ref => {
         return ref.orderBy("createdOn", "desc");
       })
       .valueChanges()
-      .pipe(
-        mergeMap((allPost: IPost[]) => {
-          return allPost.map((post: IPost) => {
-            if (!post) {
-              return;
-            }
-            return this.mapPostData(post);
-          });
-        }),
-        mergeMap(post => post)
-      );
   }
 
   // Method which map each post to add imageLink prop
@@ -65,67 +69,57 @@ export class PostService {
   }
 
   // Update likes and dislikes prop every time when button is clicked
-  updateLikeDislike(id: string, prop: string) {
+  updateLikeDislike(postId: string, prop: string, value: string) {
     return this.afDb
-      .collection("posts", ref => {
-        return ref.where("createdById", "==", id);
+      .collection<IPost>("posts", ref => {
+        return ref.where("createdById", "==", postId);
       })
-      .doc(id)
-      .get()
-      .pipe(
-        mergeMap((doc: DocumentData) => {
-          const post = doc.data();
-          return this.afDb
-            .collection("posts")
-            .doc(id)
-            .update({
-              [prop]: +post[prop] + 1
-            });
-        })
-      )
-  
+      .doc(postId)
+      .update({ [prop]: +value + 1 });
   }
 
   // Pass post in params and delete it from DB and delete image from storage
   deletePost(post: IPost) {
     this.afDb
-      .collection("posts")
+      .collection<IPost>("posts")
       .doc(post.id)
-      .delete();
+      .delete()
+      .catch(err => console.error(err));
 
-    this.afs.ref(`/uploads/${post.imgName}`).delete();
-    this.router.navigate([""]);
+    this.afs
+      .ref(`/uploads/${post.imgName}`)
+      .delete()
+      .subscribe(
+        () => {
+          this.router.navigate([""]);
+        },
+        err => console.error(err)
+      );
   }
 
   // Get post with Id and map it to add property imageLink
-  getPost(id: string) {
+  getPost(postId: string) {
     return this.afDb
-      .collection("posts")
-      .doc(id)
+      .collection<IPost>("posts")
+      .doc(postId)
       .valueChanges()
-      .pipe(
-        map((post: IPost) => {
-          return this.mapPostData(post);
-        }),
-        mergeMap(post => post)
-      );
   }
 
   // Pass in params comment and postId then add current comment in comments collection
   addComment(comment: IComment, postId: string) {
     return this.afDb
-      .collection("posts")
+      .collection<IPost>("posts")
       .doc(postId)
-      .collection("comments")
+      .collection<IComment>("comments")
       .add(comment);
   }
 
   // Get all comments for post with id from params
   getAllComments(postId: string) {
     return this.afDb
-      .collection("posts")
+      .collection<IPost>("posts")
       .doc(postId)
-      .collection("comments", ref => {
+      .collection<IComment>("comments", ref => {
         return ref.orderBy("createdOn", "asc");
       })
       .valueChanges();

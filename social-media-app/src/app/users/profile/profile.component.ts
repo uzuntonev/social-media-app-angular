@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { UsersService } from "../services/users.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { filter } from "rxjs/operators";
-import { Subscription } from "rxjs";
+import { filter, map } from "rxjs/operators";
+import { Subscription, Observable, pipe } from "rxjs";
 
 @Component({
   selector: "app-profile",
@@ -11,7 +11,7 @@ import { Subscription } from "rxjs";
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   user: any;
-  private subscription: Subscription;
+  private userListSubscription: Subscription;
   constructor(
     private userService: UsersService,
     private activateRoute: ActivatedRoute,
@@ -19,15 +19,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-   this.subscription = this.userService.getAllUsers
-      .pipe(filter(post => post.id === this.activateRoute.snapshot.params.id))
-      .subscribe(user => (this.user = user));
+    this.userListSubscription = this.userService.getAllUsers
+    .pipe(filter(user => user.id === this.activateRoute.snapshot.params.id))
+    .subscribe(user => (this.user = user));
+
   }
 
   getDetails(postId) {
     this.router.navigate(["post", postId]);
   }
+
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.userListSubscription.unsubscribe();
   }
 }

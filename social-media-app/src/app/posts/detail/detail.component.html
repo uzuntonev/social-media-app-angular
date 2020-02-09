@@ -4,13 +4,11 @@
 <div
   class="wrapper"
   fxLayout="column"
-  fxLayoutAlign="center"
   fxLayoutGap="15px"
   *ngIf="!!post"
 >
-  <mat-card class="card">
-    <app-card [post]="post"></app-card>
-    <!-- <div fxLayout>
+  <app-card [post]="post"></app-card>
+  <!-- <div fxLayout>
       <img src="{{ post.avatar }}" class="avatar" alt="No Avatar" />
       <mat-card-header>
         <mat-card-title>{{ post.title }}</mat-card-title>
@@ -50,6 +48,6 @@
         DELETE
       </button>
     </mat-card-actions> -->
-  </mat-card>
+
   <app-comments [post]="post"></app-comments>
 </div>

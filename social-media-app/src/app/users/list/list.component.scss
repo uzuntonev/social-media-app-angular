@@ -1,6 +1,6 @@
 .wrapper {
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 600px;
 }
 
 ul {
@@ -22,32 +22,37 @@ ul {
 }
 
 .card {
-  max-width: 700px;
+  max-width: 600px;
   margin: 20px 0;
   padding: 20px;
   border-radius: 0.5em;
   box-shadow: 0 0 1em gray;
   width: 100%;
   margin-bottom: 100px;
+  box-sizing: border-box;
 }
 
 .avatar {
-  width: 200px;
+  width: 180px;
   border-radius: 50%;
 }
 
 .info-section,
 .post-section {
-  font-size: 20px;
+  font-size: 18px;
   .label {
     font-weight: bold;
   }
 }
 
 .search-bar {
-  width: 100%
+  width: 600px
 }
 
 .search-from{
   padding: 5px 20px;
+}
+
+.search-header{
+  font-family: "Pacifico", cursive; 
 }
