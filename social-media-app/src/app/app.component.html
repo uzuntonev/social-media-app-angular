@@ -1,1 +1,23 @@
-<app-home></app-home>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav>
+      <app-sidenav-list
+      ></app-sidenav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="site">
+      <app-navbar
+        (sidenavToggle)="sidenav.toggle()"
+      ></app-navbar>
+  
+      <main class="main">
+        <router-outlet></router-outlet>
+      </main>
+    
+      <footer class="footer">
+        <app-footer></app-footer>
+      </footer>
+      
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  

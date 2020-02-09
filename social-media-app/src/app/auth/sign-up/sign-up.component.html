@@ -1,4 +1,4 @@
-<div class="container" fxLayout>
+<div class="wrapper" fxLayout>
   <div
     class="sign-up-container"
     fxFlex
@@ -36,8 +36,9 @@
           </mat-form-field>
           <div
             #passwordsGroup="ngModelGroup"
-            ngModelGroup="passwords"
+            ngModelGroup="passwordsGroup"
             appPasswordMatch
+            fxLayout="column"
           >
             <mat-form-field>
               <input

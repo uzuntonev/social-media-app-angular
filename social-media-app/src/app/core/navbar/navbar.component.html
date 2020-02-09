@@ -5,7 +5,7 @@
     </button>
   </div>
   <div>
-    <a class="title" routerLink="home">Social Network</a>
+    <a class="title" routerLink="post/list">Social Network</a>
   </div>
   <ul
     fxFlex
@@ -43,7 +43,13 @@
       >
     </li>
 
-    <li *ngIf="isAuth"></li>
+    <li *ngIf="!isAuth">
+      <a routerLink="/home"><mat-icon>home</mat-icon>Home</a>
+    </li>
+
+    <li *ngIf="!isAuth">
+      <a routerLink="/check-post"><mat-icon>dvr</mat-icon>Check Posts</a>
+    </li>
 
     <li *ngIf="!isAuth">
       <a routerLink="/auth/sign-in"> <mat-icon>person_pin</mat-icon>Login</a>

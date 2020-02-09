@@ -1,15 +1,9 @@
 import { Injectable } from "@angular/core";
 import { IUser } from "../../shared/models/user";
 import { AngularFirestore } from "@angular/fire/firestore";
-import {
-  mergeMap,
-  map,
-  debounceTime,
-  distinctUntilChanged
-} from "rxjs/operators";
+import { mergeMap, map } from "rxjs/operators";
 import { IPost } from "src/app/shared/models/post";
-import { fromEvent, Subject, of, Observable } from "rxjs";
-import { FromEventTarget } from "rxjs/internal/observable/fromEvent";
+import { Subject, of, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -18,12 +12,14 @@ export class UsersService {
   userStore = new Subject<any[]>();
   constructor(private afDb: AngularFirestore) {}
 
+  // Get single user bt id
   getUser(id) {
     return this.afDb
       .collection<IUser>("users", ref => ref.where("id", "==", id))
       .valueChanges();
   }
 
+  // Get all users
   get getAllUsers() {
     let userList: any[] = [];
     return this.afDb
@@ -50,10 +46,10 @@ export class UsersService {
         })
       );
   }
-
-  searchUser(stream$: Observable<any>, collection: any[], params) {
+  // In params pass collection and criteria for search. Search for user in passed collection by criteria and return stream with found users
+  searchUser(collection: any[], params) {
     const { searchBy, searchFor } = params;
-
+    let stream$: Observable<any>;
     if (searchBy === "title") {
       stream$ = of(
         [...collection].filter(user => {
@@ -77,18 +73,5 @@ export class UsersService {
       );
     }
     return stream$;
-  }
-
-  _searchUser(element: FromEventTarget<any>) {
-    return fromEvent(element, "keyup").pipe(
-      map((event: KeyboardEvent) => (event.target as HTMLInputElement).value),
-      // if character length greater then 2
-      // filter((res: string) => res.length > 2),
-      // Time in milliseconds between key events
-      debounceTime(1000),
-      // If previous query is diffent from current
-      distinctUntilChanged()
-      // Filtered users by query
-    );
   }
 }

@@ -1,23 +1,8 @@
-<mat-sidenav-container class="container">
-  <mat-sidenav #sidenav>
-    <app-sidenav-list
-      [isAuth]="isAuth"
-    ></app-sidenav-list>
-  </mat-sidenav>
-  <mat-sidenav-content class="site">
-    <app-navbar
-      [isAuth]="isAuth"
-      [currentUser]="currentUser"
-      (sidenavToggle)="sidenav.toggle()"
-    ></app-navbar>
+<div class="wrapper" fxFlex fxLayoutAlign="center" fxLayoutGap="20px">
+  <img src="assets/images/Screenshot_1.png" />
+  <div class="sign-in-form">
+    <app-sign-in></app-sign-in>
+  </div>
+</div>
 
-    <main class="main">
-      <router-outlet></router-outlet>
-    </main>
-  
-    <footer class="footer">
-      <app-footer></app-footer>
-    </footer>
-    
-  </mat-sidenav-content>
-</mat-sidenav-container>
+

@@ -1,16 +1,28 @@
-mat-sidenav {
-  width: 250px;
+.container {
+  margin: 0 auto;
+  max-width: 800px;
 }
-.site{
-  position: relative;
-  min-height: 100vh;
-  background-color: #EAEAEA;
+
+.sign-in-form {
+  width: 40%;
 }
-.main {
-  // padding-top: 2em;
+
+img {
+  margin: 0 !important;
 }
-.footer{
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
+
+// @media(min-width: 900px){
+//     .container {
+//         display: flex;
+//     }
+
+//     .aside {
+//         flex: 1 0 25%;
+//         margin-left: 2em;
+//     }
+// }
+
+
+
+
+

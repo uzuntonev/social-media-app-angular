@@ -91,7 +91,7 @@ export class PostService {
       .delete()
       .subscribe(
         () => {
-          this.router.navigate([""]);
+          this.router.navigate(["post", "list"]);
         },
         err => console.error(err)
       );

@@ -45,8 +45,9 @@ export class AuthService {
 
   // Sign in with email/password
   SignIn(value) {
+    const { email, password } = value;
     return this.afAuth.auth
-      .signInWithEmailAndPassword(value.email, value.password)
+      .signInWithEmailAndPassword(email, password)
       .then(result => {
         this.ChangeEmailVerifiedProp(result);
         this.router.navigate(["post", "list"]);
@@ -79,16 +80,17 @@ export class AuthService {
 
   // Sign up with email/password
   SignUp(value) {
-    if (value.password !== value.repassword) {
+    const {email, passwordsGroup, name, avatar} = value
+    if (passwordsGroup.password !== passwordsGroup.repassword) {
       this.snackbar.open("Password do not match", "Undo", {
         duration: 3000
       });
       return;
     }
     return this.afAuth.auth
-      .createUserWithEmailAndPassword(value.email, value.password)
+      .createUserWithEmailAndPassword(email, passwordsGroup.password)
       .then(result => {
-        this.SetUserData(result, value.name, value.avatar);
+        this.SetUserData(result, name, avatar);
         this.SendVerificationMail();
       })
       .catch(error => {
@@ -101,7 +103,7 @@ export class AuthService {
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
     return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
-      this.router.navigate(["auth","verify-email-address"]);
+      this.router.navigate(["auth", "verify-email-address"]);
     });
   }
 

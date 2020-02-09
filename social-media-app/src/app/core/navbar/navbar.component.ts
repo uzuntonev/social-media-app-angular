@@ -15,25 +15,20 @@ import { IUser } from "src/app/shared/models/user";
   templateUrl: "./navbar.component.html",
   styleUrls: ["./navbar.component.scss"]
 })
-export class NavbarComponent implements OnInit, DoCheck, AfterViewInit {
+export class NavbarComponent implements OnInit{
   @Output() sidenavToggle = new EventEmitter<void>();
-  @Input() isAuth: boolean;
-  @Input() currentUser: IUser;
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-    this.isAuth = this.authService.isLoggedIn;
+  ngOnInit() {}
+
+  get isAuth() {
+    return this.authService.isLoggedIn;
   }
 
-  ngAfterViewInit(){
-
+  get currentUser() {
+    return this.authService.userData;
   }
-  ngDoCheck() {
-   
-
-  }
-
   signOut() {
     this.authService.SignOut();
   }

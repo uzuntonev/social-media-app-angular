@@ -19,7 +19,11 @@
   </div> -->
 
   <div>
-    <a *ngIf="isAuth" mat-list-item [routerLink]="['user/profile', currentUser ? currentUser.id : '']">
+    <a
+      *ngIf="isAuth"
+      mat-list-item
+      [routerLink]="['user', currentUser ? currentUser.id : '']"
+    >
       <mat-icon>account_circle</mat-icon>
       My Profile</a
     >
@@ -41,6 +45,12 @@
 
     <a *ngIf="isAuth" mat-list-item (click)="signOut()">
       <mat-icon>cancel</mat-icon>Logout</a
+    >
+
+    <a *ngIf="!isAuth" routerLink="/home"><mat-icon>home</mat-icon>Home</a>
+
+    <a *ngIf="!isAuth" routerLink="/check-post"
+      ><mat-icon>dvr</mat-icon>Check Posts</a
     >
 
     <a *ngIf="!isAuth" mat-list-item routerLink="/auth/sign-in">

@@ -3,12 +3,11 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
-  OnDestroy
 } from "@angular/core";
 import { UsersService } from "../services/users.service";
-import { Observable, Subscription, of } from "rxjs";
-import { filter, tap, mergeMapTo, mergeMap, map } from "rxjs/operators";
-import { IPost } from "src/app/shared/models/post";
+import { Observable, Subscription } from "rxjs";
+import { delay } from 'rxjs/operators';
+
 
 @Component({
   selector: "app-users-list",
@@ -35,11 +34,7 @@ export class ListComponent implements OnInit {
   }
 
   searchUser(value) {
-    this.users$ = this.userService.searchUser(
-      this.users$,
-      this._allUsers,
-      value
-    );
+    this.users$ = this.userService.searchUser(this._allUsers, value);
   }
 
   ngOnDestroy() {

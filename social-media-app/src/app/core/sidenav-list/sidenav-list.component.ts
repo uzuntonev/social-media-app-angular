@@ -8,17 +8,15 @@ import { IUser } from "src/app/shared/models/user";
   styleUrls: ["./sidenav-list.component.scss"]
 })
 export class SidenavListComponent implements OnInit {
-  @Input() isAuth: boolean;
+  constructor(private authService: AuthService) {}
 
-  constructor(private authService: AuthService) {
- 
+  ngOnInit() {}
+  
+  get isAuth() {
+    return this.authService.isLoggedIn;
   }
 
-  ngOnInit() {
-    this.isAuth = this.authService.isLoggedIn;
-  }
-
-  get currentUser(){
+  get currentUser() {
     return this.authService.userData;
   }
   signOut() {

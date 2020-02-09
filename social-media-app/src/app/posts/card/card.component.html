@@ -18,7 +18,7 @@
   <img mat-card-image src="{{ post.imageLink }}" alt="Photo of a Shiba Inu" />
   <mat-card-content>
     <p>
-      {{ post.description | substring: 200 }}
+      {{ post.description | substring: 200 : !isDetailPage}}
     </p>
   </mat-card-content>
   <mat-card-actions class="action-btn" fxLayout fxLayoutAlign="space-between">

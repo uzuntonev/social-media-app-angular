@@ -19,7 +19,7 @@ export class SecureInnerGuard implements CanActivate {
           duration: 3000,
         })
         // window.alert("You are not allowed to access this URL!");
-         this.router.navigate(['home'])
+         this.router.navigate([''])
       }
     return true;
   }
