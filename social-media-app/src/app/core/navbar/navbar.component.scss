@@ -1,31 +1,33 @@
 /* Toolbar CSS */
 
-.welcome-msg,
-li,
-a {
+.welcome-msg {
   font-family: "Pacifico", cursive;
 }
-a {
-  text-decoration: none;
-  color: white;
-}
+
 .title {
   font-size: 1.7em;
   font-weight: bold;
-}
-li {
-  list-style: none;
-  a {
-    display: flex;
-    align-items: center;
-    mat-icon {
-      margin-right: 5%;
-    }
-  }
+  font-family: "Pacifico", cursive;
+  text-decoration: none;
+  color: white;
 }
 
 ul {
   margin-right: 6%;
+  li {
+    list-style: none;
+    font-family: "Pacifico", cursive;
+    a {
+      font-family: "Pacifico", cursive;
+      text-decoration: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      mat-icon {
+        margin-right: 5%;
+      }
+    }
+  }
 }
 
 a:hover {
@@ -41,13 +43,30 @@ a:hover {
 }
 
 .welcome-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.2em;
   font-weight: bold;
 }
 
 .avatar {
+  margin: 0 20px;
   border-radius: 50%;
   width: 45px;
   height: 35px;
-background-size: cover;
+  background-size: cover;
+}
+
+@media (max-width: 1200px) {
+  .welcome,
+  .user-name {
+    display: none;
+  }
+  .avatar {
+    margin: 0;
+  }
+  .title {
+    font-size: 1.2em;
+  }
 }

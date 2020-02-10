@@ -21,12 +21,16 @@ ul {
   }
 }
 
+.card-info {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .card {
   max-width: 800px;
-  margin: 5% 0 15% 0;
+  margin: 3% 0;
   border-radius: 0.5em;
   box-shadow: 0 0 1em gray;
-  width: 100%;
   padding: 10px;
 }
 
@@ -39,5 +43,22 @@ ul {
   font-size: 20px;
   .label {
     font-weight: bold;
+  }
+}
+
+@media (max-width: 600px) {
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .wrapper {
+    margin: 0 20px;
+  }
+  .avatar {
+    width: 80px;
+    border-radius: 50%;
   }
 }

@@ -60,29 +60,23 @@
     </button>
   </form>
 
-  <div class="upload" fxFlex>
+  <div class="upload">
     <input
       class="upload-input"
       id="upload"
       type="file"
       color="primary"
       (change)="detectFiles($event)"
-      fxFlex
-      fxFlexAlign="start"
     />
-
     <button
-      class="btn-upload"
-      type="button"
-      mat-button
-      color="primary"
-      (click)="uploadSingle()"
-      fxFlex
-      fxFlexAlign="end"
-    >
-      <mat-icon>file_upload</mat-icon>
-      Upload
-    </button>
+    class="btn-upload"
+    type="button"
+    mat-mini-fab
+    color="primary"
+    (click)="uploadSingle()"
+  >
+    <mat-icon>file_upload</mat-icon>
+  </button>
   </div>
   <div
     *ngIf="currentUpload?.name"

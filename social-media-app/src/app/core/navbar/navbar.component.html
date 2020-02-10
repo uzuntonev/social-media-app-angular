@@ -65,13 +65,11 @@
     <div
       class="welcome-msg"
       *ngIf="!!currentUser"
-      fxLayout
-      fxLayoutAlign="center center"
-      fxLayoutGap="20px"
+      
     >
-      <p>Hello</p>
+      <p class="welcome">Hello</p>
       <img src="{{ currentUser.avatar }}" class="avatar" alt="No Avatar" />
-      <p>{{ currentUser.name }}</p>
+      <p class="user-name">{{ currentUser.name }}</p>
     </div>
     <div fxLayout fxLayoutAlign="center center" fxLayoutGap="10px">
       <a class="logout" (click)="signOut()"

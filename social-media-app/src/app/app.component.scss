@@ -1,17 +1,22 @@
-
 mat-sidenav {
-    width: 250px;
-  }
-  .site{
-    position: relative;
-    min-height: 100vh;
-    background-color: #EAEAEA;
-  }
-  .main {
-    // padding-top: 2em;
-  }
-  .footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
+  width: 250px;
+}
+.site {
+  // position: relative;
+  // min-height: 100vh;
+  background-color: #eaeaea;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  background-image: url("../assets/images/background-1.png");
+  // background-repeat: no-repeat;
+  background-size: contain;
+  min-height: 82.5vh;
+  // padding-top: 2em;
+}
+.footer {
+  // position: absolute;
+  // bottom: 0;
+  // width: 100%;
+}

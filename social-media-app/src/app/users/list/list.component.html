@@ -47,7 +47,7 @@
 
 <div class="wrapper" *ngFor="let user of users$ | async">
   <div class="card">
-    <div class="card-info" fxLayoutAlign="space-evenly" fxLayoutGap="20px">
+    <div class="card-info" >
       <div class="img-section">
         <img class="avatar" src="{{ user.avatar }}" />
       </div>
@@ -79,7 +79,7 @@
                   Created on: {{ post.createdOn.toDate() | date: "dd.MM.yyyy" }}
                 </p>
               </div>
-              <button mat-fab color="primary">Read</button>
+              <button class="btn-read" mat-fab color="primary">Read</button>
             </a>
           </li>
         </ul>

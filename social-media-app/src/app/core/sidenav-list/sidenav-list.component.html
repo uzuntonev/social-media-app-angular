@@ -47,9 +47,11 @@
       <mat-icon>cancel</mat-icon>Logout</a
     >
 
-    <a *ngIf="!isAuth" routerLink="/home"><mat-icon>home</mat-icon>Home</a>
+    <a *ngIf="!isAuth" mat-list-item routerLink="/home"
+      ><mat-icon>home</mat-icon>Home</a
+    >
 
-    <a *ngIf="!isAuth" routerLink="/check-post"
+    <a *ngIf="!isAuth" mat-list-item routerLink="/check-post"
       ><mat-icon>dvr</mat-icon>Check Posts</a
     >
 

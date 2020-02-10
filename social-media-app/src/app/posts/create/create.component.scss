@@ -1,8 +1,8 @@
 .create-post-section {
-  margin: 5% 20%;
+  margin: 3% 20%;
   border-radius: 0.5em;
   box-shadow: 0 0 1em gray;
-  padding: 3% 7%;
+  padding: 30px;
 }
 
 .upload-msg {
@@ -16,21 +16,29 @@
 .upload-input {
   border-radius: 8px;
   padding: 6px 10px 10px 10px;
+  align-items: flex-start;
 }
 .upload-input:hover {
   background-color: #e5e3e8;
 }
-
-.btn-upload {
-  border-radius: 8px;
-}
 .upload {
   margin: 15px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.upload-input {
+
+
+}
+.btn-upload {
+  border-radius: 8px;
+  margin-right: 30px;
 }
 
 .btn-submit {
-  margin: 5px 150px;
-  padding: 10px;
+  margin: 0 auto;
+  padding: 15px 150px;
   border-radius: 10px;
   font-size: 20px;
   font-weight: bold;
@@ -38,4 +46,21 @@
 
 .textarea {
   resize: none !important;
+}
+
+@media (max-width: 600px) {
+  .create-post-section {
+    margin: 20px 50px;
+    width: 300px;
+    padding: 20px;
+  }
+  .btn-submit {
+    padding: 5px 20px;
+    font-size: 15px;
+  }
+  .upload {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }

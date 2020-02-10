@@ -21,6 +21,11 @@ ul {
   }
 }
 
+.card-info {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .card {
   max-width: 700px;
   margin: 20px 0;
@@ -28,7 +33,6 @@ ul {
   border-radius: 0.5em;
   box-shadow: 0 0 1em gray;
   width: 100%;
-  margin-bottom: 100px;
   box-sizing: border-box;
 }
 
@@ -46,13 +50,37 @@ ul {
 }
 
 .search-bar {
-  width: 600px
+  width: 600px;
 }
 
-.search-from{
+.search-from {
   padding: 5px 20px;
 }
 
-.search-header{
-  font-family: "Pacifico", cursive; 
+.search-header {
+  font-family: "Pacifico", cursive;
+}
+
+@media (max-width: 600px) {
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .wrapper {
+    margin: 0 20px;
+  }
+  .search-bar {
+    width: 300px;
+  }
+  .avatar {
+    width: 80px;
+    border-radius: 50%;
+  }
+  .info-section,
+  .post-section {
+    font-size: 16px;
+  }
 }

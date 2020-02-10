@@ -1,28 +1,29 @@
-.container {
+.wrapper {
   margin: 0 auto;
-  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 }
 
 .sign-in-form {
   width: 40%;
 }
 
-img {
-  margin: 0 !important;
+
+.wrapper {
+  height: auto;
 }
 
-// @media(min-width: 900px){
-//     .container {
-//         display: flex;
-//     }
-
-//     .aside {
-//         flex: 1 0 25%;
-//         margin-left: 2em;
-//     }
-// }
-
-
-
-
-
+@media (max-width: 600px) {
+  .sign-in-form {
+    margin: 5%;
+    width: 300px;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
