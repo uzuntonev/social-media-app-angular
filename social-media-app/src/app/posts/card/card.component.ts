@@ -15,7 +15,6 @@ export class CardComponent implements OnInit {
   @ViewChild("likes", { static: false }) likes: ElementRef;
   @ViewChild("dislikes", { static: false }) dislikes: ElementRef;
   private userData: IUser;
-  private afUserData: any;
   isDetailPage: boolean;
   constructor(
     private postService: PostService,
@@ -24,7 +23,7 @@ export class CardComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.userData = this.authService.userData;
-    this.afUserData = this.authService.afUserData;
+
   }
 
   ngOnInit() {
@@ -32,7 +31,7 @@ export class CardComponent implements OnInit {
   }
 
   get author() {
-    return this.userData ? this.userData.id : this.afUserData.uid;
+    return this.userData.id
   }
 
   likePost(postId) {

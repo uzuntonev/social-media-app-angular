@@ -16,7 +16,7 @@ import { IPost } from "src/app/shared/models/post";
 export class CoreService {
   constructor(private afDb: AngularFirestore) {}
 
-  filter(element) {
+  userFilter(element) {
     return fromEvent(element, "keyup").pipe(
       map((event: KeyboardEvent) => (event.target as HTMLInputElement).value),
       // if character length greater then 2
@@ -32,15 +32,17 @@ export class CoreService {
           .valueChanges()
           .pipe(
             map(posts => {
-              const found = posts.find(post =>
-                post.title
-                  .toLocaleLowerCase()
-                  .includes(query.toLocaleLowerCase())
-              );
-              if (found) {
-                return found;
-              }
-            })
+              return posts.map(post => {
+                if (
+                  post.title
+                    .toLocaleLowerCase()
+                    .includes(query.toLocaleLowerCase())
+                ) {
+                  return post;
+                }
+              });
+            }),
+            map(list => list.filter(e => e !== undefined)),
           );
       })
     );

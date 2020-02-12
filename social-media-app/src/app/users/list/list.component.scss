@@ -48,13 +48,12 @@ ul {
     font-weight: bold;
   }
 }
-
-.search-bar {
-  width: 600px;
-}
-
 .search-from {
-  padding: 5px 20px;
+  display: flex;
+}
+.search-input {
+  width: 600px;
+  margin-right: 20px;
 }
 
 .search-header {
@@ -67,13 +66,21 @@ ul {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
   }
   .wrapper {
     margin: 0 20px;
   }
-  .search-bar {
-    width: 300px;
+  .search-from {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .search-input {
+    width: 250px;
+  }
+
+  .search-select {
+    width: 250px;
   }
   .avatar {
     width: 80px;

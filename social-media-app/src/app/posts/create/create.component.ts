@@ -17,7 +17,7 @@ export class CreateComponent implements OnInit {
   currentUpload: Upload;
   isUpload: boolean = false;
   private userData: IUser;
-  private afUserData: any;
+
   constructor(
     private uploadService: UploadService,
     private postService: PostService,
@@ -25,7 +25,7 @@ export class CreateComponent implements OnInit {
     private authService: AuthService
   ) {
     this.userData = this.authService.userData;
-    this.afUserData = this.authService.afUserData;
+
   }
 
   ngOnInit() {}
@@ -41,16 +41,16 @@ export class CreateComponent implements OnInit {
     }
     const post: IPost = {
       id: Math.random().toString(),
-      avatar: this.afUserData.photoURL || this.userData.avatar,
+      avatar: this.userData.avatar,
       createdOn: new Date(),
-      createdByName: this.afUserData.displayName || this.userData.name,
-      createdById: this.afUserData.uid,
+      createdByName: this.userData.name,
+      createdById: this.userData.id,
       title: title,
       description: description,
       imgName: this.selectedFiles.item(0).name,
       imageLink: null,
       likes: 0,
-      dislikes: 0,
+      dislikes: 0
     };
 
     this.postService.createPost(post);

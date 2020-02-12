@@ -20,3 +20,9 @@ mat-sidenav {
   // bottom: 0;
   // width: 100%;
 }
+
+@media(max-width: 900px){
+  .main {
+    background-image: none;
+  }
+}

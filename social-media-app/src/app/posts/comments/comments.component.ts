@@ -5,9 +5,9 @@ import { IPost } from "src/app/shared/models/post";
 import { AuthService } from "src/app/auth/services/auth.service";
 import { Observable } from "rxjs";
 import { DocumentData } from "@angular/fire/firestore";
-import { NgForm } from '@angular/forms';
-import { IUser } from 'src/app/shared/models/user';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from "@angular/forms";
+import { IUser } from "src/app/shared/models/user";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-comments",
@@ -15,8 +15,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ["./comments.component.scss"]
 })
 export class CommentsComponent implements OnInit {
-  // private userData: IUser;
-  // private afUserData: any;
   // isDetailPage: boolean;
   // @ViewChild("likes", { static: false }) likes: ElementRef;
   // @ViewChild("dislikes", { static: false }) dislikes: ElementRef;
@@ -26,17 +24,13 @@ export class CommentsComponent implements OnInit {
     private postService: PostService,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-  ) {
-    // this.userData = this.authService.userData;
-    // this.afUserData = this.authService.afUserData;
-  }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.allComments$ = this.postService.getAllComments(this.post.id);
     // this.isDetailPage = !!this.activatedRoute.snapshot.params.id;
   }
-
 
   addComment(form: NgForm) {
     const comment: IComment = {
@@ -50,11 +44,11 @@ export class CommentsComponent implements OnInit {
     };
 
     this.postService.addComment(comment, this.post.id);
-    form.reset()
+    form.reset();
   }
 
   // get author() {
-  //   return this.userData ? this.userData.id : this.afUserData.uid;
+  //   return this.userData.id
   // }
 
   // likeComment(commentId){

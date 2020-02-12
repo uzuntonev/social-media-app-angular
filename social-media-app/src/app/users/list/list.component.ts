@@ -1,13 +1,7 @@
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChild,
-} from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { UsersService } from "../services/users.service";
-import { Observable, Subscription } from "rxjs";
-import { delay } from 'rxjs/operators';
-
+import { Observable, Subscription, interval, range } from "rxjs";
+import { buffer, bufferCount, last, takeLast, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-users-list",
@@ -22,22 +16,31 @@ export class ListComponent implements OnInit {
   ];
   @ViewChild("searchInput", { static: true }) searchInput: ElementRef;
   users$: Observable<any>;
-  private _allUsers: any[] = [];
+  private _userList: any[] = [];
+  userList: any[] = [];
   private userListSubscription: Subscription;
+  private userSearchSubscription: Subscription = new Subscription();
   constructor(private userService: UsersService) {}
 
   ngOnInit() {
     this.userListSubscription = this.userService.getAllUsers.subscribe(user => {
-      this._allUsers = this._allUsers.concat(user);
+      this._userList = this._userList.concat(user);
+      this.userList = this.userList.concat(user);
     });
-    this.users$ = this.userService.userStore;
+    // this.users$ = this.userService.userStore;
   }
 
   searchUser(value) {
-    this.users$ = this.userService.searchUser(this._allUsers, value);
+    this.userSearchSubscription = this.userService
+      .searchUser(this._userList, value)
+      .subscribe(users => {
+        this.userList = [...users];
+      });
+    // this.users$ = this.userService.searchUser(this._allUsers, value);
   }
 
   ngOnDestroy() {
     this.userListSubscription.unsubscribe();
+    this.userSearchSubscription.unsubscribe();
   }
 }

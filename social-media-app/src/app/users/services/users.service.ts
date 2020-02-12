@@ -9,7 +9,7 @@ import { Subject, of, Observable } from "rxjs";
   providedIn: "root"
 })
 export class UsersService {
-  userStore = new Subject<any[]>();
+  userStore = new Subject<any>();
   constructor(private afDb: AngularFirestore) {}
 
   // Get single user bt id
@@ -46,6 +46,7 @@ export class UsersService {
         })
       );
   }
+
   // In params pass collection and criteria for search. Search for user in passed collection by criteria and return stream with found users
   searchUser(collection: any[], params) {
     const { searchBy, searchFor } = params;

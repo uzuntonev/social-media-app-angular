@@ -1,14 +1,15 @@
 <div class="wrapper">
-  <h2 class="search-header" fxLayoutAlign="center">Search user by name, email or title of his post:</h2>
+  <h2 class="search-header" fxLayoutAlign="center">
+    Search user by name, email or title of his post:
+  </h2>
   <form
     #searchForm="ngForm"
     (ngSubmit)="searchUser(searchForm.value)"
-    fxLayoutAlign="center"
-    fxLayoutGap="20px"
-    class="card search-from"
+    class="search-from card"
   >
-    <mat-form-field class="search-bar">
+    <mat-form-field class="search-input">
       <input
+        class="search-input"
         #searchInput
         ngModel
         name="searchFor"
@@ -16,7 +17,7 @@
         placeholder="Type here..."
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="search-select">
       <mat-label>Search by</mat-label>
       <mat-select
         #selectInput="ngModel"
@@ -33,7 +34,7 @@
         >Select searching by is required</mat-error
       >
     </mat-form-field>
-    <button mat-button>
+    <button class="search-btn" mat-button [disabled]="searchForm.invalid">
       <mat-icon aria-hidden="false" aria-label="Example home icon"
         >search</mat-icon
       >
@@ -41,13 +42,13 @@
   </form>
 </div>
 
-<ng-container *ngIf="!(users$ | async)?.length">
+<ng-container *ngIf="!userList.length">
   <app-loader></app-loader>
 </ng-container>
 
-<div class="wrapper" *ngFor="let user of users$ | async">
+<div class="wrapper" *ngFor="let user of userList">
   <div class="card">
-    <div class="card-info" >
+    <div class="card-info">
       <div class="img-section">
         <img class="avatar" src="{{ user.avatar }}" />
       </div>

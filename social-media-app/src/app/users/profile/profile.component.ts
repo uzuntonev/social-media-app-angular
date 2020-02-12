@@ -3,6 +3,7 @@ import { UsersService } from "../services/users.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { filter, map } from "rxjs/operators";
 import { Subscription, Observable, pipe } from "rxjs";
+import { IUser } from 'src/app/shared/models/user';
 
 @Component({
   selector: "app-profile",
@@ -20,7 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userListSubscription = this.userService.getAllUsers
-    .pipe(filter(user => user.id === this.activateRoute.snapshot.params.id))
+    .pipe(filter((user: IUser) => user.id === this.activateRoute.snapshot.params.id))
     .subscribe(user => (this.user = user));
 
   }
