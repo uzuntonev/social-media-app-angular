@@ -30,7 +30,6 @@ const routes: Routes = [
       {
         path: "verify-email-address",
         component: VerifyEmailComponent,
-        canActivate: []
       }
     ]
   }

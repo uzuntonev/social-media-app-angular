@@ -16,7 +16,7 @@
     fxHide.lt-sm
   >
     <li *ngIf="isAuth">
-      <a [routerLink]="['/user', currentUser?.id]">
+      <a [routerLink]="['/user', currentUser ? currentUser.id : '']">
         <mat-icon>account_circle</mat-icon>
         My Profile</a
       >
@@ -47,9 +47,9 @@
       <a routerLink="/home"><mat-icon>home</mat-icon>Home</a>
     </li>
 
-    <li *ngIf="!isAuth">
+    <!-- <li *ngIf="!isAuth">
       <a routerLink="/check-post"><mat-icon>dvr</mat-icon>Check Posts</a>
-    </li>
+    </li> -->
 
     <li *ngIf="!isAuth">
       <a routerLink="/auth/sign-in"> <mat-icon>person_pin</mat-icon>Login</a>
