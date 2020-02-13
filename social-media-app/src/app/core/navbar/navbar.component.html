@@ -5,7 +5,7 @@
     </button>
   </div>
   <div>
-    <a class="title" routerLink="post/list">Social Network</a>
+    <a class="title" [routerLink]="isAuth ? ['post', 'list'] : ['home']">Social Network</a>
   </div>
   <ul
     fxFlex
@@ -15,8 +15,8 @@
     fxShow
     fxHide.lt-sm
   >
-    <li *ngIf="isAuth && !!currentUser">
-      <a [routerLink]="['/user', currentUser.id]">
+    <li *ngIf="isAuth">
+      <a [routerLink]="['/user', currentUser?.id]">
         <mat-icon>account_circle</mat-icon>
         My Profile</a
       >

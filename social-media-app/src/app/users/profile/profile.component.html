@@ -14,7 +14,12 @@
           <span>{{ user.name }}</span>
           <p class="label">Email:</p>
           <span>{{ user.email }}</span>
+          <div class="action">
+            <button mat-flat-button color="primary" (click)="resetPassword()">Reset password</button>
+            <button mat-raised-button color="warn" (click)="deleteAccount(user.id)">Delete account</button>
+          </div>
         </div>
+
         <div class="post-section">
           <p class="label">Posts:</p>
           <div *ngIf="!user.posts.length"><p>This user no posts</p></div>

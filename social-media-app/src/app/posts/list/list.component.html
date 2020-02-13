@@ -4,15 +4,15 @@
 
 <ng-template #posts>
   <div class="wrapper" fxLayout="column">
-    <app-card *ngFor="let post of allPosts$ | async" [post]="post"></app-card>
+    <app-card *ngFor="let post of (allPosts$ | async)" [post]="post"></app-card>
   </div>
 </ng-template>
 
-<ng-container *ngIf="!allPosts$; then loader; else posts"></ng-container>
+<ng-container *ngIf="!allPosts$ then loader; else posts"></ng-container>
 
-<!-- <ng-container *ngIf="!allPosts.length">
-</ng-container>
+// <!-- <ng-container *ngIf="!allPosts.length">
+// </ng-container>
 
-<ng-container *ngIf="!!allPosts.length">
+// <ng-container *ngIf="!!allPosts.length">
   
-</ng-container> -->
+// </ng-container> -->

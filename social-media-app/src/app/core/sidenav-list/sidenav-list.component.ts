@@ -17,6 +17,6 @@ export class SidenavListComponent {
     return this.authService.userData;
   }
   signOut() {
-    this.authService.SignOut();
+    this.authService.signOut();
   }
 }

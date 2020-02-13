@@ -39,20 +39,34 @@ ul {
   border-radius: 50%;
 }
 
-.info-section, .post-section {
+.info-section,
+.post-section {
   font-size: 20px;
   .label {
     font-weight: bold;
   }
 }
 
+.action {
+  display: flex;
+  flex-direction: column;
+  button {
+    margin-top: 15px;
+    font-size: 20px;
+  }
+}
 @media (max-width: 600px) {
   .card-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+  }
+  .action {
+    button {
+      margin-right: 10px;
+      font-size: 18px;
+    }
   }
   .wrapper {
     margin: 0 20px;

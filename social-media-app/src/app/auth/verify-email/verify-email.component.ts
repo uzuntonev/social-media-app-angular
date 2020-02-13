@@ -1,17 +1,20 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { AuthService } from "src/app/auth/services/auth.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-verify-email",
   templateUrl: "./verify-email.component.html",
   styleUrls: ["./verify-email.component.scss"]
 })
-export class VerifyEmailComponent implements OnInit {
+export class VerifyEmailComponent {
   currentUser = this.authService.userData;
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {}
   sendVerificationMail() {
-    this.authService.SendVerificationMail();
+    this.authService.sendVerificationMail();
+  }
+  navigateMyProfile(){
+    this.router.navigate(["user", this.currentUser.id])
   }
 }

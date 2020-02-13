@@ -1,16 +1,24 @@
 import { Injectable } from "@angular/core";
 import { IUser } from "../../shared/models/user";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { mergeMap, map } from "rxjs/operators";
+import { mergeMap, map, tap } from "rxjs/operators";
 import { IPost } from "src/app/shared/models/post";
 import { Subject, of, Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { AuthService } from "src/app/auth/services/auth.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class UsersService {
   userStore = new Subject<any>();
-  constructor(private afDb: AngularFirestore) {}
+  constructor(
+    private afDb: AngularFirestore,
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private authService: AuthService
+  ) {}
 
   // Get single user bt id
   getUser(id) {
@@ -74,5 +82,15 @@ export class UsersService {
       );
     }
     return stream$;
+  }
+
+  deleteUser(userId) {
+    this.afAuth.auth.currentUser.delete().then(() => {
+      this.authService.signOut();
+      this.afDb
+        .collection("users")
+        .doc(userId)
+        .delete();
+    });
   }
 }

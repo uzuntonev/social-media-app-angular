@@ -8,72 +8,53 @@ import {
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
-import { map, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-  private _userData: IUser;
   constructor(
-    private afDb: AngularFirestore, // Inject Firestore service
-    private afAuth: AngularFireAuth, // Inject Firebase auth service
+    private afDb: AngularFirestore, 
+    private afAuth: AngularFireAuth, 
     private router: Router,
     private snackbar: MatSnackBar
-  ) // private ngZone: NgZone // NgZone service to remove outside scope warning         // this.ngZone.run(() => {});
-  {
+  ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
 
+    /* Before async operation i set in local storage returned user from angular fire but
+     information for the user  is in "users" collection. 
+     That`s why fetch data for logged user from "users" collection and then 
+     override property "userData" in localStorage. 
+     Do this because when redirect to "/post/list" after sign in app doesn't know that have "userData" */
+
     this.afAuth.authState.subscribe(afUserInfo => {
       if (afUserInfo) {
+        localStorage.setItem("userData", JSON.stringify(afUserInfo));
         this.getUserData(afUserInfo).subscribe((user: IUser) => {
-          this._userData = user;
-          // localStorage.setItem("userData", JSON.stringify(user));
+          const userData = user ? user : null
+          localStorage.setItem("userData", JSON.stringify(userData));
         });
       } else {
-        this._userData = null;
-        // localStorage.setItem("userData", null);
+        localStorage.setItem("userData", null);
       }
     });
   }
 
+  // Returns data for logged user
   get userData(): IUser {
-    return this._userData;
-    // return JSON.parse(localStorage.getItem("userData"));
+    return JSON.parse(localStorage.getItem("userData"));
   }
 
-  // Returns true when user is looged in and email is verified
+  // Returns true when user is logged in and email is verified
   get isLoggedIn(): boolean {
-    // const user = JSON.parse(localStorage.getItem("userData"));
-    const user = this._userData;
-    return user !== null;
+    const user = JSON.parse(localStorage.getItem("userData"));
+    return user != null
     // && user.emailVerified !== false ? true : false;
   }
 
-  /* Sign in with email/password, 
-   Check if returned info from angular fire have emailVerified prop
-   with value true update property emailVerified in "users" collection */
-  SignIn(value) {
-    const { email, password } = value;
-    return this.afAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(afUserInfo => {
-        if (afUserInfo.user.emailVerified) {
-          this.ChangeEmailVerifiedProp(afUserInfo);
-        }
-        setTimeout(() => {
-          this.router.navigate(["post", "list"]);
-        }, 500);
-      })
-      .catch(error => {
-        this.snackbar.open(error.message, "Undo", {
-          duration: 3000
-        });
-      });
-  }
-
-  private ChangeEmailVerifiedProp(afUserInfo) {
+  private changeEmailVerifiedProp(afUserInfo) {
     return this.afDb
       .collection("users")
       .doc(afUserInfo.user.uid)
@@ -88,8 +69,28 @@ export class AuthService {
       .pipe(map(user => user.payload.data()));
   }
 
+  /* Sign in with email/password, 
+   Check if returned info from angular fire have emailVerified prop
+   with value true update property emailVerified in "users" collection */
+  SignIn(value) {
+    const { email, password } = value;
+    return this.afAuth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(afUserInfo => {
+        if (afUserInfo.user.emailVerified) {
+          this.changeEmailVerifiedProp(afUserInfo);
+        }
+        this.router.navigate(["post", "list"]);
+      })
+      .catch(error => {
+        this.snackbar.open(error.message, "Undo", {
+          duration: 3000
+        });
+      });
+  }
+
   // Sign up with email/password
-  SignUp(value) {
+  signUp(value) {
     const { email, passwordsGroup, name, avatar } = value;
     if (passwordsGroup.password !== passwordsGroup.repassword) {
       this.snackbar.open("Password do not match", "Undo", {
@@ -100,8 +101,8 @@ export class AuthService {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, passwordsGroup.password)
       .then(afUserInfo => {
-        this.SetUserData(afUserInfo, name, avatar);
-        this.SendVerificationMail();
+        this.setUserData(afUserInfo, name, avatar);
+        this.sendVerificationMail();
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -111,14 +112,14 @@ export class AuthService {
   }
 
   // Send email verfificaiton when new user sign up
-  SendVerificationMail() {
+  sendVerificationMail() {
     return this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
       this.router.navigate(["auth", "verify-email-address"]);
     });
   }
 
   // Reset Forggot password
-  ForgotPassword(passwordResetEmail) {
+  forgotPassword(passwordResetEmail) {
     return this.afAuth.auth
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
@@ -129,7 +130,6 @@ export class AuthService {
             duration: 3000
           }
         );
-        this.router.navigate(["auth", "sign-in"]);
       })
       .catch(error => {
         this.snackbar.open(error.message, "Undo", {
@@ -140,15 +140,15 @@ export class AuthService {
 
   // Sign in with Google
   GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
+    return this.authLogin(new auth.GoogleAuthProvider());
   }
 
   // Auth logic to run auth providers
-  AuthLogin(provider) {
+  authLogin(provider) {
     return this.afAuth.auth
       .signInWithPopup(provider)
       .then(afUserInfo => {
-        this.SetUserData(afUserInfo);
+        this.setUserData(afUserInfo);
         this.router.navigate(["post", "list"]);
       })
       .catch(error => {
@@ -161,7 +161,7 @@ export class AuthService {
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(afUserInfo, name?: string, avatar?: string) {
+  setUserData(afUserInfo, name?: string, avatar?: string) {
     const userRef: AngularFirestoreDocument<any> = this.afDb.doc(
       `users/${afUserInfo.user.uid}`
     );
@@ -180,10 +180,9 @@ export class AuthService {
   }
 
   // Sign out
-  SignOut() {
+  signOut() {
     return this.afAuth.auth.signOut().then(() => {
-      // localStorage.removeItem("userData");
-      this._userData = null;
+      localStorage.removeItem("userData");
       this.router.navigate(["home"]);
     });
   }

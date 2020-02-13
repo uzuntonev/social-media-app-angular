@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {}
 
   signUp(value) {
-    this.authService.SignUp(value);
+    this.authService.signUp(value);
   }
 
   signUpGoogle() {

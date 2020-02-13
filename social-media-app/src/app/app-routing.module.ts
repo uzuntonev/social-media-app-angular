@@ -6,8 +6,8 @@ import { SecureInnerGuard } from "./shared/guards/secure-inner.guard";
 import { HomeComponent } from "./core/home/home.component";
 
 const routes: Routes = [
-  { path: "", pathMatch: "full", redirectTo: "post" },
-  { path: "home", component: HomeComponent, canActivate: [SecureInnerGuard] },
+  { path: "", pathMatch: "full", redirectTo: "home" },
+  { path: "home", component: HomeComponent,},
   { path: "check-post", component: CheckPostComponent, canActivate: [SecureInnerGuard] },
   { path: "post", loadChildren: "./posts/post.module#PostModule" },
   { path: "user", loadChildren: "./users/user.module#UserModule" },

@@ -26,7 +26,6 @@ const routes: Routes = [
       {
         path: "forgot-password",
         component: ForgotPasswordComponent,
-        canActivate: [SecureInnerGuard]
       },
       {
         path: "verify-email-address",

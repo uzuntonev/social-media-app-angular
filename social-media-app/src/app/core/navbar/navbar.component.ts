@@ -19,7 +19,7 @@ export class NavbarComponent {
     return this.authService.userData;
   }
   signOut() {
-    this.authService.SignOut();
+    this.authService.signOut();
   }
 
   toggleSidenav() {
