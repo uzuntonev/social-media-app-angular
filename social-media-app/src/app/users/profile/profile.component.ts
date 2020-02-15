@@ -32,9 +32,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   getDetails(postId) {
     this.router.navigate(["post", postId]);
   }
+
   resetPassword() {
     this.router.navigate(["auth", "forgot-password"]);
   }
+  
   deleteAccount(userId) {
     window.alert("Are you sure ?")
     this.userService.deleteUser(userId)

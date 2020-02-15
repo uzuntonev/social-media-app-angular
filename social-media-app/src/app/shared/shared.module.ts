@@ -6,10 +6,11 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from "./material/material.module";
 import { LoaderComponent } from "./loader/loader.component";
 import { PasswordMatchDirective } from "./directives/password-match.directive";
+import { SubstringPipe } from './pipes/substring.pipe';
 
 @NgModule({
-  declarations: [LoaderComponent, PasswordMatchDirective],
+  declarations: [LoaderComponent, PasswordMatchDirective, SubstringPipe],
   imports: [MaterialModule, CommonModule, RouterModule, FlexLayoutModule],
-  exports: [LoaderComponent, PasswordMatchDirective]
+  exports: [LoaderComponent, PasswordMatchDirective, SubstringPipe]
 })
 export class SharedModule {}

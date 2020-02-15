@@ -1,11 +1,11 @@
-import { Injectable, NgZone } from "@angular/core";
-import { AngularFirestore, DocumentData } from "@angular/fire/firestore";
+import { Injectable } from "@angular/core";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { IPost } from "../../shared/models/post";
-import { map, mergeMap, delay, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { IComment } from "../../shared/models/comment";
-import { Subject, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -45,12 +45,12 @@ export class PostService {
   }
 
   // Getter for all posts in DB in getter iteration over each post and map it. Add property imageLink
-  get getAllPost() {
+  getAllPost() {
     return this.afDb
       .collection<IPost>("posts", ref => {
         return ref.orderBy("createdOn", "desc");
       })
-      .valueChanges()
+      .valueChanges();
   }
 
   // Method which map each post to add imageLink prop
@@ -102,7 +102,7 @@ export class PostService {
     return this.afDb
       .collection<IPost>("posts")
       .doc(postId)
-      .valueChanges()
+      .valueChanges();
   }
 
   // Pass in params comment and postId then add current comment in comments collection

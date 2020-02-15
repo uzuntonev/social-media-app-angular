@@ -8,7 +8,7 @@
   </div>
 </ng-template>
 
-<ng-container *ngIf="!authService.userData then loader; else posts"></ng-container>
+<ng-container *ngIf="!allPosts$ then loader; else posts"></ng-container>
 
 // <!-- <ng-container *ngIf="!allPosts.length">
 // </ng-container>

@@ -24,8 +24,8 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.userListSubscription = this.userService.getAllUsers.subscribe(user => {
-      this._userList = this._userList.concat(user);
-      this.userList = this.userList.concat(user);
+      this._userList.push(user)
+      this.userList.push(user)
     });
     // this.users$ = this.userService.userStore;
   }

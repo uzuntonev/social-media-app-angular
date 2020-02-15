@@ -11,8 +11,6 @@ import { DetailComponent } from "./detail/detail.component";
 import { CommentsComponent } from "./comments/comments.component";
 import { CardComponent } from "./card/card.component";
 import { PostRoutingModule } from "./post-routing.module";
-import { SubstringPipe } from "../shared/pipes/substring.pipe";
-
 
 
 @NgModule({
@@ -22,8 +20,6 @@ import { SubstringPipe } from "../shared/pipes/substring.pipe";
     DetailComponent,
     CommentsComponent,
     CardComponent,
-    SubstringPipe,
-
   ],
   imports: [
     FlexLayoutModule,

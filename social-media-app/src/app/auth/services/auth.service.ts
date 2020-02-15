@@ -23,31 +23,33 @@ export class AuthService {
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(afUserInfo => {
       if (afUserInfo) {
-        this._isAuth = true;
-        localStorage.setItem("user", '');
+        // this._isAuth = true;
+        // this._userData = afUserInfo
+        localStorage.setItem("user", JSON.stringify("test"));
         this.getUserData(afUserInfo).subscribe((user: IUser) => {
-          this._userData = user ? user : null;
-          localStorage.setItem("user", JSON.stringify(this._userData));
-
+          // this._userData = user ? user : null
+          const userData = user ? JSON.stringify(user) : null;
+          localStorage.setItem("user", userData);
         });
       } else {
+        // this._isAuth = false;
+        // this._userData = null;
         localStorage.setItem("user", null);
-        this._userData = null;
       }
     });
   }
 
   // Returns data for logged user
   get userData(): IUser {
-    return this._userData;
+    return JSON.parse(localStorage.getItem("user"));
+    // return this._userData
   }
 
   // Returns true when user is logged
   get isLoggedIn(): boolean {
-    if(localStorage.getItem("user")){
-      const user = JSON.parse(localStorage.getItem("user"));
-      return user != null;
-    }
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user !== null;
+    // return this._isAuth
   }
 
   private changeEmailVerifiedProp(afUserInfo) {
@@ -181,9 +183,9 @@ export class AuthService {
   // Sign out
   signOut() {
     return this.afAuth.auth.signOut().then(() => {
-      localStorage.removeItem("user")
-      this._isAuth = false;
-      this._userData = null;
+      // this._isAuth = false;
+      // this._userData = null;
+      localStorage.removeItem("user");
       this.router.navigate(["/"]);
     });
   }

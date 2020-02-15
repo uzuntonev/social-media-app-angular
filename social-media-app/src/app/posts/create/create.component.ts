@@ -12,7 +12,7 @@ import { IUser } from "../../shared/models/user";
   templateUrl: "./create.component.html",
   styleUrls: ["./create.component.scss"]
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent {
   selectedFiles: FileList;
   currentUpload: Upload;
   isUpload: boolean = false;
@@ -25,13 +25,9 @@ export class CreateComponent implements OnInit {
     private authService: AuthService
   ) {
     this.userData = this.authService.userData;
-
   }
 
-  ngOnInit() {}
-
-  // Create stream of data for current post and pass them to the postService
-
+  // Create post 
   createPost(title, description) {
     if (!this.isUpload) {
       this.snackbar.open("Please upload file", "Undo", {
