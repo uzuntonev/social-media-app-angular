@@ -8,9 +8,10 @@ import { SharedModule } from "../shared/shared.module";
 import { RouterModule } from "@angular/router";
 import { UserRoutingModule } from "./user-routing.module";
 import { FormsModule } from "@angular/forms";
+import { UserPostsComponent } from './user-posts/user-posts.component';
 
 @NgModule({
-  declarations: [ListComponent, ProfileComponent],
+  declarations: [ListComponent, ProfileComponent, UserPostsComponent],
   imports: [
     CommonModule,
     MaterialModule,

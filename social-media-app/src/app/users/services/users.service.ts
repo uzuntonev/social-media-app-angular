@@ -3,34 +3,48 @@ import { IUser } from "../../shared/models/user";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { mergeMap, map, tap } from "rxjs/operators";
 import { IPost } from "src/app/shared/models/post";
-import { Subject, of, Observable } from "rxjs";
-import { Router } from "@angular/router";
-import { AngularFireAuth } from "@angular/fire/auth";
+import { of as ObservableOf, Observable } from "rxjs";
 import { AuthService } from "src/app/auth/services/auth.service";
+import { StoreService } from "../../shared/services/store.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class UsersService {
-  userStore = new Subject<any>();
   constructor(
     private afDb: AngularFirestore,
-    private router: Router,
-    private afAuth: AngularFireAuth,
-    private authService: AuthService
+    private authService: AuthService,
+    private storeService: StoreService
   ) {}
 
-  // Get single user bt id
+  // Get single user by id
   getUser(id) {
     return this.afDb
       .collection<IUser>("users", ref => ref.where("id", "==", id))
-      .valueChanges();
+      .valueChanges()
+      .pipe(
+        mergeMap((userList: IUser[]) => userList),
+        mergeMap((user: IUser) => {
+          return this.afDb
+            .collection<IPost>("posts", ref =>
+              ref.where("createdById", "==", user.id)
+            )
+            .valueChanges()
+            .pipe(
+              map((posts: IPost[]) => {
+                return {
+                  ...user,
+                  posts
+                };
+              })
+            );
+        })
+      );
   }
 
   // Get all users
   get getAllUsers() {
-    let userList: any[] = [];
-    return this.afDb
+    const user = this.afDb
       .collection<IUser>("users")
       .valueChanges()
       .pipe(
@@ -43,16 +57,21 @@ export class UsersService {
             .valueChanges()
             .pipe(
               map((posts: IPost[]) => {
-                userList = userList.concat({ ...user, posts });
-                this.userStore.next(userList);
                 return {
                   ...user,
                   posts
                 };
+              }),
+              tap(user => {
+                this.storeService.update(state => ({
+                  userList: state.userList.find(u => u.name === user.name) ? state.userList : state.userList.concat(user)
+                }));
               })
             );
         })
       );
+
+    return user;
   }
 
   // In params pass collection and criteria for search. Search for user in passed collection by criteria and return stream with found users
@@ -60,7 +79,7 @@ export class UsersService {
     const { searchBy, searchFor } = params;
     let stream$: Observable<any>;
     if (searchBy === "title") {
-      stream$ = of(
+      stream$ = ObservableOf(
         [...collection].filter(user => {
           const isFound = user.posts.filter(post => {
             return post.title
@@ -73,7 +92,7 @@ export class UsersService {
         })
       );
     } else {
-      stream$ = of(
+      stream$ = ObservableOf(
         [...collection].filter(user => {
           return user[searchBy]
             .toLocaleLowerCase()
@@ -84,13 +103,8 @@ export class UsersService {
     return stream$;
   }
 
+  // Delete user by id
   deleteUser(userId) {
-    this.afAuth.auth.currentUser.delete().then(() => {
-      this.authService.signOut();
-      this.afDb
-        .collection("users")
-        .doc(userId)
-        .delete();
-    });
+    this.authService.deleteUser(userId);
   }
 }

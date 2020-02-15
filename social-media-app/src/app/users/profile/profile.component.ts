@@ -20,26 +20,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.userListSubscription = this.userService.getAllUsers
-      .pipe(
-        filter(
-          (user: IUser) => user.id === this.activateRoute.snapshot.params.id
-        )
-      )
-      .subscribe(user => (this.user = user));
-  }
-
-  getDetails(postId) {
-    this.router.navigate(["post", postId]);
+    this.userListSubscription = this.userService
+      .getUser(this.activateRoute.snapshot.params.id)
+      .subscribe(user => this.user = user);
   }
 
   resetPassword() {
     this.router.navigate(["auth", "forgot-password"]);
   }
-  
+
   deleteAccount(userId) {
-    window.alert("Are you sure ?")
-    this.userService.deleteUser(userId)
+    this.userService.deleteUser(userId);
   }
 
   ngOnDestroy() {

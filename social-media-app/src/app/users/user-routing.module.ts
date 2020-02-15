@@ -7,9 +7,9 @@ const routes: Routes = [
   { path: "", redirectTo: "list" },
   {
     path: "list",
-    resolve: {
-      userList: UserListResolver
-    },
+    // resolve: {
+    //   userList: UserListResolver
+    // },
     component: ListComponent,
     canActivate: [AuthGuard]
   },

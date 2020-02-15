@@ -15,32 +15,19 @@
           <p class="label">Email:</p>
           <span>{{ user.email }}</span>
           <div class="action">
-            <button mat-flat-button color="primary" (click)="resetPassword()">Reset password</button>
-            <button mat-raised-button color="warn" (click)="deleteAccount(user.id)">Delete account</button>
+            <button mat-flat-button color="primary" (click)="resetPassword()">
+              Reset password
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="deleteAccount(user.id)"
+            >
+              Delete account
+            </button>
           </div>
         </div>
-
-        <div class="post-section">
-          <p class="label">Posts:</p>
-          <div *ngIf="!user.posts.length"><p>This user no posts</p></div>
-
-          <ul fxLayout="column" fxLayoutAlign="start" fxLayoutGap="20px">
-            <li *ngFor="let post of user.posts">
-              <div fxLayout fxLayoutAlign="space-between" fxLayoutGap="10px">
-                <div>
-                  <span>{{ post.title}}</span>
-                  <p>
-                    Created on:
-                    {{ post.createdOn.toDate() | date: "dd.MM.yyyy" }}
-                  </p>
-                </div>
-                <button mat-fab color="primary" (click)="getDetails(post.id)">
-                  Read
-                </button>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <app-user-posts [posts]="user.posts"></app-user-posts>
       </div>
     </div>
   </div>

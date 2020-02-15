@@ -7,7 +7,7 @@ import { HomeComponent } from "./core/home/home.component";
 
 const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "home" },
-  { path: "home", component: HomeComponent },
+  { path: "home", component: HomeComponent, canActivate: [SecureInnerGuard]},
   {
     path: "post",
     loadChildren: () => import("./posts/post.module").then(m => m.PostModule)

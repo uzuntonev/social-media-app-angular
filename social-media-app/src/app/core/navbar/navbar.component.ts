@@ -18,6 +18,7 @@ export class NavbarComponent {
   get currentUser() {
     return this.authService.userData;
   }
+
   signOut() {
     this.authService.signOut();
   }

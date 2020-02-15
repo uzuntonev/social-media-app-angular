@@ -1,7 +1,9 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { UsersService } from "../services/users.service";
-import { Observable, Subscription, interval, range } from "rxjs";
-import { buffer, bufferCount, last, takeLast, tap } from "rxjs/operators";
+import { Observable, Subscription } from "rxjs";
+import { IUser } from "src/app/shared/models/user";
+import { StoreService } from "../../shared/services/store.service";
+import { shareReplay } from "rxjs/operators";
 
 @Component({
   selector: "app-users-list",
@@ -14,29 +16,39 @@ export class ListComponent implements OnInit {
     { text: "Email", value: "email" },
     { text: "Title", value: "title" }
   ];
-  @ViewChild("searchInput", { static: true }) searchInput: ElementRef;
-  users$: Observable<any>;
-  private _userList: any[] = [];
-  userList: any[] = [];
+  users$: Observable<IUser[]>;
   private userListSubscription: Subscription;
   private userSearchSubscription: Subscription = new Subscription();
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private storeService: StoreService
+  ) {}
 
   ngOnInit() {
-    this.userListSubscription = this.userService.getAllUsers.subscribe(user => {
-      this._userList.push(user)
-      this.userList.push(user)
-    });
-    // this.users$ = this.userService.userStore;
+    this.userListSubscription = this.userService.getAllUsers.subscribe()
+    this.users$ = this.storeService
+      .select(state => state.userList)
+      .pipe(shareReplay());
+
+    // this.userListSubscription = this.userService.getAllUsers.subscribe(user => {
+    //   this._userList.push(user);
+    //   this.userList.push(user);
+    // });
   }
 
   searchUser(value) {
-    this.userSearchSubscription = this.userService
-      .searchUser(this._userList, value)
-      .subscribe(users => {
-        this.userList = [...users];
+    this.userSearchSubscription = this.storeService
+      .select(state => state.userList)
+      .pipe(shareReplay())
+      .subscribe(userList => {
+        this.users$ = this.userService.searchUser(userList, value);
       });
-    // this.users$ = this.userService.searchUser(this._allUsers, value);
+    // const collection = [...this._userList];
+    // this.userSearchSubscription = this.userService
+    // .searchUser(collection, value)
+    // .subscribe(users => {
+    //   this.userList = [...users];
+    // });
   }
 
   ngOnDestroy() {

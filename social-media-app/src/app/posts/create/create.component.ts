@@ -13,10 +13,10 @@ import { IUser } from "../../shared/models/user";
   styleUrls: ["./create.component.scss"]
 })
 export class CreateComponent {
-  selectedFiles: FileList;
   currentUpload: Upload;
-  isUpload: boolean = false;
-  private userData: IUser;
+  private _selectedFiles: FileList;
+  private _isUpload: boolean = false;
+  private _userData: IUser;
 
   constructor(
     private uploadService: UploadService,
@@ -24,12 +24,12 @@ export class CreateComponent {
     private snackbar: MatSnackBar,
     private authService: AuthService
   ) {
-    this.userData = this.authService.userData;
+    this._userData = this.authService.userData;
   }
 
-  // Create post 
+  // Create post
   createPost(title, description) {
-    if (!this.isUpload) {
+    if (!this._isUpload) {
       this.snackbar.open("Please upload file", "Undo", {
         duration: 3000
       });
@@ -37,13 +37,13 @@ export class CreateComponent {
     }
     const post: IPost = {
       id: Math.random().toString(),
-      avatar: this.userData.avatar,
+      avatar: this._userData.avatar,
       createdOn: new Date(),
-      createdByName: this.userData.name,
-      createdById: this.userData.id,
+      createdByName: this._userData.name,
+      createdById: this._userData.id,
       title: title,
       description: description,
-      imgName: this.selectedFiles.item(0).name,
+      imgName: this._selectedFiles.item(0).name,
       imageLink: null,
       likes: 0,
       dislikes: 0
@@ -55,20 +55,20 @@ export class CreateComponent {
   // Detect file when is selected
 
   detectFiles(event) {
-    this.selectedFiles = event.target.files;
+    this._selectedFiles = event.target.files;
   }
 
   // Upload file to Firebase Storage
 
   uploadSingle() {
-    if (!this.selectedFiles) {
+    if (!this._selectedFiles) {
       this.snackbar.open("Please select file", "Undo", {
         duration: 3000
       });
       return;
     }
-    this.isUpload = true;
-    const file = this.selectedFiles.item(0);
+    this._isUpload = true;
+    const file = this._selectedFiles.item(0);
     this.currentUpload = new Upload(file);
     this.uploadService.publishUpload(this.currentUpload);
   }

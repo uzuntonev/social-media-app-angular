@@ -189,4 +189,18 @@ export class AuthService {
       this.router.navigate(["/"]);
     });
   }
+
+  deleteUser(userId) {
+    window.alert("Are you sure ?");
+    return this.afAuth.auth.currentUser
+      .delete()
+      .then(() => {
+        this.signOut();
+        this.afDb
+          .collection("users")
+          .doc(userId)
+          .delete();
+      })
+      .catch(err => console.error(err));
+  }
 }

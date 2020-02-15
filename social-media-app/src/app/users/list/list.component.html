@@ -42,11 +42,11 @@
   </form>
 </div>
 
-<ng-container *ngIf="!userList.length">
+<ng-container *ngIf="!(users$ | async)?.length">
   <app-loader></app-loader>
 </ng-container>
 
-<div class="wrapper" *ngFor="let user of userList">
+<div class="wrapper" *ngFor="let user of users$ | async">
   <div class="card">
     <div class="card-info">
       <div class="img-section">
@@ -58,33 +58,7 @@
         <p class="label">Email:</p>
         <span>{{ user.email }}</span>
       </div>
-      <div class="post-section">
-        <p class="label">Posts:</p>
-        <div *ngIf="!user.posts.length"><p>This user no posts</p></div>
-        <ul
-          fxLayout="column"
-          fxLayoutAlign="start"
-          fxLayoutGap="20px"
-          *ngIf="!!user.posts.length"
-        >
-          <li *ngFor="let post of user.posts">
-            <a
-              [routerLink]="['/post', post.id]"
-              fxLayout
-              fxLayoutAlign="space-between"
-              fxLayoutGap="10px"
-            >
-              <div>
-                <span>{{ post.title }}</span>
-                <p>
-                  Created on: {{ post.createdOn.toDate() | date: "dd.MM.yyyy" }}
-                </p>
-              </div>
-              <button class="btn-read" mat-fab color="primary">Read</button>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <app-user-posts [posts]="user.posts"></app-user-posts>
     </div>
   </div>
 </div>
