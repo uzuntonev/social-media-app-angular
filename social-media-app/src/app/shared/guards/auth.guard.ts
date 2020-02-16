@@ -6,20 +6,24 @@ import {
   Router
 } from "@angular/router";
 import { AuthService } from "../../auth/services/auth.service";
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,   private afAuth: AngularFireAuth,) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
-    if (this.authService.isLoggedIn) {
-      return true;
+  ): Observable<boolean> | boolean {
+    if (!this.authService.isLoggedIn && !this.authService.userData) {
+      this.router.navigate(["auth", "sign-in"]);
+      return false
+      // return this.afAuth.authState.pipe(map(user => !!user))
     }
-    this.router.navigate(["auth", "sign-in"]);
-    return false;
+    return true;
   }
 }

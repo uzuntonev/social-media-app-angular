@@ -36,7 +36,7 @@ export class PostService {
                 imageLink: updatedPost.imageLink
               });
           },
-          err => console.log(err),
+          err => console.error(err),
           () => subscription.unsubscribe()
         );
         this.router.navigate(["post", "list"]);

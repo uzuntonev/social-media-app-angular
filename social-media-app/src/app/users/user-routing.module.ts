@@ -2,18 +2,19 @@ import { Routes, RouterModule } from "@angular/router";
 import { ProfileComponent } from "./profile/profile.component";
 import { ListComponent } from "./list/list.component";
 import { AuthGuard } from "../shared/guards/auth.guard";
-import { UserListResolver } from "./resolvers/user-list.resolver";
+import { UserResolver } from "./resolvers/user.resolver";
 const routes: Routes = [
   { path: "", redirectTo: "list" },
   {
     path: "list",
-    // resolve: {
-    //   userList: UserListResolver
-    // },
     component: ListComponent,
     canActivate: [AuthGuard]
   },
-  { path: ":id", component: ProfileComponent, canActivate: [AuthGuard] }
+  { path: ":id",
+    //   resolve: {
+    //   user: UserResolver
+    // },
+     component: ProfileComponent}
 ];
 
 export const UserRoutingModule = RouterModule.forChild(routes);

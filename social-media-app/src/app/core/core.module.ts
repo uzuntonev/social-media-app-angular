@@ -9,7 +9,6 @@ import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { SidenavListComponent } from "./sidenav-list/sidenav-list.component";
 import { CommonModule } from "@angular/common";
-import { CheckPostComponent } from "./check-post/check-post.component";
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { CheckPostComponent } from "./check-post/check-post.component";
     FooterComponent,
     NavbarComponent,
     SidenavListComponent,
-    CheckPostComponent
   ],
   imports: [
     CommonModule,

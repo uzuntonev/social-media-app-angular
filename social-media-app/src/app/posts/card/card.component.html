@@ -39,7 +39,7 @@
     </div>
 
     <button
-      *ngIf="author === post.createdById && isDetailPage"
+      *ngIf="isAuthor && isDetailPage"
       (click)="deletePost()"
       mat-button
     >

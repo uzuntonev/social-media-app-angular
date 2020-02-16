@@ -15,7 +15,7 @@ export class CardComponent implements OnInit {
   @ViewChild("likes", { static: false }) likes: ElementRef;
   @ViewChild("dislikes", { static: false }) dislikes: ElementRef;
   private userData: IUser;
-  isDetailPage: boolean;
+  isDetailPage = !!this.activatedRoute.snapshot.params.id;
   constructor(
     private postService: PostService,
     private router: Router,
@@ -23,15 +23,12 @@ export class CardComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.userData = this.authService.userData;
-
   }
 
-  ngOnInit() {
-    this.isDetailPage = !!this.activatedRoute.snapshot.params.id;
-  }
+  ngOnInit() {}
 
-  get author() {
-    return this.userData.id
+  get isAuthor() {
+    return this.userData.id === this.post.createdById;
   }
 
   likePost(postId) {
