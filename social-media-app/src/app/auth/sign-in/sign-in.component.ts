@@ -12,7 +12,7 @@ export class SignInComponent implements OnInit {
   ngOnInit() {}
 
   signIn(value){
-    this.authService.SignIn(value)
+    this.authService.signIn(value)
   }
 
   signInGoogle(){

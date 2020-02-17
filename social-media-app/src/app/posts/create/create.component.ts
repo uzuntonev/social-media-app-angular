@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { UploadService } from "../services/upload.service";
 import { Upload } from "../../shared/models/file";
 import { PostService } from "../services/post.service";
-import { IPost } from "../../shared/models/post";
+import { IPost } from "../../shared/interfaces/post";
 import { MatSnackBar } from "@angular/material";
 import { AuthService } from "../../auth/services/auth.service";
-import { IUser } from "../../shared/models/user";
+import { IUser } from "../../shared/interfaces/user";
 
 @Component({
   selector: "app-create-post",

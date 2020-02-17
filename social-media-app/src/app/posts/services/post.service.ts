@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { IPost } from "../../shared/models/post";
+import { IPost } from "../../shared/interfaces/post";
 import { map } from "rxjs/operators";
 import { AngularFireStorage } from "@angular/fire/storage";
-import { IComment } from "../../shared/models/comment";
+import { IComment } from "../../shared/interfaces/comment";
 import { Subscription } from "rxjs";
 
 @Injectable({

@@ -12,8 +12,11 @@ import { SharedModule } from "./shared/shared.module";
 import { AuthModule } from "./auth/auth.module";
 import { CoreModule } from "./core/core.module";
 
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from "./not-found/not-found.component";
 
+import { StoreModule } from "@ngrx/store";
+import { reducers } from "./+store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -27,6 +30,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     CoreModule,
     SharedModule,
     AuthModule,
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({})
   ],
   providers: [],
   bootstrap: [AppComponent]

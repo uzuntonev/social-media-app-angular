@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { IUser } from "../../shared/models/user";
+import { IUser } from "../../shared/interfaces/user";
 import { auth } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
@@ -22,7 +22,7 @@ export class AuthService {
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(afUserInfo => {
       if (afUserInfo) {
-        localStorage.setItem("user", JSON.stringify("logged"));
+        localStorage.setItem("user", "logged");
         this.getUserData(afUserInfo).subscribe((user: IUser) => {
           this._userData = user ? user : null;
           // const userData = user ? JSON.stringify(user) : null;
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = localStorage.getItem("user");
     return user !== null;
     // return !!this._userData;
   }
@@ -67,7 +67,7 @@ export class AuthService {
   /* Sign in with email/password, 
    Check if returned info from angular fire have emailVerified prop
    with value true update property emailVerified in "users" collection */
-  SignIn(value) {
+  signIn(value) {
     const { email, password } = value;
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)

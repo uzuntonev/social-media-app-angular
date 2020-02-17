@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IState } from 'src/app/shared/models/state';
+import { IState } from 'src/app/shared/interfaces/state';
 import { map } from 'rxjs/operators';
 
 @Injectable({

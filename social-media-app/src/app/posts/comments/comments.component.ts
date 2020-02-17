@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
-import { IComment } from "src/app/shared/models/comment";
+import { IComment } from "src/app/shared/interfaces/comment";
 import { PostService } from "../services/post.service";
-import { IPost } from "src/app/shared/models/post";
+import { IPost } from "src/app/shared/interfaces/post";
 import { AuthService } from "src/app/auth/services/auth.service";
 import { Observable } from "rxjs";
 import { DocumentData } from "@angular/fire/firestore";

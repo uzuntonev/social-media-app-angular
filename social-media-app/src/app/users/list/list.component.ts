@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UsersService } from "../services/users.service";
 import { Observable, Subscription } from "rxjs";
-import { IUser } from "src/app/shared/models/user";
+import { IUser } from "src/app/shared/interfaces/user";
 import { StoreService } from "../../shared/services/store.service";
 import { shareReplay } from "rxjs/operators";
 

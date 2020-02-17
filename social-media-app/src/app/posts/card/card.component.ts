@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
-import { IPost } from "../../shared/models/post";
+import { IPost } from "../../shared/interfaces/post";
 import { PostService } from "../services/post.service";
 import { Router, ActivatedRoute } from "@angular/router";
-import { IUser } from "../../shared/models/user";
+import { IUser } from "../../shared/interfaces/user";
 import { AuthService } from "../../auth/services/auth.service";
 
 @Component({

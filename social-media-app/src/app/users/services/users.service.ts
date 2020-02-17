@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { IUser } from "../../shared/models/user";
+import { IUser } from "../../shared/interfaces/user";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { mergeMap, map, tap } from "rxjs/operators";
-import { IPost } from "src/app/shared/models/post";
+import { IPost } from "src/app/shared/interfaces/post";
 import { of as ObservableOf, Observable } from "rxjs";
 import { AuthService } from "src/app/auth/services/auth.service";
 import { StoreService } from "../../shared/services/store.service";

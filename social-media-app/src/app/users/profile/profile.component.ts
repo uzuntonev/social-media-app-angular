@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { UsersService } from "../services/users.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { IUser } from "src/app/shared/models/user";
+import { IUser } from "src/app/shared/interfaces/user";
 
 @Component({
   selector: "app-profile",
