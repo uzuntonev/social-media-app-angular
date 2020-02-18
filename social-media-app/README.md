@@ -1,4 +1,5 @@
-# This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
+## SocialNetworkApp
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
 
 ## Idea
 An application that every user can post article, comment article, delete own article.
