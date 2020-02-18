@@ -1,27 +1,32 @@
-# SocialNetworkApp
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
 
-## Development server
+## Idea
+An application that every user can post article, comment article, delete own article.
+Every user can create a post that can be viewed by all users
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Public part
+* Anonymus user
+  * On landing page login provided.
+  * User has access to register page.
+  * User has access to login page.
+  * If a user forgot password. It is possible to reset.
+## Private part
+* Authorized user
+  * User can create a post.
+  * User has access to all posts.
+  * User has access to all registered users.
+  * User has access to his own profile page.
+## Functionality
+* Create post
+  * Choose a file from file system and upload it to firebase storage.
+* Posts
+  * Like and dislike every post.
+  * Access to detail page for every post.
+ * Write a comment on every post.
+  * If a logged user is an author he can delete a post.
+* Users
+  * In the user list for each user are presented links to his posts.
+  * Can search for a user by name, email or title of his post.
+* Profile
+  * User can reset password.
+  * User can delete account
