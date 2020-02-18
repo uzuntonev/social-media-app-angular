@@ -17,6 +17,8 @@ Every user can create a post that can be viewed by all users
   * User has access to all posts.
   * User has access to all registered users.
   * User has access to his own profile page.
+## Design
+* Responsive
 ## Functionality
 * Create post
   * Choose a file from file system and upload it to firebase storage.
