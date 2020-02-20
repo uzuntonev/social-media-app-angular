@@ -6,6 +6,9 @@ import { IPost } from "../../shared/interfaces/post";
 import { MatSnackBar } from "@angular/material";
 import { AuthService } from "../../auth/services/auth.service";
 import { IUser } from "../../shared/interfaces/user";
+import { IAppState } from "src/app/+store";
+import { Store } from "@ngrx/store";
+import { CreatePost } from "src/app/+store/posts/actions";
 
 @Component({
   selector: "app-create-post",
@@ -20,9 +23,9 @@ export class CreateComponent {
 
   constructor(
     private uploadService: UploadService,
-    private postService: PostService,
     private snackbar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<IAppState>
   ) {
     this._userData = this.authService.userData;
   }
@@ -48,18 +51,15 @@ export class CreateComponent {
       likes: 0,
       dislikes: 0
     };
-
-    this.postService.createPost(post);
+    this.store.dispatch(new CreatePost(post));
   }
 
   // Detect file when is selected
-
   detectFiles(event) {
     this._selectedFiles = event.target.files;
   }
 
   // Upload file to Firebase Storage
-
   uploadSingle() {
     if (!this._selectedFiles) {
       this.snackbar.open("Please select file", "Undo", {

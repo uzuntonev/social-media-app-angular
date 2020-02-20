@@ -5,21 +5,23 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { MaterialModule } from "./shared/material/material.module";
+import { MaterialModule } from "./material/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { FirebaseModule } from "./shared/firebase/firebase.module";
+import { FirebaseModule } from "./firebase/firebase.module";
 import { SharedModule } from "./shared/shared.module";
 import { AuthModule } from "./auth/auth.module";
 import { CoreModule } from "./core/core.module";
 
-import { NotFoundComponent } from "./not-found/not-found.component";
-
 import { StoreModule } from "@ngrx/store";
 import { reducers } from "./+store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { EffectsModule } from "@ngrx/effects";
+import { UserEffects } from "./+store/users/effects";
+import { PostEffects } from "./+store/posts/effects";
+import { AuthEffects } from "./+store/auth/effects";
 
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -30,6 +32,7 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
     CoreModule,
     SharedModule,
     AuthModule,
+    EffectsModule.forRoot([AuthEffects, UserEffects, PostEffects]),
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({})
   ],

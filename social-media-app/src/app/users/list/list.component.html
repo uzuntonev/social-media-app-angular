@@ -46,7 +46,7 @@
   <app-loader></app-loader>
 </ng-container>
 
-<div class="wrapper" *ngFor="let user of users$ | async">
+<div class="wrapper" *ngFor="let user of (users$ | async)">
   <div class="card">
     <div class="card-info">
       <div class="img-section">

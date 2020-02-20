@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from "@angular/router";
 
-import { NotFoundComponent } from "./not-found/not-found.component";
+import { NotFoundComponent } from "./core/not-found/not-found.component";
 import { SecureInnerGuard } from "./shared/guards/secure-inner.guard";
 import { HomeComponent } from "./core/home/home.component";
 

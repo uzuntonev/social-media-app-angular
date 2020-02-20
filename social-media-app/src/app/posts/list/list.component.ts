@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { PostService } from "../services/post.service";
 import { IPost } from "../../shared/interfaces/post";
 import { Observable } from "rxjs";
-import { AuthService } from "src/app/auth/services/auth.service";
+import { Store } from "@ngrx/store";
+import { IAppState, getAllPostsSelector } from "src/app/+store";
+import { AllPosts } from "../../+store/posts/actions";
 
 @Component({
   selector: "app-all-posts",
@@ -11,10 +12,12 @@ import { AuthService } from "src/app/auth/services/auth.service";
 })
 export class ListComponent implements OnInit {
   allPosts$: Observable<IPost[]>;
-
-  constructor(private postService: PostService) {}
+  constructor(
+    private store: Store<IAppState>
+  ) {}
 
   ngOnInit() {
-    this.allPosts$ = this.postService.getAllPost();
+    this.store.dispatch(new AllPosts());
+    this.allPosts$ = this.store.select(getAllPostsSelector);
   }
 }

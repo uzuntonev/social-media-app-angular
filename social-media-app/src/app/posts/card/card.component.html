@@ -26,14 +26,14 @@
       <button (click)="likePost(post.id)" mat-button>
         <mat-icon>thumb_up_alt</mat-icon>
       </button>
-      <span #likes class="likes">
+      <span #like class="likes">
         {{ post.likes }}
       </span>
 
       <button (click)="dislikePost(post.id)" mat-button>
         <mat-icon>thumb_down_alt</mat-icon>
       </button>
-      <span #dislikes class="dislikes">
+      <span #dislike class="dislikes">
         {{ post.dislikes }}
       </span>
     </div>

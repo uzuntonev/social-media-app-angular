@@ -1,32 +1,27 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { PostService } from "../services/post.service";
+import { Component, OnInit } from "@angular/core";
 import { IPost } from "../../shared/interfaces/post";
 import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Observable } from "rxjs";
+import { IAppState, getPostDetailSelector } from "src/app/+store";
+import { Store } from "@ngrx/store";
+import { PostDetail } from "src/app/+store/posts/actions";
 
 @Component({
   selector: "app-details",
   templateUrl: "./detail.component.html",
   styleUrls: ["./detail.component.scss"]
 })
-export class DetailComponent implements OnInit, OnDestroy {
-  post: IPost;
-  private subscription: Subscription;
+export class DetailComponent implements OnInit {
+  post$: Observable<IPost>;
+
   constructor(
-    private postService: PostService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private store: Store<IAppState>
   ) {}
 
   ngOnInit() {
     const postId: string = this.activateRoute.snapshot.params.id;
-    this.subscription = this.postService
-      .getPost(postId)
-      .subscribe((post: IPost) => {
-        this.post = post;
-      });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.store.dispatch(new PostDetail({ postId }));
+    this.post$ = this.store.select(getPostDetailSelector);
   }
 }

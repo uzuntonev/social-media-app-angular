@@ -1,11 +1,14 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
-import { IComment } from "src/app/shared/interfaces/comment";
-import { PostService } from "../services/post.service";
-import { IPost } from "src/app/shared/interfaces/post";
-import { AuthService } from "src/app/auth/services/auth.service";
+import { Component, OnInit, Input } from "@angular/core";
+import { IComment } from "../../shared/interfaces/comment";
+import { IPost } from "../../shared/interfaces/post";
+import { AuthService } from "../../auth/services/auth.service";
 import { Observable } from "rxjs";
 import { DocumentData } from "@angular/fire/firestore";
 import { NgForm } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { IAppState, getCommentsSelector } from "src/app/+store";
+import { PostComments, AddComment } from "../../+store/posts/actions";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-comments",
@@ -14,14 +17,17 @@ import { NgForm } from "@angular/forms";
 })
 export class CommentsComponent implements OnInit {
   @Input() post: IPost;
+  private postId: string = this.activatedRoute.snapshot.params.id;
   allComments$: Observable<DocumentData[]>;
   constructor(
-    private postService: PostService,
     private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private store: Store<IAppState>
   ) {}
 
   ngOnInit() {
-    this.allComments$ = this.postService.getAllComments(this.post.id);
+    this.store.dispatch(new PostComments({ postId: this.postId }));
+    this.allComments$ = this.store.select(getCommentsSelector);
   }
 
   addComment(form: NgForm) {
@@ -35,8 +41,6 @@ export class CommentsComponent implements OnInit {
       dislikes: 0
     };
 
-    this.postService.addComment(comment, this.post.id);
-    form.reset();
+    this.store.dispatch(new AddComment({ comment , postId: this.postId }));
   }
-
 }

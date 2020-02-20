@@ -1,21 +1,21 @@
-import { Component, OnInit } from "@angular/core";
-import { AuthService } from "src/app/auth/services/auth.service";
+import { Component } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { IAppState } from "src/app/+store";
+import { GoogleAuth, SignIn } from "src/app/+store/auth/actions";
 
 @Component({
   selector: "app-sign-in",
   templateUrl: "./sign-in.component.html",
   styleUrls: ["./sign-in.component.scss"]
 })
-export class SignInComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+export class SignInComponent {
+  constructor(private store: Store<IAppState>) {}
 
-  ngOnInit() {}
-
-  signIn(value){
-    this.authService.signIn(value)
+  signIn(value) {
+    this.store.dispatch(new SignIn(value));
   }
 
-  signInGoogle(){
-    this.authService.GoogleAuth()
+  signInGoogle() {
+    this.store.dispatch(new GoogleAuth());
   }
 }

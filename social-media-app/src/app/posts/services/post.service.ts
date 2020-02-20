@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { Router } from "@angular/router";
 import { IPost } from "../../shared/interfaces/post";
 import { map } from "rxjs/operators";
 import { AngularFireStorage } from "@angular/fire/storage";
@@ -13,14 +12,13 @@ import { Subscription } from "rxjs";
 export class PostService {
   constructor(
     private afDb: AngularFirestore,
-    private router: Router,
     private afs: AngularFireStorage
   ) {}
 
   // Create new post and redirect to "/post/list"
   createPost(post: IPost) {
     let subscription: Subscription;
-    this.afDb
+    return this.afDb
       .collection<IPost>("posts")
       .doc(post.id)
       .set(post, {
@@ -39,13 +37,12 @@ export class PostService {
           err => console.error(err),
           () => subscription.unsubscribe()
         );
-        this.router.navigate(["post", "list"]);
       })
       .catch(err => console.error(err));
   }
 
   // Getter for all posts in DB in getter iteration over each post and map it. Add property imageLink
-  getAllPost() {
+  get getAllPost() {
     return this.afDb
       .collection<IPost>("posts", ref => {
         return ref.orderBy("createdOn", "desc");
@@ -86,15 +83,7 @@ export class PostService {
       .delete()
       .catch(err => console.error(err));
 
-    this.afs
-      .ref(`/uploads/${post.imgName}`)
-      .delete()
-      .subscribe(
-        () => {
-          this.router.navigate(["post", "list"]);
-        },
-        err => console.error(err)
-      );
+    return this.afs.ref(`/uploads/${post.imgName}`).delete();
   }
 
   // Get post with Id and map it to add property imageLink

@@ -1,5 +1,8 @@
 import { Component } from "@angular/core";
 import { AuthService } from "src/app/auth/services/auth.service";
+import { Store } from "@ngrx/store";
+import { IAppState } from "src/app/+store";
+import { SignOut } from 'src/app/+store/auth/actions';
 
 @Component({
   selector: "app-sidenav-list",
@@ -7,7 +10,10 @@ import { AuthService } from "src/app/auth/services/auth.service";
   styleUrls: ["./sidenav-list.component.scss"]
 })
 export class SidenavListComponent {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private store: Store<IAppState>
+  ) {}
 
   get isAuth() {
     return this.authService.isLoggedIn;
@@ -17,6 +23,6 @@ export class SidenavListComponent {
     return this.authService.userData;
   }
   signOut() {
-    this.authService.signOut();
+    this.store.dispatch(new SignOut());
   }
 }

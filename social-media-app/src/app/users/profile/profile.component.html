@@ -1,8 +1,6 @@
-<ng-template #loader>
-  <app-loader></app-loader>
-</ng-template>
+<app-loader *ngIf="!(user$ | async)"></app-loader>
 
-<ng-template #profile>
+<ng-container *ngIf="(user$ | async) as user">
   <div class="wrapper">
     <div class="card">
       <div class="card-info">
@@ -31,6 +29,4 @@
       </div>
     </div>
   </div>
-</ng-template>
-
-<ng-container *ngIf="!user; then loader; else profile"></ng-container>
+</ng-container>

@@ -1,12 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { AuthService } from "src/app/auth/services/auth.service";
+import { Component } from "@angular/core";
+import { Store } from '@ngrx/store';
+import { IAppState } from 'src/app/+store';
+import { SignUp, GoogleAuth } from 'src/app/+store/auth/actions';
 
 @Component({
   selector: "app-sign-up",
   templateUrl: "./sign-up.component.html",
   styleUrls: ["./sign-up.component.scss"]
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   avatars: { value: string; link: string }[] = [
     {
       value: "Man",
@@ -17,15 +19,14 @@ export class SignUpComponent implements OnInit {
       link: "assets/images/avatar-women.png"
     }
   ];
-  constructor(private authService: AuthService) {}
 
-  ngOnInit() {}
+  constructor( private store: Store<IAppState>) {}
 
   signUp(value) {
-    this.authService.signUp(value);
+    this.store.dispatch(new SignUp(value))
   }
 
   signUpGoogle() {
-    this.authService.GoogleAuth();
+    this.store.dispatch(new GoogleAuth())
   }
 }
