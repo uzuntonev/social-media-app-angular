@@ -6,7 +6,7 @@
       <mat-card-subtitle
         >Created on:
         {{
-          post.createdOn.toDate() | date: "dd.MM.yyyy hh:mm:SS"
+          post.createdOn | toDate | date: "dd.MM.yyyy hh:mm:SS"
         }}</mat-card-subtitle
       >
       <mat-card-subtitle

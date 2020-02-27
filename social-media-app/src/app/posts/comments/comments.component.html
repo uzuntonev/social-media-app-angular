@@ -61,7 +61,7 @@
           <mat-card-subtitle
             >Created on:
             {{
-              comment.createdOn.toDate() | date: "dd.MM.yyyy hh:mm:SS"
+              comment.createdOn | toDate | date: "dd.MM.yyyy hh:mm:SS"
             }}</mat-card-subtitle
           >
         </mat-card-header>
