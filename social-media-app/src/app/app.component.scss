@@ -4,16 +4,13 @@ mat-sidenav {
 .site {
   // position: relative;
   // min-height: 100vh;
-  background-color: #eaeaea;
+  background-image: url("../assets/images/angular-project-background.jpg");
+  background-size: contain;
   display: flex;
   flex-direction: column;
 }
 .main {
-  background-image: url("../assets/images/background-1.png");
-  // background-repeat: no-repeat;
-  background-size: contain;
   min-height: 82.5vh;
-  // padding-top: 2em;
 }
 .footer {
   // position: absolute;
