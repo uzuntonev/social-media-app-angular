@@ -1,6 +1,8 @@
 ## SocialNetworkApp
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
 
+You can view Social Network App [Here](https://social-network-angular.herokuapp.com/home)
+
 ## Idea
 An application that every user can post article, comment article, delete own article.
 Every user can create a post that can be viewed by all users
